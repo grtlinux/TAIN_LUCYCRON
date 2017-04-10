@@ -18,6 +18,7 @@ set LUCY_JOB_HOME=%LUCY_HOME%\lucycron1.01
 
 :: test tool env
 set TEST_DIR=%LUCY_HOME%\test
+set LOG_DIR=%LUCY_HOME%\logs
 set TOOL_DIR=%LUCY_HOME%\tools
 set JAVA_HOME=%TOOL_DIR%\jdk\jdk1.7.0_79
 set JRE_HOME=%TOOL_DIR%\jre\jre1.7.0_79
@@ -44,6 +45,7 @@ echo LUCY_HOME=%LUCY_HOME%
 echo LUCY_JOB_HOME=%LUCY_JOB_HOME%
 echo ----- test tool env --------------------------
 echo TEST_DIR=%TEST_DIR%
+echo LOG_DIR=%LOG_DIR%
 echo TOOL_DIR=%TOOL_DIR%
 echo JRE_HOME=%JRE_HOME%
 echo JAVA_HOME=%JAVA_HOME%

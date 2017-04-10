@@ -24,6 +24,7 @@ set JAVA_HOME=%TOOL_DIR%\jdk\jdk1.7.0_79
 set JRE_HOME=%TOOL_DIR%\jre\jre1.7.0_79
 set CATALINA_HOME=%TOOL_DIR%\apache\apache-tomcat-7.0.75
 set DERBY_HOME=%TOOL_DIR%\db-derby\db10.8
+set DERBY_OPTS=-Dderby.system.home=%LUCY_HOME%\data\derbyDB
 
 :: path env
 set PATH=%JRE_HOME%\bin;%PATH%
@@ -51,10 +52,18 @@ echo JRE_HOME=%JRE_HOME%
 echo JAVA_HOME=%JAVA_HOME%
 echo CATALINA_HOME=%CATALINA_HOME%
 echo DERBY_HOME=%DERBY_HOME%
+echo DERBY_OPTS=%DERBY_OPTS%
 echo ----- path env --------------------------
 echo PATH=%PATH%
 echo The environment is OK!!!
+
+echo -------------------------------------------------------------------
+echo -------------------------------------------------------------------
+echo "##### jre version > java -version"
+echo "##### apache-tomcat version > version"
+echo "##### derby information > sysinfo"
 pause
+
 goto label_end
 
 ::----------------------------------------------

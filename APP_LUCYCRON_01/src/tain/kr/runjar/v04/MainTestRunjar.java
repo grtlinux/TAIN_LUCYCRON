@@ -98,6 +98,10 @@ public class MainTestRunjar {
 	private static void test01(String[] args) throws Exception {
 
 		if (flag) {
+			new MainTestRunjar();
+		}
+		
+		if (!flag) {
 			/*
 			 * start classLoader
 			 */

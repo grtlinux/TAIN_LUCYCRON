@@ -17,7 +17,7 @@
  * Copyright 2014, 2015, 2016, 2017 TAIN, Inc.
  *
  */
-package tain.kr.vfs.v01;
+package tain.kr.test.vfs.v01;
 
 import org.apache.commons.vfs2.FileChangeEvent;
 import org.apache.commons.vfs2.FileListener;
@@ -31,8 +31,8 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : MainTest01.java
- *   -. Package    : tain.kr.vfs.v01
+ *   -. FileName   : MainTestVfs01.java
+ *   -. Package    : tain.kr.test.vfs.v01
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2017. 4. 11. {time}
@@ -41,11 +41,11 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public final class MainTest01 {
+public final class MainTestVfs01 {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(MainTest01.class);
+	private static final Logger log = Logger.getLogger(MainTestVfs01.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ public final class MainTest01 {
 	/*
 	 * constructor
 	 */
-	public MainTest01() {
+	public MainTestVfs01() {
 		if (flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
@@ -62,11 +62,10 @@ public final class MainTest01 {
 		
 		if (flag) {
 			/*
-			 * prograss
+			 * progress
 			 */
 			try {
-				Thread thread = new Thread(new ThrProgress());
-				thread.start();
+				new Thread(new ThrProgress()).start();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -78,8 +77,8 @@ public final class MainTest01 {
 			 */
 			try {
 				FileSystemManager fileSystemManager = VFS.getManager();
-				//FileObject listenFolder = fileSystemManager.resolveFile("N:/tain/products/LucyCron/test");
-				FileObject listenFolder = fileSystemManager.resolveFile("N:\\tain\\products\\LucyCron\\test");
+				FileObject listenFolder = fileSystemManager.resolveFile("N:/tain/products/LucyCron/test");
+				// FileObject listenFolder = fileSystemManager.resolveFile("N:\\tain\\products\\LucyCron\\test");
 				
 				DefaultFileMonitor fileMonitor = new DefaultFileMonitor(new FolderListener());
 				fileMonitor.setRecursive(true);
@@ -95,13 +94,16 @@ public final class MainTest01 {
 	
 	private final class ThrProgress implements Runnable {
 		
-		private static final long LOOP_WAIT = 5 * 1000; // millisecond
+		private static final long SLEEP_LOOP = 5 * 1000;  // millisecond
 		
 		@Override
 		public void run() {
-			while (true) {
-				System.out.println("#");
-				try { Thread.sleep(ThrProgress.LOOP_WAIT); } catch (InterruptedException e) {}
+			
+			if (flag) {
+				while (true) {
+					System.out.println("#");
+					try { Thread.sleep(SLEEP_LOOP); } catch (InterruptedException e) {}
+				}
 			}
 		}
 	}
@@ -109,7 +111,7 @@ public final class MainTest01 {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private final class FolderListener implements FileListener {
-
+		
 		@Override
 		public void fileChanged(FileChangeEvent fileChangeEvent) throws Exception {
 			if (flag) log.debug(String.format("STATUS: file [%s] has a changed event from [%s].", fileChangeEvent.getFile().getName(), this));
@@ -146,7 +148,7 @@ public final class MainTest01 {
 			/*
 			 * begin
 			 */
-			new MainTest01().execute();
+			new MainTestVfs01().execute();
 		}
 	}
 

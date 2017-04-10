@@ -1,0 +1,42 @@
+Manifest-Version: 1.0
+ 
+Title: LucyCron 1.01 in TAIN, Inc.
+Version: 1.01
+Created-By: TAIN, Inc.
+Company: TAIN, Inc.
+Copyright: Copyright 2014, 2015, 2016, 2017 TAIN, Inc. all rights reserved.
+Provider: 
+  Kiea Seok Kang    kiea@tain.co.kr  at 17.04.10
+ 
+ 
+ 
+Package: tain.kr.com.proj.lucycron
+ 
+Etc-Content: 
+  the below is for ready jars
+  libs/commons-net-3.3.jar
+  libs/log4j-1.2.17.jar
+  libs/gson-2.6.2.jar
+ 
+Class-Path: .
+ 
+ 
+ 
+ 
+Main-Class: tain.kr.runjar.v04.RunJarLoader
+ 
+Rsrc-version: RunJarLoader ver1.04
+ 
+Rsrc-Class-Path: ./
+  libs/commons-net-3.3.jar
+  libs/log4j-1.2.17.jar
+  libs/gson-2.6.2.jar
+ 
+Rsrc-Main-Class: tain.kr.runjar.v04.MainTestRunjar
+ 
+
+
+
+
+
+

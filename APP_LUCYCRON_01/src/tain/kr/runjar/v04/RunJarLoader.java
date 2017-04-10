@@ -158,6 +158,15 @@ public final class RunJarLoader {
 			
 			if (flag) {
 				/*
+				 * for check the variables above
+				 */
+				for (URL url : rsrcUrls) {
+					System.out.printf("[%s]\n", url);
+				}
+			}
+			
+			if (flag) {
+				/*
 				 * start classLoader
 				 */
 				ClassLoader jceClassLoader = new URLClassLoader(rsrcUrls, null);

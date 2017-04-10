@@ -25,8 +25,8 @@ set CATALINA_HOME=%TOOL_DIR%\apache\apache-tomcat-7.0.75
 set DERBY_HOME=%TOOL_DIR%\db-derby\db10.8
 
 :: path env
-set PATH=%JAVA_HOME%\bin;%PATH%
 set PATH=%JRE_HOME%\bin;%PATH%
+set PATH=%JAVA_HOME%\bin;%PATH%
 set PATH=%CATALINA_HOME%\bin;%PATH%
 set PATH=%DERBY_HOME%\bin;%PATH%
 set PATH=%LUCY_JOB_HOME%\bin;%PATH%
@@ -45,8 +45,8 @@ echo LUCY_JOB_HOME=%LUCY_JOB_HOME%
 echo ----- test tool env --------------------------
 echo TEST_DIR=%TEST_DIR%
 echo TOOL_DIR=%TOOL_DIR%
-echo JAVA_HOME=%JAVA_HOME%
 echo JRE_HOME=%JRE_HOME%
+echo JAVA_HOME=%JAVA_HOME%
 echo CATALINA_HOME=%CATALINA_HOME%
 echo DERBY_HOME=%DERBY_HOME%
 echo ----- path env --------------------------

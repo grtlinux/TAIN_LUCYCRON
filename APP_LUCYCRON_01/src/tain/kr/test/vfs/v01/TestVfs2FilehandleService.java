@@ -29,11 +29,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import org.apache.commons.vfs2.CacheStrategy;
 import org.apache.commons.vfs2.FileContent;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemManager;
 import org.apache.commons.vfs2.Selectors;
 import org.apache.commons.vfs2.VFS;
+import org.apache.commons.vfs2.impl.DefaultFileSystemManager;
+import org.apache.commons.vfs2.provider.local.DefaultLocalFileProvider;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -165,6 +168,60 @@ public final class TestVfs2FilehandleService {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testCaching() throws Exception {
+		String path = TestVfs2FilehandleService.class.getResource("").getPath();
+		if (flag) System.out.printf("[%s]\n", path);
+		
+		String testFolder = path + "/testfolder";
+		FileSystemManager manager = VFS.getManager();
+		
+		FileObject scratchFolder = manager.resolveFile(testFolder);
+		
+		// testfolder 내의 모든 파일 삭제
+		scratchFolder.delete(Selectors.EXCLUDE_SELF);
+		
+		FileObject file = manager.resolveFile(path +  "/testfolder/dummy.txt");
+		file.createFile();
+		
+		// 캐싱 Manager 생성
+		DefaultFileSystemManager fs = new DefaultFileSystemManager();
+		fs.setFilesCache(manager.getFilesCache());
+		
+		// zip, jar, tgz, tar, tbz2, file
+		if (!fs.hasProvider("file")) {
+		fs.addProvider("file", new DefaultLocalFileProvider());
+		}
+		
+		fs.setCacheStrategy(CacheStrategy.ON_RESOLVE);
+		fs.init();
+		
+		// 캐싱 객체 생성
+		FileObject foBase2 = fs.resolveFile(testFolder);
+		if (flag) System.out.printf("## scratchFolder.getName().getPath() : %s\n", scratchFolder.getName().getPath());
+		
+		FileObject cachedFolder = foBase2.resolveFile(scratchFolder.getName().getPath());
+		
+		// 파일이 존재하지 않음
+		FileObject[] fos = cachedFolder.getChildren();
+		assertFalse(contains(fos, "file1.txt"));
+		
+		// 파일생성
+		scratchFolder.resolveFile("file1.txt").createFile();
+		
+		// 파일 존재함
+		// BUT cachedFolder 에는 파일이 존재하지 않음
+		fos = cachedFolder.getChildren();
+		assertFalse(contains(fos, "file1.txt"));
+		
+		// 새로고침
+		cachedFolder.refresh();
+		// 파일이 존재함
+		fos = cachedFolder.getChildren();
+		assertTrue(contains(fos, "file1.txt"));
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,5 +242,18 @@ public final class TestVfs2FilehandleService {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private boolean contains(FileObject[] fos, String string) {
+		for (int i = 0; i < fos.length; i++) {
+			if (string.equals(fos[i].getName().getBaseName())) {
+				if (flag) System.out.printf("# %s", string);
+				return true;
+			}
+		}
+
+		if (flag) System.out.printf("# %s should be seen", string);
+		return false;
+	}
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
 }

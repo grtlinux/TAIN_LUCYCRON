@@ -60,6 +60,7 @@ echo The environment is OK!!!
 echo -------------------------------------------------------------------
 echo -------------------------------------------------------------------
 echo "##### jre version > java -version"
+echo "##### jdk version > javac -version"
 echo "##### apache-tomcat version > version"
 echo "##### derby information > sysinfo"
 pause

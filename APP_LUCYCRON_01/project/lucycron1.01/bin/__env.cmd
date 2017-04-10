@@ -29,7 +29,7 @@ set DERBY_OPTS=-Dderby.system.home=%LUCY_HOME%\data\derbyDB
 set NSSM_HOME=%TOOL_DIR%\nssm-2.24
 set UNX_HOME=%TOOL_DIR%\UnxUpdates
 set MAVEN_HOME=%TOOL_DIR%\apache\apache-maven-3.3.3
-set ANT_HOME=%TOOL_DIR%\apache\apache-ant-1.10.1
+set ANT_HOME=%TOOL_DIR%\apache\apache-ant-1.9.9
 
 :: path env
 set PATH=%JRE_HOME%\bin;%PATH%
@@ -79,8 +79,8 @@ echo "##### derby information > sysinfo"
 echo "##### nssm windows service > nssm"
 echo "##### UnxUpdates command > tail"
 echo "##### apache-maven version > mvn -version"
-echo "##### apache-ant version > mvn -version"
-pause
+echo "##### apache-ant version > ant -version"
+::pause
 
 goto label_end
 

@@ -28,5 +28,6 @@ start
 ::----------------------------------------------
 :label_end
 echo The end of the command
+pause
 
 @endlocal

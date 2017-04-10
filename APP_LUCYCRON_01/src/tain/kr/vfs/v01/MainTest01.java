@@ -19,6 +19,12 @@
  */
 package tain.kr.vfs.v01;
 
+import org.apache.commons.vfs2.FileChangeEvent;
+import org.apache.commons.vfs2.FileListener;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.VFS;
+import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.log4j.Logger;
 
 /**
@@ -35,7 +41,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class MainTest01 {
+public final class MainTest01 {
 
 	private static boolean flag = true;
 
@@ -52,8 +58,74 @@ public class MainTest01 {
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
+	public void execute() {
+		
+		if (flag) {
+			/*
+			 * prograss
+			 */
+			try {
+				Thread thread = new Thread(new ThrProgress());
+				thread.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * listener
+			 */
+			try {
+				FileSystemManager fileSystemManager = VFS.getManager();
+				//FileObject listenFolder = fileSystemManager.resolveFile("N:/tain/products/LucyCron/test");
+				FileObject listenFolder = fileSystemManager.resolveFile("N:\\tain\\products\\LucyCron\\test");
+				
+				DefaultFileMonitor fileMonitor = new DefaultFileMonitor(new FolderListener());
+				fileMonitor.setRecursive(true);
+				fileMonitor.addFile(listenFolder);
+				fileMonitor.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class ThrProgress implements Runnable {
+		
+		private static final long LOOP_WAIT = 2 * 1000; // millisecond
+		
+		@Override
+		public void run() {
+			while (true) {
+				System.out.println("#");
+				try { Thread.sleep(ThrProgress.LOOP_WAIT); } catch (InterruptedException e) {}
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class FolderListener implements FileListener {
+
+		@Override
+		public void fileChanged(FileChangeEvent fileChangeEvent) throws Exception {
+			if (flag) log.debug(String.format("STATUS: file [%s] has a changed event from [%s].", fileChangeEvent.getFile().getName(), this));
+		}
+
+		@Override
+		public void fileCreated(FileChangeEvent fileChangeEvent) throws Exception {
+			if (flag) log.debug(String.format("STATUS: create the file [%s].", fileChangeEvent.getFile().getName()));
+		}
+
+		@Override
+		public void fileDeleted(FileChangeEvent fileChangeEvent) throws Exception {
+			if (flag) log.debug(String.format("STATUS: delete the file [%s].", fileChangeEvent.getFile().getName()));
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,11 +142,11 @@ public class MainTest01 {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new MainTest01();
-
 		if (flag) {
-
+			/*
+			 * begin
+			 */
+			new MainTest01().execute();
 		}
 	}
 

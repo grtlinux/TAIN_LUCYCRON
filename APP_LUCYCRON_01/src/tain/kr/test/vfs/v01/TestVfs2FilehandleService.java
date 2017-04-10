@@ -19,8 +19,11 @@
  */
 package tain.kr.test.vfs.v01;
 
+import static org.junit.Assert.*;
+
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.Selectors;
 import org.apache.commons.vfs2.VFS;
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -62,6 +65,9 @@ public final class TestVfs2FilehandleService {
 		this.filename = "test.txt";
 		this.text = "test¿‘¥œ¥Ÿ.";
 		this.tmppath = "tmp";
+		this.absoluteFilePath = "N:/tain/products/LucyCron/test";
+		
+		if (flag) System.out.printf("[user.dir] = [%s]\n", System.getProperty("user.dir"));
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,9 +77,16 @@ public final class TestVfs2FilehandleService {
 		
 		FileSystemManager manager = VFS.getManager();
 		
-		FileObject baseDir = manager.resolveFile(System.getProperty("user.dir"));
+		FileObject baseDir = manager.resolveFile(this.absoluteFilePath);
 		final FileObject file = manager.resolveFile(baseDir, "testfolder/file1.txt");
 		
+		// delete a file
+		file.delete(Selectors.SELECT_FILES);
+		assertFalse(file.exists());
+		
+		// create a file
+		file.createFile();
+		assertTrue(file.exists());
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

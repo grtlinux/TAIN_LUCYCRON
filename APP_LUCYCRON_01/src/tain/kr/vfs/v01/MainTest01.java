@@ -95,7 +95,7 @@ public final class MainTest01 {
 	
 	private final class ThrProgress implements Runnable {
 		
-		private static final long LOOP_WAIT = 2 * 1000; // millisecond
+		private static final long LOOP_WAIT = 5 * 1000; // millisecond
 		
 		@Override
 		public void run() {

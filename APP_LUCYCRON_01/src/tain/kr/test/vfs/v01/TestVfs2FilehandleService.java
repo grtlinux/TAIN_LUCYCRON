@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -103,6 +104,10 @@ public final class TestVfs2FilehandleService {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/*
+	 * 특정 위치에 존재하는 파일에 접근하여 파일 내용을 수정한다.
+	 * 파일 위치는 절대 경로 또는 상대 경로 등 다양한 형식을 지원한다.
+	 */
 	@Test
 	public void testAccessFile() throws Exception  {
 		
@@ -169,8 +174,13 @@ public final class TestVfs2FilehandleService {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	/*
+	 * 캐싱 기능을 사용하여, 생성하거나 수정할 파일을 메모리 상에 로딩함으로써
+	 * 파일 접근 시에 소요되는 시간을 단축한다.
+	 */
 	@Test
 	public void testCaching() throws Exception {
+		
 		String path = TestVfs2FilehandleService.class.getResource("").getPath();
 		if (flag) System.out.printf("[%s]\n", path);
 		
@@ -191,7 +201,7 @@ public final class TestVfs2FilehandleService {
 		
 		// zip, jar, tgz, tar, tbz2, file
 		if (!fs.hasProvider("file")) {
-		fs.addProvider("file", new DefaultLocalFileProvider());
+			fs.addProvider("file", new DefaultLocalFileProvider());
 		}
 		
 		fs.setCacheStrategy(CacheStrategy.ON_RESOLVE);
@@ -223,7 +233,39 @@ public final class TestVfs2FilehandleService {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
+	 * 파일 생성 테스트 - 1
+	 */
+	@Test
+	public void testWriteFile() throws Exception {
+		
+		// delete file
+		File file = new File(filename);
+		if (file.exists()) {
+			file.delete();
+		}
+		
+		assertFalse(file.exists());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
+	 * 파일 생성 테스트 - 2
+	 */
+	@Test
+	public void testWriteFileWithAbsolutePath() throws Exception {
+		
+		// delete file
+		File file = new File(this.absoluteFilePath + "/testfolder/file1.txt");
+		if (file.exists()) {
+			file.delete();
+		}
+		
+		assertFalse(file.exists());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

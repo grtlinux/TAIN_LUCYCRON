@@ -10,37 +10,47 @@ if not "%TAIN_HOME%" == "" goto label_end
 
 :: base env
 set TAIN_HOME=N:\tain
-set TAIN_TOOL=%TAIN_HOME%\tools
-set TAIN_TEST=%TAIN_HOME%\test
-set TAIN_PRODUCT=%TAIN_HOME%\products
+set PRODUCT_HOME=%TAIN_HOME%\products
 
-:: tool env
-set JAVA_HOME=%TAIN_TOOL%\jdk1.7.0_79
-set CATALINA_HOME=%TAIN_TOOL%\apache-tomcat-7.0.75
+:: project env
+set LUCY_HOME=%PRODUCT_HOME%\LucyCron
+set LUCY_JOB_HOME=%LUCY_HOME%\lucycron1.01
 
-:: product env
-set LUCY_HOME=%TAIN_PRODUCT%\LucyCron\lucycron1.01
+:: test tool env
+set TEST_DIR=%LUCY_HOME%\test
+set TOOL_DIR=%LUCY_HOME%\tools
+set JAVA_HOME=%TOOL_DIR%\jdk\jdk1.7.0_79
+set JRE_HOME=%TOOL_DIR%\jre\jre1.7.0_79
+set CATALINA_HOME=%TOOL_DIR%\apache\apache-tomcat-7.0.75
+set DERBY_HOME=%TOOL_DIR%\db-derby\db10.8
 
-:: other env
-set PATH=%JAVA_HOME%\bin;%CATALINA_HOME%\bin;%PATH%
+:: path env
+set PATH=%JAVA_HOME%\bin;%PATH%
+set PATH=%JRE_HOME%\bin;%PATH%
+set PATH=%CATALINA_HOME%\bin;%PATH%
+set PATH=%DERBY_HOME%\bin;%PATH%
+set PATH=%LUCY_JOB_HOME%\bin;%PATH%
 
 ::----------------------------------------------
 :label_start
-echo ----- base env --------------------------
-echo TAIN_HOME=%TAIN_HOME%
-echo TAIN_TOOL=%TAIN_TOOL%
-echo TAIN_TEST=%TAIN_TEST%
-echo TAIN_PRODUCT=%TAIN_PRODUCT%
-echo ----- tool env --------------------------
-echo JAVA_HOME=%JAVA_HOME%
-echo CATALINA_HOME=%CATALINA_HOME%
-echo ----- products env --------------------------
-echo LUCY_HOME=%LUCY_HOME%
-echo ----- path env --------------------------
-echo PATH=%PATH%
-echo ----- other env --------------------------
+echo ----- first env --------------------------
 echo CURRENT_DIR=%CURRENT_DIR%
 echo ENV_CMD=%ENV_CMD%
+echo ----- base env --------------------------
+echo TAIN_HOME=%TAIN_HOME%
+echo PRODUCT_HOME=%PRODUCT_HOME%
+echo ----- project env --------------------------
+echo LUCY_HOME=%LUCY_HOME%
+echo LUCY_JOB_HOME=%LUCY_JOB_HOME%
+echo ----- test tool env --------------------------
+echo TEST_DIR=%TEST_DIR%
+echo TOOL_DIR=%TOOL_DIR%
+echo JAVA_HOME=%JAVA_HOME%
+echo JRE_HOME=%JRE_HOME%
+echo CATALINA_HOME=%CATALINA_HOME%
+echo DERBY_HOME=%DERBY_HOME%
+echo ----- path env --------------------------
+echo PATH=%PATH%
 echo The environment is OK!!!
 pause
 goto label_end

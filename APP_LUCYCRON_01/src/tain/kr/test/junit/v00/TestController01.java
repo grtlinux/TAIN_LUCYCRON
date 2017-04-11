@@ -19,12 +19,15 @@
  */
 package tain.kr.test.junit.v00;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -43,6 +46,19 @@ import org.junit.Test;
  */
 public final class TestController01 {
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@SuppressWarnings("unused")
+	private interface ImpTest {
+		public abstract void test() throws Exception;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private final class RequestTest implements ImpRequest {
@@ -210,10 +226,68 @@ public final class TestController01 {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testProcessResponse() {
+		ImpResponse response = this.controller.getResponse(this.request);
+		
+		assertNotNull(response);
+		assertEquals(ResponseTest.class, response.getClass());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testProcessRequestAnswerErrorResponse() {
+		ImpRequest request = new RequestTest("testError");
+		ImpRequestHandler handler = new ExceptionHandler();
+		this.controller.addHandler(request, handler);
+		ImpResponse response = this.controller.getResponse(request);
+		
+		assertNotNull(response);
+		assertEquals(ErrorResponse.class, response.getClass());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test ( expected = RuntimeException.class )
+	public void testGetHandlerNotDefined() {
+		ImpRequest request = new RequestTest("testNotDefined");
+		
+		// occured the event RuntimeException
+		this.controller.getHandler(request);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test ( expected = RuntimeException.class )
+	public void testAddRequestDuplication() {
+		ImpRequest request = new RequestTest("Hello, world!!!");
+		ImpRequestHandler handler = new RequestHandlerTest();
+		
+		// occured the event RuntimeException
+		this.controller.addHandler(request, handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Ignore
+	@Test ( timeout = 10 )   // milliseconds
+	public void testProcessMultipleRequestsTimeout() {
+		ImpRequest request;
+		ImpRequestHandler handler = new RequestHandlerTest();
+		ImpResponse response;
+		
+		for (int i=0; i < 99999; i++) {
+			request = new RequestTest(String.valueOf(i));
+			this.controller.addHandler(request, handler);
+			response = this.controller.getResponse(request);
+			
+			assertNotNull(response);
+			assertNotSame(ErrorResponse.class, response.getClass());
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 }

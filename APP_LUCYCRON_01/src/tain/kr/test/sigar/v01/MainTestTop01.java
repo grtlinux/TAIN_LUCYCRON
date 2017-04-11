@@ -19,10 +19,17 @@
  */
 package tain.kr.test.sigar.v01;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.ProcStat;
 import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
 import org.hyperic.sigar.SigarProxyCache;
+import org.hyperic.sigar.cmd.Ps;
+import org.hyperic.sigar.cmd.Shell;
 
 /**
  * Code Templates > Comments > Types
@@ -71,14 +78,15 @@ public class MainTestTop01 {
 	/*
 	 * static test method
 	 */
+	@SuppressWarnings("unchecked")
 	private static void test01(String[] args) throws Exception {
 
 		if (flag)
 			new MainTestTop01();
 
-		if (flag) {
+		if (!flag) {
 			/*
-			 * begin
+			 * information of system, that is CPU, MEM, SWAP
 			 */
 			final int SLEEP_TIME = 5 * 1000;
 			
@@ -86,7 +94,63 @@ public class MainTestTop01 {
 			
 			while (true) {
 				
-				System.out.println(sigar.getCpuPerc());
+				ProcStat stat = sigar.getProcStat();
+				System.out.printf("TOT-%d SLEEP-%d RUN-%d ZOMB-%d STOP-%d \t"
+						, stat.getTotal()
+						, stat.getSleeping()
+						, stat.getRunning()
+						, stat.getZombie()
+						, stat.getStopped());
+				
+				System.out.printf("%s\t", sigar.getCpuPerc());
+				System.out.printf("%s\t", sigar.getMem());
+				System.out.printf("%s\t", sigar.getSwap());
+				
+				System.out.println();
+				
+				if (flag) {
+					try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException e) {}
+					SigarProxyCache.clear(sigar);
+				}
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * array of pids
+			 */
+			final int SLEEP_TIME = 5 * 1000;
+			
+			SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), SLEEP_TIME);
+			
+			while (true) {
+				
+				long[] pids = Shell.getPids(sigar, args);
+				
+				for (int i=0; i < pids.length; i++) {
+					long pid = pids[i];
+					
+					String cpuPerc = "?";
+					
+					List<String> info;
+					
+					try {
+						info = Ps.getInfo(sigar, pid);
+					} catch (SigarException e) {
+						continue; // process may have gone away
+					}
+					
+					try {
+						// ProcCpu cpu = sigar.getProcCpu(pid);
+						cpuPerc = CpuPerc.format(sigar.getProcCpu(pid).getPercent());
+					} catch (SigarException e) {
+						// TODO: handle exception
+					}
+					
+					info.add(info.size()-1, cpuPerc);
+					
+					System.out.printf("%s\n", Ps.join(info));
+				}
 				
 				if (flag) {
 					try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException e) {}

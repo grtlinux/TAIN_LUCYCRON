@@ -19,8 +19,13 @@
  */
 package tain.kr.test.junit.v00;
 
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Code Templates > Comments > Types
@@ -80,6 +85,32 @@ public final class TestController01 {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	private final class ErrorResponse implements ImpResponse {
+		
+		private ImpRequest request;
+		private Exception exception;
+		
+		public ErrorResponse(ImpRequest request, Exception exception) {
+			this.request = request;
+			this.exception = exception;
+		}
+		
+		public ImpRequest getRequest() {
+			return this.request;
+		}
+		
+		public Exception getException() {
+			return this.exception;
+		}
+		
+		@Override
+		public String getName() {
+			return "ErrorResponse";
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
 	private final class RequestHandlerTest implements ImpRequestHandler {
 		
 		@Override
@@ -121,11 +152,21 @@ public final class TestController01 {
 				throw new RuntimeException(String.format("", request.getName()));
 			}
 			
+			return this.map.get(request.getName());
 		}
 		
 		@Override
 		public ImpResponse getResponse(ImpRequest request) {
 			
+			ImpResponse response;
+			
+			try {
+				response = getHandler(request).process(request);
+			} catch (Exception e) {
+				response = new ErrorResponse(request, e);
+			}
+			
+			return response;
 		}
 	}
 	
@@ -143,8 +184,31 @@ public final class TestController01 {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private ImpController controller;
+	private ImpRequest request;
+	private ImpRequestHandler handler;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Before
+	public void initialize() throws Exception {
+		this.controller = new ControllerTest();
+		this.request = new RequestTest("Hello, world!!!");
+		this.handler = new RequestHandlerTest();
+		
+		this.controller.addHandler(this.request, this.handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testAddHandler() {
+		ImpRequestHandler handler2 = this.controller.getHandler(this.request);
+		
+		assertEquals(handler2, this.handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

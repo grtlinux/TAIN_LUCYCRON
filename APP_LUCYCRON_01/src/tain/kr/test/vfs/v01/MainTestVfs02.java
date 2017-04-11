@@ -19,6 +19,16 @@
  */
 package tain.kr.test.vfs.v01;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.apache.commons.vfs2.FileChangeEvent;
+import org.apache.commons.vfs2.FileListener;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.VFS;
+import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.log4j.Logger;
 
 /**
@@ -52,9 +62,105 @@ public class MainTestVfs02 {
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
+	public void execute() throws Exception {
+		
+		if (flag) {
+			/*
+			 * progress
+			 */
+			try {
+				new Thread(new ThrProgress()).start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (flag) {
+			/*
+			 * event listener
+			 */
+			try {
+				FileSystemManager fileSystemManager = VFS.getManager();
+				FileObject listenFolder = fileSystemManager.resolveFile("N:/tain/products/LucyCron/test");
+				
+				DefaultFileMonitor fileMonitor = new DefaultFileMonitor(new FolderListener());
+				fileMonitor.addFile(listenFolder);
+				fileMonitor.setRecursive(true);
+				fileMonitor.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class ThrProgress implements Runnable {
+		
+		private final static long SLEEP_LOOP = 10 * 1000;  // millesecond
+		private final static long LOOP_VALUE = 24 * 60 * 6;
+		
+		@Override
+		public void run() {
+			
+			if (flag) {
+				String oldTime = "";
+				String curTime = null;
+				
+				for (long i=0; ; i = ++i % LOOP_VALUE) {
+					curTime = DateFormat.get();
+					if (!curTime.equals(oldTime)) {
+						if (flag) System.out.printf("[%s]\n", curTime);
+						oldTime = curTime;
+					}
+					
+					try { Thread.sleep(SLEEP_LOOP); } catch (InterruptedException e) {}
+				}
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class FolderListener implements FileListener {
+		
+		@Override
+		public void fileChanged(FileChangeEvent fileChangeEvent) throws Exception {
+			if (flag) System.out.printf("[%s] STATUS: change the file [%s].\n"
+					, DateFormat.get("HH:mm:ss")
+					, fileChangeEvent.getFile().getName());
+		}
+		
+		@Override
+		public void fileCreated(FileChangeEvent fileChangeEvent) throws Exception {
+			if (flag) System.out.printf("[%s] STATUS: create the file [%s].\n"
+					, DateFormat.get("HH:mm:ss")
+					, fileChangeEvent.getFile().getName());
+		}
+		
+		@Override
+		public void fileDeleted(FileChangeEvent fileChangeEvent) throws Exception {
+			if (flag) System.out.printf("[%s] STATUS: delete the file [%s].\n"
+					, DateFormat.get("HH:mm:ss")
+					, fileChangeEvent.getFile().getName());
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final static class DateFormat {
+		
+		private static String DEFAULT_FORMAT = "HH:mm";
+		
+		public final static String get() {
+			return get(DEFAULT_FORMAT);
+		}
+		
+		public final static String get(String format) {
+			return new SimpleDateFormat(format, Locale.KOREA).format(new Date());
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,11 +176,11 @@ public class MainTestVfs02 {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new MainTestVfs02();
-
 		if (flag) {
-
+			/*
+			 * begin
+			 */
+			new MainTestVfs02().execute();
 		}
 	}
 

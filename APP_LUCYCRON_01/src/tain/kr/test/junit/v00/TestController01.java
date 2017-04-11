@@ -101,6 +101,7 @@ public final class TestController01 {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
+	@SuppressWarnings("unused")
 	private final class ErrorResponse implements ImpResponse {
 		
 		private ImpRequest request;

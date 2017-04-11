@@ -60,13 +60,16 @@ public final class TestVfs2FilehandleService {
 
 	private static boolean flag = true;
 
+	@SuppressWarnings("unused")
 	private static final Logger log = Logger
 			.getLogger(TestVfs2FilehandleService.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private String filename;
+	@SuppressWarnings("unused")
 	private String text;
+	@SuppressWarnings("unused")
 	private String tmppath;
 	private String absoluteFilePath;
 	

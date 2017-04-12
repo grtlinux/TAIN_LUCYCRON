@@ -19,7 +19,14 @@
  */
 package tain.kr.test.junit.v01;
 
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Code Templates > Comments > Types
@@ -41,6 +48,7 @@ public final class TestJunit01 {
 
 	private static final Logger log = Logger.getLogger(TestJunit01.class);
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -73,16 +81,154 @@ public final class TestJunit01 {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class Request implements ImpRequest {
+		
+		private String name;
+		
+		public Request(String name) {
+			this.name = name;
+		}
+		
+		@Override
+		public String getName() {
+			return this.name;
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class Response implements ImpResponse {
+		
+		private String name;
+		
+		public Response(String name) {
+			this.name = name;
+		}
+		
+		@Override
+		public String getName() {
+			return this.name;
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class ErrorResponse implements ImpResponse {
+		
+		private ImpRequest request;
+		private Exception exception;
+		
+		public ErrorResponse(ImpRequest request, Exception exception) {
+			this.request = request;
+			this.exception = exception;
+		}
+		
+		public ImpRequest getRequest() {
+			return this.request;
+		}
+		
+		public Exception getException() {
+			return this.exception;
+		}
+		
+		@Override
+		public String getName() {
+			return "ResponseError";
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class RequestHandler implements ImpRequestHandler {
+		
+		@Override
+		public ImpResponse process(ImpRequest request) throws Exception {
+			return new Response(request.getName());
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class ExceptionHandler implements ImpRequestHandler {
+		
+		@Override
+		public ImpResponse process(ImpRequest request) throws Exception {
+			throw new Exception("error event in processing request.");
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final class Controller implements ImpController {
+		
+		private Map<String, ImpRequestHandler> map = new HashMap<String, ImpRequestHandler>();
+		
+		@Override
+		public void addHandler(ImpRequest request, ImpRequestHandler handler) {
+			
+			if (this.map.containsKey(request.getName())) {
+				throw new RuntimeException(String.format("a request handler has already been registered for request name [%s].", request.getName()));
+			} else {
+				this.map.put(request.getName(), handler);
+			}
+		}
+		
+		@Override
+		public ImpRequestHandler getHandler(ImpRequest request) {
+			
+			if (!this.map.containsKey(request.getName())) {
+				throw new RuntimeException(String.format("Cannot find handler for request name [%s].", request.getName()));
+			}
+			
+			return this.map.get(request.getName());
+		}
+		
+		@Override
+		public ImpResponse getResponse(ImpRequest request) {
+			
+			ImpResponse response;
+			
+			try {
+				response = this.getHandler(request).process(request);
+			} catch (Exception e) {
+				response = new ErrorResponse(request, e);
+			}
+			
+			return response;
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private ImpController controller;
+	private ImpRequest request;
+	private ImpRequestHandler handler;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Before
+	public void initialize() throws Exception {
+		this.controller = new Controller();
+		this.request = new Request("Hello, world!!!");
+		this.handler = new RequestHandler();
+		
+		this.controller.addHandler(request, handler);
+		
+		if (flag) log.debug("initialize() be done!!!");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testAddHandler() {
+		ImpRequestHandler handler2 = this.controller.getHandler(request);
+		
+		assertEquals(handler2, this.handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

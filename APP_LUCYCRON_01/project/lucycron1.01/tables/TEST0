@@ -38,11 +38,15 @@ env := PARAM2=hello, world
 
 # -------------------------------------
 # cron schecule list
-schedule.hour := *    # every hour
-schedule.min  := *    # every minute
-schedule.day  := *    # every day
-schedule.mon  := *    # every month
-schedule.week := *    # every week
+# schedule.hour := *    # every hour
+# schedule.min  := *    # every minute
+# schedule.day  := *    # every day
+# schedule.mon  := *    # every month
+# schedule.week := *    # every week
+
+hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 1
+hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 2
+hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 3
 
 # -------------------------------------
 # properties

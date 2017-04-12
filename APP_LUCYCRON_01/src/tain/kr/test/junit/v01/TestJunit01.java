@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -124,10 +125,12 @@ public final class TestJunit01 {
 			this.exception = exception;
 		}
 		
+		@SuppressWarnings("unused")
 		public ImpRequest getRequest() {
 			return this.request;
 		}
 		
+		@SuppressWarnings("unused")
 		public Exception getException() {
 			return this.exception;
 		}
@@ -217,7 +220,7 @@ public final class TestJunit01 {
 		
 		this.controller.addHandler(request, handler);
 		
-		if (flag) log.debug("initialize() be done!!!");
+		if (!flag) log.debug("@Before initialize() be done!!!");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,24 +230,84 @@ public final class TestJunit01 {
 		ImpRequestHandler handler2 = this.controller.getHandler(request);
 		
 		assertEquals(handler2, this.handler);
+		
+		if (!flag) log.debug("testAddHandler() be done!!!");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testProcessResponse() {
+		ImpResponse response = this.controller.getResponse(this.request);
+		
+		assertNotNull(response);
+		assertEquals(Response.class, response.getClass());
+		
+		if (!flag) log.debug("testProcessResponse() be done!!!");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testProcessRequestAnswerErrorResponse() {
+		ImpRequest request = new Request("testError");
+		ImpRequestHandler handler = new ExceptionHandler();
+		this.controller.addHandler(request, handler);
+		
+		ImpResponse response = this.controller.getResponse(request);
+		
+		assertNotNull(response);
+		assertEquals(ErrorResponse.class, response.getClass());
+		
+		if (!flag) log.debug("testProcessRequestAnswerErrorResponse() be done!!!");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test ( expected = RuntimeException.class )
+	public void testGetHandlerNotDefined() {
+		ImpRequest request = new Request("testNotDefined");
+		
+		// occurred the event RuntimeException
+		this.controller.getHandler(request);
+		
+		if (!flag) log.debug("testGetHandlerNotDefined() be done!!!");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test ( expected = RuntimeException.class )
+	public void testAddRequestDuplication() {
+		ImpRequest request = new Request("Hello, world!!!");
+		ImpRequestHandler handler = new RequestHandler();
+		
+		// occurred the event RuntimeException
+		this.controller.addHandler(request, handler);
+		
+		if (!flag) log.debug("testAddRequestDuplication() be done!!!");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Ignore
+	@Test ( timeout = 10 )   // millisecond
+	public void testProcessMultipleRequestsTimeout() {
+		ImpRequest request;
+		ImpRequestHandler handler = new RequestHandler();
+		ImpResponse response;
+		
+		for (int i=0; i < 99999; i++) {
+			request = new Request(String.valueOf(i));
+			this.controller.addHandler(request, handler);
+			response = this.controller.getResponse(request);
+			
+			assertNotNull(response);
+			assertNotSame(ErrorResponse.class, response.getClass());
+		}
+		
+		if (!flag) log.debug("testProcessMultipleRequestsTimeout() be done!!!");
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

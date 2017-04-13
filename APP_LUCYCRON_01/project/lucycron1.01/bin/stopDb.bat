@@ -9,3 +9,7 @@ start stopNetworkServer.bat -p 1527 -user kang -password kang123!
 :label_end
 
 @endlocal
+
+::----------------------------------------------
+:label_end
+exit /b 0

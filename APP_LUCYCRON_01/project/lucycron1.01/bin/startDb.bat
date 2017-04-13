@@ -9,3 +9,7 @@ start startNetworkServer.bat
 :label_end
 
 @endlocal
+
+::----------------------------------------------
+:label_end
+exit /b 0

@@ -25,7 +25,7 @@ set JAVA_HOME=%TOOL_DIR%\jdk\jdk1.7.0_79
 set JRE_HOME=%TOOL_DIR%\jre\jre1.7.0_79
 set CATALINA_HOME=%TOOL_DIR%\apache\apache-tomcat-7.0.75
 set DERBY_HOME=%TOOL_DIR%\db-derby\db10.8
-set DERBY_OPTS=-Dderby.system.home=%LUCY_HOME%\data\derbyDB
+set DERBY_OPTS=-Dderby.system.home=%LUCY_BASE%\data\derbyDB
 set NSSM_HOME=%TOOL_DIR%\nssm-2.24
 set UNX_HOME=%TOOL_DIR%\UnxUpdates
 set MAVEN_HOME=%TOOL_DIR%\apache\apache-maven-3.3.3
@@ -76,7 +76,7 @@ echo "##### jdk version > javac -version"
 echo "##### apache-tomcat version > version"
 echo "##### derby information > sysinfo"
 echo "##### nssm windows service > nssm"
-echo "##### UnxUpdates command > tail"
+echo "##### UnxUpdates command > tail one"
 echo "##### apache-maven version > mvn -version"
 echo "##### apache-ant version > ant -version"
 echo "The environment is OK!!!"

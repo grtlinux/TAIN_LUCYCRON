@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="derby_server-15b694047d7-4905f39d35fc6fb2" provider="generic" driver="derby_server" name="Derby - lucycron01" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="localhost" port="1527" server="" database="lucycron01" url="jdbc:derby://localhost:1527/lucycron01;create=false" user="kang" password="GAUIJxARF1dl8w==" type="dev">
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="false">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="false">
+				<property name="port" value="22"/>
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+		</connection>
+	</data-source>
+</data-sources>

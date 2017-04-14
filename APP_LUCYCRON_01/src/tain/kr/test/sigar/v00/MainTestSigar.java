@@ -19,11 +19,17 @@
  */
 package tain.kr.test.sigar.v00;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.ProcStat;
 import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
 import org.hyperic.sigar.SigarProxyCache;
+import org.hyperic.sigar.cmd.Ps;
+import org.hyperic.sigar.cmd.Shell;
 
 /**
  * Code Templates > Comments > Types
@@ -77,12 +83,11 @@ public class MainTestSigar {
 		if (flag)
 			new MainTestSigar();
 
-		if (flag) {
+		if (!flag) {
 			/*
 			 * 1st
 			 */
 			final int SLEEP_TIME = 5 * 1000;
-			
 			SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), SLEEP_TIME);
 			
 			while (true) {
@@ -101,7 +106,7 @@ public class MainTestSigar {
 				System.out.println();
 				
 				if (flag) {
-					try { Thread.sleep(1000); } catch (InterruptedException e) {}
+					try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException e) {}
 					SigarProxyCache.clear(sigar);
 				}
 			}
@@ -111,6 +116,44 @@ public class MainTestSigar {
 			/*
 			 * 2nd
 			 */
+			final int SLEEP_TIME = 5 * 1000;
+			SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), SLEEP_TIME);
+			
+			args = new String[] {
+					"java",
+			};
+			
+			while (true) {
+				
+				long[] pids = Shell.getPids(sigar, args);
+				
+				for (int i=0; i < pids.length; i++) {
+					long pid = pids[i];
+					
+					List<String> info;
+					try {
+						info = Ps.getInfo(sigar, pid);
+					} catch (SigarException e) {
+						continue;
+					}
+					
+					String cpuPerc = "?";
+					try {
+						cpuPerc = CpuPerc.format(sigar.getProcCpu(pid).getPercent());
+					} catch (SigarException e) {
+						// TODO: handle exception
+					}
+					
+					info.add(info.size() - 1, cpuPerc);
+					
+					System.out.printf("%s\n", Ps.join(info));
+				}
+
+				if (flag) {
+					try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException e) {}
+					SigarProxyCache.clear(sigar);
+				}
+			}
 		}
 	}
 

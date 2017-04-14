@@ -78,6 +78,7 @@ public class MainTestSigar {
 	/*
 	 * static test method
 	 */
+	@SuppressWarnings("unchecked")
 	private static void test01(String[] args) throws Exception {
 
 		if (flag)

@@ -19,11 +19,14 @@
  */
 package tain.kr.test.junit.v01;
 
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Code Templates > Comments > Types
@@ -203,12 +206,42 @@ public final class TestJunit02 {
 		
 		this.controller.addHandler(request, handler);
 		
-		if (flag) log.debug("@Before initalize() be done!!!!");
+		if (!flag) log.debug("@Before initalize() be done!!!!");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testAddHandler() {
+		ImpRequestHandler handler2 = this.controller.getHandler(this.request);
+		
+		assertEquals(handler2, this.handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testProcessResponse() {
+		ImpResponse response = this.controller.getResponse(this.request);
+		
+		assertNotNull(response);
+		assertEquals(Response.class, response.getClass());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testProcessRequestAnswerErrorResponse() {
+		ImpRequest request = new Request("testError");
+		ImpRequestHandler handler = new ExceptionHandler();
+		this.controller.addHandler(request, handler);
+		
+		ImpResponse response = this.controller.getResponse(request);
+		
+		assertNotNull(response);
+		assertEquals(ErrorResponse.class, response.getClass());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

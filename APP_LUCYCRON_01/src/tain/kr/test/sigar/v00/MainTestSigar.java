@@ -76,6 +76,88 @@ public class MainTestSigar {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
+	 * PTQL (Process Table Query Language)
+	 * 
+	 * Hyperic SIGAR provides a mechanism to identify processes called Process Table Query Language.
+	 * All operating systems assign a unique id (PID) to each running process. However, the PID is
+	 * a random number that may also change at any point in time when a process is restarted. PTQL
+	 * uses process attributes that will persist over time to identify a process.
+	 * 
+	 * Class.Attribute.operator=value
+	 * 
+	 *     e.g.) Exe.Name.ct=Program Files
+	 * 
+	 * Class.Attribute
+	 * 
+	 *     Pid.Pid        - The process ID
+	 *     Pid.PidFile    - File containing the process ID
+	 *     Pid.Service    - Windows Service name used to pid from the service manager
+	 *     State.Name     - Base name of the process executable
+	 *     CredName.User  - User Name of the process owner
+	 *     CredName.Group - Group Name of the process owner
+	 *     Cred.Uid       - User ID of the process owner
+	 *     Cred.Gid       - Group ID of the process owner
+	 *     Cred.Euid      - Effective User ID of the process owner
+	 *     Cred.Egid      - Effective Group ID of the process owner
+	 *     Exe.Name       - Full path name of the process executable
+	 *     Exe.Cwd        - Current Working Directory of the process
+	 *     Args.*         - Command line argument passed to the process
+	 *     Env.*          - Environment variable within the process
+	 *     Modules.*      - Shared library loaded within the process
+	 *     
+	 * operator for String values
+	 * 
+	 *     eq - equal to value
+	 *     ne - not equal to value
+	 *     ew - ends with value
+	 *     sw - start with value
+	 *     ct - contains value (substring)
+	 *     re - regular expression value matches
+	 *     Pne - Parent process not equal to value
+	 *     
+	 * operator for Numeric values
+	 * 
+	 *     eq - equal to value
+	 *     ne - not equal to value
+	 *     gt - greater than value
+	 *     ge - greater than or equal value
+	 *     lt - less than value
+	 *     le - less than or equal value
+	 *     
+	 * e.g.) do not make a space in the below
+	 * 
+	 *     State.Name.eq = crond
+	 *     
+	 *     State.Name.eq = sshd
+	 *     
+	 *     Pid.PidFile.eq = /var/run/sshd.pid
+	 *     
+	 *     Pid.Service.eq = Eventlog
+	 *     
+	 *     Pid.Service.eq = sshd
+	 *     
+	 *     State.Name.re = ^(https?d.*|[Aa]pache2?)$
+	 *     
+	 *     State.Name.eq = httpd, State.Name.Pne = httpd
+	 *     
+	 *     State.Name.eq = httpd, State.Name.Pne = $1   <- $1 is the return value of the attribute (State.Name)
+	 *                                                     in the first branch of the query
+	 *     
+	 *     CredName.User.eq = dougm, State.Name.eq = httpd, State.Name.Pne = $2 <- the return value of State.Name
+	 *     
+	 *     State.Name.eq = java
+	 *     
+	 *     State.Name.sw = java
+	 *     
+	 *     State.Name.eq = java, Args.7.eq = org.jboss.Main
+	 *     
+	 *     State.Name.eq = java, Args.-1.eq = org.jboss.Main
+	 *     
+	 *     State.Name.eq = java, Args.*.eq = org.jboss.Main
+	 *     
+	 *     
+	 */
+	/*
 	 * static test method
 	 */
 	@SuppressWarnings("unchecked")
@@ -121,7 +203,8 @@ public class MainTestSigar {
 			SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), SLEEP_TIME);
 			
 			args = new String[] {
-					"java",
+					"CredName.User.eq=taincokr",
+					//"State.Name.eq=java",
 			};
 			
 			while (true) {
@@ -154,6 +237,8 @@ public class MainTestSigar {
 					try { Thread.sleep(SLEEP_TIME); } catch (InterruptedException e) {}
 					SigarProxyCache.clear(sigar);
 				}
+				
+				if (flag) break;
 			}
 		}
 	}

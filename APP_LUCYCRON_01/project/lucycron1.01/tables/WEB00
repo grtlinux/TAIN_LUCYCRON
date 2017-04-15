@@ -29,7 +29,8 @@ cwd := N:/WORK
 cmd := cmd | bash     # windows | linux
 cmd := /c  | -c       # windows | linux
 cmd := DIR
-cmd := /W
+cmd := /W             # arg0
+cmd := /T             # arg1
 
 # -------------------------------------
 # running environment

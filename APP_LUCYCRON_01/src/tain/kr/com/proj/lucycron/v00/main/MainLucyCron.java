@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class MainLucyCron {
+public final class MainLucyCron {
 
 	private static boolean flag = true;
 
@@ -52,9 +52,28 @@ public class MainLucyCron {
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
+	public void execute(String[] args) throws Exception {
+		
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private void runLucyServer() throws Exception {
+		
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private void runLucyListener() throws Exception {
+		
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private void runLucyScheduler() throws Exception {
+		
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,11 +89,11 @@ public class MainLucyCron {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new MainLucyCron();
-
 		if (flag) {
-
+			/*
+			 * begin
+			 */
+			new MainLucyCron().execute(args);
 		}
 	}
 

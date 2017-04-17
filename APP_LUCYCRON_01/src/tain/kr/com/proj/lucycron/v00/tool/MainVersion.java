@@ -21,6 +21,8 @@ package tain.kr.com.proj.lucycron.v00.tool;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.lucycron.v00.util.Params;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -74,7 +76,13 @@ public class MainVersion {
 			new MainVersion();
 
 		if (flag) {
-
+			/*
+			 * begin
+			 */
+			String key = "tain.lucy.version";
+			String val = Params.getInstance().getString(key);
+			
+			if (flag) log.debug(String.format("[%s] = [%s]", key, val));
 		}
 	}
 

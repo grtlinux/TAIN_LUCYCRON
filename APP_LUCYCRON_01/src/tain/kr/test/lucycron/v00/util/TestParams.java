@@ -60,9 +60,11 @@ public class TestParams {
 	
 	@Test
 	public void testGetString() {
-		String str = Params.getInstance().getString("tain.lucy.version");
+		String key = "tain.lucy.version";
+		String val = Params.getInstance().getString(key);
+		if (flag) log.debug(String.format("[%s] = [%s]", key, val));
 		
-		assertNotNull(str);
+		assertNotNull(val);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

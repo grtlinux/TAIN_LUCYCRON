@@ -63,7 +63,7 @@ public final class Params {
 		this.prop = System.getProperties();
 		this.resourceBundle = ResourceBundle.getBundle(FILE_RESOURCES);
 		
-		if (flag)
+		if (!flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
@@ -154,7 +154,7 @@ public final class Params {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static synchronized Params getInstance() throws Exception {
+	public static synchronized Params getInstance() {
 		
 		if (Params.instance == null) {
 			Params.instance = new Params();

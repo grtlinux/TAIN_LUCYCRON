@@ -19,7 +19,9 @@
  */
 package tain.kr.test.lucycron.v00.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+
+import java.text.DateFormat;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -68,7 +70,7 @@ public final class TestDateFormat {
 	
 	@Test
 	public void testGetDateFormatFromDate() {
-		String str = DateString.get(Date.p);
+		String str = DateString.parse("2017-04-04 12:34:21.000");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

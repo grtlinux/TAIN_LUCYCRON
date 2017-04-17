@@ -21,6 +21,8 @@ package tain.kr.com.proj.lucycron.v00.main;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.lucycron.v00.main.manager.LucyManager;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -52,28 +54,19 @@ public final class MainLucyCron {
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
-	public void execute(String[] args) throws Exception {
+	public void runManager(String[] args) throws Exception {
 		
+		if (flag) {
+			/*
+			 * run lucy cron manager
+			 */
+			LucyManager.getInstance().manage();
+		}
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private void runLucyServer() throws Exception {
-		
-	}
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private void runLucyListener() throws Exception {
-		
-	}
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private void runLucyScheduler() throws Exception {
-		
-	}
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +86,7 @@ public final class MainLucyCron {
 			/*
 			 * begin
 			 */
-			new MainLucyCron().execute(args);
+			new MainLucyCron().runManager(args);
 		}
 	}
 

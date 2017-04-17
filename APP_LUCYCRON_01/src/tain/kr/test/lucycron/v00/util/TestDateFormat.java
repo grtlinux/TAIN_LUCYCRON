@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import tain.kr.com.proj.lucycron.v00.util.DateFormat;
+import tain.kr.com.proj.lucycron.v00.util.DateString;
 
 /**
  * Code Templates > Comments > Types
@@ -59,12 +59,18 @@ public final class TestDateFormat {
 	
 	@Test
 	public void testGetDateFormat() {
-		String str = DateFormat.get();
+		String str = DateString.get();
 		
 		assertNotNull(str);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testGetDateFormatFromDate() {
+		String str = DateString.get(Date.p);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

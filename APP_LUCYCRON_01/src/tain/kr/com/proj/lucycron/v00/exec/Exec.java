@@ -144,26 +144,48 @@ public final class Exec {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new Exec();
-
-		if (flag) {
+		if (!flag) {
 			/*
 			 * begin
 			 */
 			File cwd = new File("N:/tain/test");
 
 			String[] cmd = new String[] {
+					"cmd",
+					"/c",
 					"echo",
-					"hello, world!!!",
+					"hello, world!!! %PARAM1% %PARAM2%",
 			};
 			
 			String[] env = new String[] {
-					"PARAM1=How do you do?",
-					"PARAM2=Fine these days.",
+					"PARAM1=How do you do? [%PARAM2%]",
+					"PARAM2=Fine these days. [%PARAM1%]",
 			};
 			
 			int ret = Exec.run(cmd, env, cwd, System.out, false);
+			if (flag) log.debug(String.format(">>>> ret = (%d)", ret));
+		}
+		
+		if (flag) {
+			/*
+			 * start network server
+			 */
+			File cwd = new File("N:/tain/products/LucyCron/tools/db-derby/db10.8/bin");
+
+			String[] cmd = new String[] {
+					"cmd",
+					"/c",
+					"startNetworkServer",
+			};
+			
+			String[] env = new String[] {
+					"JRE_HOME=N:/tain/products/LucyCron/tools/jre/jre1.7.0_79",
+					"JAVA_HOME=N:/tain/products/LucyCron/tools/jdk/jdk1.7.0_79",
+					"DERBY_HOME=N:/tain/products/LucyCron/tools/db-derby/db10.8",
+					"DERBY_OPTS=-Dderby.system.home=N:/tain/products/LucyCron/data/derbyDB",
+			};
+			
+			int ret = Exec.run(cmd, env, cwd, System.out, false);       // <- blocking
 			if (flag) log.debug(String.format(">>>> ret = (%d)", ret));
 		}
 	}

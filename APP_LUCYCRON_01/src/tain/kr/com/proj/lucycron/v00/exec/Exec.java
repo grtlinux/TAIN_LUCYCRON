@@ -19,6 +19,10 @@
  */
 package tain.kr.com.proj.lucycron.v00.exec;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -35,7 +39,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class Exec {
+public final class Exec {
 
 	private static boolean flag = true;
 
@@ -48,14 +52,84 @@ public class Exec {
 	 * constructor
 	 */
 	public Exec() {
+		/*
+		 * nothing to do
+		 */
 		if (flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*
+	 * need a Runtime object for any of these methods in this class
+	 */
+	private final static Runtime run = Runtime.getRuntime();
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static int run(String cmd, String[] envp, File dir, OutputStream os, boolean flgOsClose) throws IOException {
+		
+		Process process = run.exec(cmd, envp, dir);
+		
+		FileIO.copyFile(process.getInputStream(), os, flgOsClose);
+		
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			
+			FileIO.copyFile(process.getErrorStream(), os, flgOsClose);
+			
+			return -1;
+		}
+		
+		return process.exitValue();
+	}
+	
+	public static int run(String cmd, OutputStream os, boolean flaOsClose) throws IOException {
+	
+		return run(cmd, null, null, os, flaOsClose);
+	}
+	
+	public static int run(String cmd, OutputStream os) throws IOException {
+		
+		return run(cmd, null, null, os, true);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static int run(String[] cmd, String[] envp, File dir, OutputStream os, boolean flgOsClose) throws IOException {
+		
+		Process process = run.exec(cmd, envp, dir);
+		
+		FileIO.copyFile(process.getInputStream(), os, flgOsClose);
+		
+		try {
+			process.waitFor();
+		} catch (InterruptedException e) {
+			
+			FileIO.copyFile(process.getErrorStream(), os, flgOsClose);
+			
+			return -1;
+		}
+		
+		return process.exitValue();
+	}
+	
+	public static int run(String[] cmd, OutputStream os, boolean flaOsClose) throws IOException {
+		
+		return run(cmd, null, null, os, flaOsClose);
+	}
+	
+	public static int run(String[] cmd, OutputStream os) throws IOException {
+		
+		return run(cmd, null, null, os, true);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +148,23 @@ public class Exec {
 			new Exec();
 
 		if (flag) {
+			/*
+			 * begin
+			 */
+			File cwd = new File("N:/tain/test");
 
+			String[] cmd = new String[] {
+					"echo",
+					"hello, world!!!",
+			};
+			
+			String[] env = new String[] {
+					"PARAM1=How do you do?",
+					"PARAM2=Fine these days.",
+			};
+			
+			int ret = Exec.run(cmd, env, cwd, System.out, false);
+			if (flag) log.debug(String.format(">>>> ret = (%d)", ret));
 		}
 	}
 

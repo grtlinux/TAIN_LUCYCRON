@@ -19,6 +19,11 @@
  */
 package tain.kr.com.proj.lucycron.v00.util;
 
+import java.util.Enumeration;
+import java.util.MissingResourceException;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -35,33 +40,129 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class Params {
+public final class Params {
 
 	private static boolean flag = true;
 
 	private static final Logger log = Logger.getLogger(Params.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static final String FILE_RESOURCES = "resources/lucycron";
+	
+	private final Properties prop;
+	private final ResourceBundle resourceBundle;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * constructor
 	 */
-	public Params() {
+	private Params() {
+		
+		this.prop = System.getProperties();
+		this.resourceBundle = ResourceBundle.getBundle(FILE_RESOURCES);
+		
 		if (flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private String getStringFromSystem(String key) {
+		return this.prop.getProperty(key);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private String getStringFromResourceBundle(String key) {
+		
+		String strValue;
+		
+		try {
+			strValue = this.resourceBundle.getString(key);
+		} catch (MissingResourceException e) {
+			strValue = null;
+		}
+		
+		return strValue;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public String getString(String key) {
+		
+		String value;
+		
+		value = this.getStringFromSystem(key);
+		if (value != null)
+			return value;
+		
+		value = this.getStringFromResourceBundle(key);
+		
+		return value;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public String getString(String key, String defaultValue) {
+		
+		String value = this.getString(key);
+		if (value != null)
+			return value;
+		
+		return defaultValue;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void printAll() {
+		
+		if (flag) {
+			/*
+			 * System properties
+			 */
+			if (flag) System.out.println("########### System properties ##########");
+			
+			this.prop.list(System.out);
+		}
+		
+		if (flag) {
+			/*
+			 * Resource properties
+			 */
+			if (flag) System.out.println("########### resources/resources.properties ##########");
+
+			Enumeration<String> enumKeys = this.resourceBundle.getKeys();
+			while (enumKeys.hasMoreElements()) {
+				String strKey = (String) enumKeys.nextElement();
+				String strVal = (String) this.resourceBundle.getString(strKey);
+				
+				System.out.printf("resources [%s] = [%s]\n", strKey, strVal);
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private static Params instance = null;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static synchronized Params getInstance() throws Exception {
+		
+		if (Params.instance == null) {
+			Params.instance = new Params();
+		}
+		
+		return Params.instance;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,11 +171,11 @@ public class Params {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new Params();
-
 		if (flag) {
-
+			/*
+			 * begin
+			 */
+			Params.getInstance().printAll();
 		}
 	}
 

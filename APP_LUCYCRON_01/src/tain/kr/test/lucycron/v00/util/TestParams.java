@@ -17,18 +17,22 @@
  * Copyright 2014, 2015, 2016, 2017 TAIN, Inc.
  *
  */
-package tain.kr.test.lucycron.v00;
+package tain.kr.test.lucycron.v00.util;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import static org.junit.Assert.assertNotNull;
+
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+
+import tain.kr.com.proj.lucycron.v00.util.DateString;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : TestSuite.java
- *   -. Package    : tain.kr.test.lucycron.v00
+ *   -. FileName   : TestParams.java
+ *   -. Package    : tain.kr.test.lucycron.v00.util
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2017. 4. 18. {time}
@@ -37,13 +41,37 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author taincokr
  *
  */
-@RunWith ( value = Suite.class )
-@SuiteClasses( value = {
-		tain.kr.test.lucycron.v00.util.TestDateFormat.class,
-		tain.kr.test.lucycron.v00.util.TestParams.class,
-})
-public final class TestSuite {
+@SuppressWarnings("unused")
+public class TestParams {
 
+	private static boolean flag = true;
+
+	private static final Logger log = Logger.getLogger(TestParams.class);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Before
+	public void initialize() throws Exception {
+		
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testGetDateFormat() {
+		String str = DateString.get();
+		
+		assertNotNull(str);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testGetDateFormatFromDate() {
+		String str = DateString.parse("2017-04-04 12:34:21.000");
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

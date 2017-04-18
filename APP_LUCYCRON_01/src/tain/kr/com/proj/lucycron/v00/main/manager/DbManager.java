@@ -128,14 +128,14 @@ public final class DbManager {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private synchronized void create() throws SQLException {
+	private synchronized void sampleCreate() throws SQLException {
 		
 		this.stmt.execute("create table location (num int, addr varchar(100))");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private synchronized void insert() throws SQLException {
+	private synchronized void sampleInsert() throws SQLException {
 		
 		this.pstmt = this.conn.prepareStatement("insert into location values (?, ?)");
 		
@@ -154,7 +154,7 @@ public final class DbManager {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private synchronized void update() throws SQLException {
+	private synchronized void sampleUpdate() throws SQLException {
 		
 		this.pstmt = this.conn.prepareStatement("update location set num=?, addr=? where num=?");
 		
@@ -171,7 +171,7 @@ public final class DbManager {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private synchronized void select() throws SQLException {
+	private synchronized void sampleSelect() throws SQLException {
 		
 		this.resultSet = this.stmt.executeQuery("select num as number, addr as address from location order by number");
 		this.meta = this.resultSet.getMetaData();
@@ -203,14 +203,14 @@ public final class DbManager {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private synchronized void delete() throws SQLException {
+	private synchronized void sampleDelete() throws SQLException {
 		
 		this.stmt.execute("delete from location where num < 2000");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private synchronized void drop() throws SQLException {
+	private synchronized void sampleDrop() throws SQLException {
 		
 		this.stmt.execute("drop table location");
 	}
@@ -219,17 +219,17 @@ public final class DbManager {
 	
 	private synchronized void sample() throws SQLException {
 		
-		create();
+		sampleCreate();
 		
-		insert();
+		sampleInsert();
 		
-		update();
+		sampleUpdate();
 		
-		select();
+		sampleSelect();
 
-		delete();
+		sampleDelete();
 		
-		drop();
+		sampleDrop();
 		
 		this.conn.commit();
 	}

@@ -19,7 +19,6 @@
  */
 package tain.kr.com.proj.lucycron.v00.handler;
 
-import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
@@ -36,5 +35,6 @@ import org.apache.log4j.Logger;
  *
  */
 public interface ImpResponse {
-
+	
+	public abstract String getName();
 }

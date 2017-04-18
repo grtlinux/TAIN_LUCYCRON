@@ -19,7 +19,6 @@
  */
 package tain.kr.com.proj.lucycron.v00.handler;
 
-import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
@@ -36,5 +35,8 @@ import org.apache.log4j.Logger;
  *
  */
 public interface ImpController {
-
+	
+	public abstract void addHandler(ImpRequest request, ImpRequestHandler handler);
+	public abstract ImpRequestHandler getHandler(ImpRequest request);
+	public abstract ImpResponse getResponse(ImpRequest request);
 }

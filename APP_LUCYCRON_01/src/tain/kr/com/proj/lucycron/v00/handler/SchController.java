@@ -46,7 +46,7 @@ public final class SchController implements ImpController {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private final Map<String, SchRequestHandler> map = new HashMap<String, SchRequestHandler>();
+	private final Map<String, ImpRequestHandler> map = new HashMap<String, ImpRequestHandler>();
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,6 +54,7 @@ public final class SchController implements ImpController {
 	 * constructor
 	 */
 	public SchController() {
+		
 		if (flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
@@ -61,9 +62,32 @@ public final class SchController implements ImpController {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@Override
-	public 
+	public void addHandler(ImpRequest request, ImpRequestHandler handler) {
+		this.map.put(request.getName(), handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public ImpRequestHandler getHandler(ImpRequest request) {
+		return this.map.get(request.getName());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public ImpResponse getResponse(ImpRequest request) {
+		ImpResponse response = null;
+		
+		try {
+			response = this.map.get(request.getName()).process(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return response;
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,9 +102,6 @@ public final class SchController implements ImpController {
 	 * static test method
 	 */
 	private static void test01(String[] args) throws Exception {
-
-		if (flag)
-			new SchController();
 
 		if (flag) {
 

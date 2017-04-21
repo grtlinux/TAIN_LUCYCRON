@@ -20,6 +20,7 @@
 package tain.kr.com.proj.lucycron.v00.test;
 
 import java.io.File;
+import java.io.FilenameFilter;
 
 import org.apache.log4j.Logger;
 
@@ -77,15 +78,42 @@ public class TestMainFile {
 				arrStrFileNames = file.list();
 				
 				for (String strFileName : arrStrFileNames) {
-					System.out.printf("> [%s]\n", strFileName);
+					System.out.printf("1> [%s]\n", strFileName);
 				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-			} finally {
-			}
+			} finally {}
 			
 			System.out.println();
+		}
+		
+		if (flag) {
+			/*
+			 * 2. String[] File.list(FilenameFilter)
+			 */
+			File file = null;
+			String[] arrStrFileNames = null;
+			
+			try {
+				file = new File(Params.getInstance().getString("tain.tab.folder"));
+				arrStrFileNames = file.list(new FilenameFilter() {
+					@Override
+					public boolean accept(File dir, String name) {
+						
+						if (flag) System.out.printf("2> [%s] [%s]\n", dir.getAbsolutePath(), name);
+						if (flag) return true;
+						
+						return false;
+					}
+				});
+				
+				for (String strFileName : arrStrFileNames) {
+					System.out.printf("2> [%s]\n", strFileName);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {}
 		}
 	}
 

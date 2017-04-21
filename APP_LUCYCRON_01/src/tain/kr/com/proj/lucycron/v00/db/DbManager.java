@@ -72,6 +72,8 @@ public class DbManager {
 	private ResultSet resultSet = null;
 	private ResultSetMetaData meta = null;
 	
+	private enum SQL { CREATE, DROP, SELECT, INSERT, UPDATE, DELETE };
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
@@ -130,12 +132,16 @@ public class DbManager {
 	
 	private synchronized void sampleCreate() throws SQLException {
 		
+		if (flag) log.debug(">>> [" + SQL.CREATE + "]");
+		
 		this.stmt.execute("create table location (num int, addr varchar(100))");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private synchronized void sampleInsert() throws SQLException {
+		
+		if (flag) log.debug(">>> [" + SQL.INSERT + "]");
 		
 		this.pstmt = this.conn.prepareStatement("insert into location values (?, ?)");
 		
@@ -156,6 +162,8 @@ public class DbManager {
 	
 	private synchronized void sampleUpdate() throws SQLException {
 		
+		if (flag) log.debug(">>> [" + SQL.UPDATE + "]");
+		
 		this.pstmt = this.conn.prepareStatement("update location set num=?, addr=? where num=?");
 		
 		this.pstmt.setInt(1, 2956);
@@ -172,6 +180,8 @@ public class DbManager {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private synchronized void sampleSelect() throws SQLException {
+		
+		if (flag) log.debug(">>> [" + SQL.SELECT + "]");
 		
 		this.resultSet = this.stmt.executeQuery("select num as number, addr as address from location order by number");
 		this.meta = this.resultSet.getMetaData();
@@ -205,12 +215,16 @@ public class DbManager {
 	
 	private synchronized void sampleDelete() throws SQLException {
 		
+		if (flag) log.debug(">>> [" + SQL.DELETE + "]");
+		
 		this.stmt.execute("delete from location where num < 2000");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private synchronized void sampleDrop() throws SQLException {
+		
+		if (flag) log.debug(">>> [" + SQL.DROP + "]");
 		
 		this.stmt.execute("drop table location");
 	}

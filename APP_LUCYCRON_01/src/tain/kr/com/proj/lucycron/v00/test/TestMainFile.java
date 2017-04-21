@@ -20,6 +20,7 @@
 package tain.kr.com.proj.lucycron.v00.test;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 
 import org.apache.log4j.Logger;
@@ -70,6 +71,8 @@ public class TestMainFile {
 			/*
 			 * 1. String[] File.list()
 			 */
+			System.out.println("1. String[] File.list();");
+			
 			File file = null;
 			String[] arrStrFileNames = null;
 			
@@ -92,6 +95,8 @@ public class TestMainFile {
 			/*
 			 * 2. String[] File.list(FilenameFilter)
 			 */
+			System.out.println("2. String[] File.list(FilenameFilter);");
+			
 			File file = null;
 			String[] arrStrFileNames = null;
 			
@@ -114,6 +119,114 @@ public class TestMainFile {
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {}
+			
+			System.out.println();
+		}
+		
+		if (flag) {
+			/*
+			 * 3. File[] File.listFiles()
+			 */
+			System.out.println("3. File[] File.listFiles();");
+			
+			File file = null;
+			File[] arrFiles = null;
+			
+			try {
+				file = new File(Params.getInstance().getString("tain.tab.folder"));
+				arrFiles = file.listFiles();
+				
+				for (File f : arrFiles) {
+					System.out.printf("3> [%s]\n", f);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {}
+			
+			System.out.println();
+		}
+		
+		if (flag) {
+			/*
+			 * 4. File[] File.listFiles(FileFilter)
+			 */
+			System.out.println("4. File[] File.listFiles(FileFilter);");
+			
+			File file = null;
+			File[] arrFiles = null;
+			
+			try {
+				file = new File(Params.getInstance().getString("tain.tab.folder"));
+				arrFiles = file.listFiles(new FileFilter() {
+					@Override
+					public boolean accept(File file) {
+						
+						if (flag) return true;
+						
+						return false;
+					}
+				});
+				
+				for (File f : arrFiles) {
+					System.out.printf("4> [%s]\n", f);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {}
+			
+			System.out.println();
+		}
+		
+		if (flag) {
+			/*
+			 * 5. File[] File.listFiles(FilenameFilter)
+			 */
+			System.out.println("5. File[] File.listFiles(FilenameFilter);");
+			
+			File file = null;
+			File[] arrFiles = null;
+			
+			try {
+				file = new File(Params.getInstance().getString("tain.tab.folder"));
+				arrFiles = file.listFiles(new FilenameFilter() {
+					@Override
+					public boolean accept(File dir, String name) {
+						
+						if (flag) return true;
+						
+						return false;
+					}
+				});
+				
+				for (File f : arrFiles) {
+					System.out.printf("5> [%s]\n", f);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {}
+			
+			System.out.println();
+		}
+		
+		if (flag) {
+			/*
+			 * 6. File[] File.listRoots()
+			 */
+			System.out.println("6. File[] File.listRoots();");
+			
+			File[] files = null;
+			
+			try {
+				files = File.listRoots();
+				
+				for (File f : files) {
+					System.out.printf("6> [%s]\n", f);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {}
+			
+			System.out.println();
 		}
 	}
 

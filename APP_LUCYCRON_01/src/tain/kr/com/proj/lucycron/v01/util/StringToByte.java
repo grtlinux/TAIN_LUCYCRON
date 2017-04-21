@@ -19,10 +19,7 @@
  */
 package tain.kr.com.proj.lucycron.v01.util;
 
-import java.util.Enumeration;
-import java.util.MissingResourceException;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.nio.charset.Charset;
 
 import org.apache.log4j.Logger;
 
@@ -30,139 +27,89 @@ import org.apache.log4j.Logger;
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Params.java
+ *   -. FileName   : StringToByte.java
  *   -. Package    : tain.kr.com.proj.lucycron.v00.util
  *   -. Comment    :
  *   -. Author     : taincokr
- *   -. First Date : 2017. 4. 15. {time}
+ *   -. First Date : 2017. 4. 18. {time}
  * </PRE>
  *
  * @author taincokr
  *
  */
-public final class Params {
+public final class StringToByte {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(Params.class);
+	private static final Logger log = Logger.getLogger(StringToByte.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private static final String FILE_RESOURCES = "resources/lucycron";
-	
-	private final Properties prop;
-	private final ResourceBundle resourceBundle;
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * constructor
 	 */
-	private Params() {
-		
-		this.prop = System.getProperties();
-		this.resourceBundle = ResourceBundle.getBundle(FILE_RESOURCES);
-		
-		if (!flag)
+	private StringToByte() {
+		if (flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String getStringFromSystem(String key) {
-		return this.prop.getProperty(key);
-	}
+	private final static String CHARSET = "EUC-KR";
+	private final static int LINE_SIZE = 16;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String getStringFromResourceBundle(String key) {
-		
-		String strValue;
-		
-		try {
-			strValue = this.resourceBundle.getString(key);
-		} catch (MissingResourceException e) {
-			strValue = null;
-		}
-		
-		return strValue;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public String getString(String key) {
-		
-		String value;
-		
-		value = this.getStringFromSystem(key);
-		if (value != null)
-			return value;
-		
-		value = this.getStringFromResourceBundle(key);
-		
-		return value;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public String getString(String key, String defaultValue) {
-		
-		String value = this.getString(key);
-		if (value != null)
-			return value;
-		
-		return defaultValue;
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public void printAll() {
+	public final static void printBytes(String str) {
 		
 		if (flag) {
-			/*
-			 * System properties
-			 */
-			if (flag) System.out.println("########### System properties ##########");
+			byte[] byt = str.getBytes(Charset.forName(CHARSET));
 			
-			this.prop.list(System.out);
-		}
-		
-		if (flag) {
-			/*
-			 * Resource properties
-			 */
-			if (flag) System.out.println("########### resources/resources.properties ##########");
-
-			Enumeration<String> enumKeys = this.resourceBundle.getKeys();
-			while (enumKeys.hasMoreElements()) {
-				String strKey = (String) enumKeys.nextElement();
-				String strVal = (String) this.resourceBundle.getString(strKey);
+			StringBuffer sb1 = new StringBuffer();
+			StringBuffer sb2 = new StringBuffer();
+			
+			int i = 0;
+			for (i=0; i < byt.length; i++) {
+				sb1.append(showByte(byt[i]));
+				sb2.append(String.format("%02X ", byt[i])); 
 				
-				System.out.printf("resources [%s] = [%s]\n", strKey, strVal);
+				if (i % LINE_SIZE == LINE_SIZE-1) {
+					System.out.printf("%s %s\n", sb1.toString(), sb2.toString());
+					sb1 = new StringBuffer();
+					sb2 = new StringBuffer();
+				}
+			}
+			
+			if (i % LINE_SIZE != LINE_SIZE-1) {
+				System.out.printf("%-16s %s\n", sb1.toString(), sb2.toString());
 			}
 		}
 	}
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private static Params instance = null;
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public static synchronized Params getInstance() {
+	private final static char showByte(byte byt) {
 		
-		if (Params.instance == null) {
-			Params.instance = new Params();
-		}
+		if ('0' <= byt && byt <= '9')
+			return (char) byt;
 		
-		return Params.instance;
+		if ('A' <= byt && byt <= 'Z')
+			return (char) byt;
+		
+		if ('a' <= byt && byt <= 'z')
+			return (char) byt;
+		
+		return (char) '.';
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -175,7 +122,9 @@ public final class Params {
 			/*
 			 * begin
 			 */
-			Params.getInstance().printAll();
+			String str = "123abcABC°¡³ª´Ù \t\b\n\r";
+			System.out.println("[" + str + "]");
+			StringToByte.printBytes(str);
 		}
 	}
 

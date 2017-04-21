@@ -19,49 +19,39 @@
  */
 package tain.kr.com.proj.lucycron.v01.util;
 
-import java.util.Enumeration;
-import java.util.MissingResourceException;
-import java.util.Properties;
-import java.util.ResourceBundle;
-
 import org.apache.log4j.Logger;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : Params.java
+ *   -. FileName   : CheckSystem.java
  *   -. Package    : tain.kr.com.proj.lucycron.v00.util
  *   -. Comment    :
  *   -. Author     : taincokr
- *   -. First Date : 2017. 4. 15. {time}
+ *   -. First Date : 2017. 4. 18. {time}
  * </PRE>
  *
  * @author taincokr
  *
  */
-public final class Params {
+public final class CheckSystem {
 
 	private static boolean flag = true;
 
-	private static final Logger log = Logger.getLogger(Params.class);
+	private static final Logger log = Logger.getLogger(CheckSystem.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private static final String FILE_RESOURCES = "resources/lucycron";
-	
-	private final Properties prop;
-	private final ResourceBundle resourceBundle;
+	private static final String OS_NAME = "os.name";
+	private static final String LINE_SEPARATOR = "line.separator";
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * constructor
 	 */
-	private Params() {
-		
-		this.prop = System.getProperties();
-		this.resourceBundle = ResourceBundle.getBundle(FILE_RESOURCES);
+	private CheckSystem() {
 		
 		if (!flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
@@ -69,98 +59,50 @@ public final class Params {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String getStringFromSystem(String key) {
-		return this.prop.getProperty(key);
+	public String getOsName() {
+		return Params.getInstance().getString(OS_NAME);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private String getStringFromResourceBundle(String key) {
+	public String getLineSeparator() {
+		return Params.getInstance().getString(LINE_SEPARATOR, "\n");
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public boolean isWindows() {
 		
-		String strValue;
-		
-		try {
-			strValue = this.resourceBundle.getString(key);
-		} catch (MissingResourceException e) {
-			strValue = null;
+		if (this.getOsName().indexOf("Win", 0) >= 0) {
+			return true;
 		}
 		
-		return strValue;
+		return false;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public String getString(String key) {
-		
-		String value;
-		
-		value = this.getStringFromSystem(key);
-		if (value != null)
-			return value;
-		
-		value = this.getStringFromResourceBundle(key);
-		
-		return value;
+	public boolean isLinux() {
+		return isWindows() ? false : true;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public String getString(String key, String defaultValue) {
-		
-		String value = this.getString(key);
-		if (value != null)
-			return value;
-		
-		return defaultValue;
-	}
+	private static CheckSystem instance = null;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public void printAll() {
+	public static synchronized CheckSystem getInstance() {
 		
-		if (flag) {
-			/*
-			 * System properties
-			 */
-			if (flag) System.out.println("########### System properties ##########");
-			
-			this.prop.list(System.out);
+		if (CheckSystem.instance == null) {
+			CheckSystem.instance = new CheckSystem();
 		}
 		
-		if (flag) {
-			/*
-			 * Resource properties
-			 */
-			if (flag) System.out.println("########### resources/resources.properties ##########");
-
-			Enumeration<String> enumKeys = this.resourceBundle.getKeys();
-			while (enumKeys.hasMoreElements()) {
-				String strKey = (String) enumKeys.nextElement();
-				String strVal = (String) this.resourceBundle.getString(strKey);
-				
-				System.out.printf("resources [%s] = [%s]\n", strKey, strVal);
-			}
-		}
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	
-	private static Params instance = null;
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
-	public static synchronized Params getInstance() {
-		
-		if (Params.instance == null) {
-			Params.instance = new Params();
-		}
-		
-		return Params.instance;
+		return CheckSystem.instance;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +117,8 @@ public final class Params {
 			/*
 			 * begin
 			 */
-			Params.getInstance().printAll();
+			log.debug(">>>>> " + CheckSystem.getInstance().getOsName());
+			log.debug(">>>>> [" + CheckSystem.getInstance().getLineSeparator() + "]");
 		}
 	}
 

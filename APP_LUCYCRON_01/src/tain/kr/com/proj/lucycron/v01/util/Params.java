@@ -20,6 +20,7 @@
 package tain.kr.com.proj.lucycron.v01.util;
 
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -50,6 +51,7 @@ public final class Params {
 	
 	private static final String FILE_RESOURCES = "resources/lucycron";
 	
+	private final Map<String, String> env;
 	private final Properties prop;
 	private final ResourceBundle resourceBundle;
 	
@@ -60,6 +62,7 @@ public final class Params {
 	 */
 	private Params() {
 		
+		this.env = System.getenv();
 		this.prop = System.getProperties();
 		this.resourceBundle = ResourceBundle.getBundle(FILE_RESOURCES);
 		
@@ -67,6 +70,12 @@ public final class Params {
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	private String getStringFromEnv(String key) {
+		return this.env.get(key);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private String getStringFromSystem(String key) {
@@ -89,10 +98,15 @@ public final class Params {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public String getString(String key) {
 		
 		String value;
+		
+		value = this.getStringFromEnv(key);
+		if (value != null)
+			return value;
 		
 		value = this.getStringFromSystem(key);
 		if (value != null)
@@ -117,6 +131,20 @@ public final class Params {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void printAll() {
+		
+		if (flag) {
+			/*
+			 * System properties
+			 */
+			if (flag) System.out.println("########### System env ##########");
+			
+			for (Map.Entry<String, String> entry : this.env.entrySet()) {
+				String strKey = entry.getKey();
+				String strVal = entry.getValue();
+				
+				System.out.printf("env [%s] = [%s]\n", strKey, strVal);
+			}
+		}
 		
 		if (flag) {
 			/*

@@ -35,24 +35,35 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class SchRequestHandler {
+public final class SchRequestHandler {
 
 	private static boolean flag = true;
 
 	private static final Logger log = Logger.getLogger(SchRequestHandler.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final SchRequest request;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * constructor
 	 */
-	public SchRequestHandler() {
+	public SchRequestHandler(SchRequest request) {
+		
+		this.request = request;
+		
 		if (flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public SchResponse process() throws Exception {
+		return new SchResponse(this.request.getName());
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,11 +81,10 @@ public class SchRequestHandler {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new SchRequestHandler();
-
 		if (flag) {
-
+			/*
+			 * test
+			 */
 		}
 	}
 

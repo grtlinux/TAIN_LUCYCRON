@@ -61,7 +61,7 @@ public final class TestDateString {
 		
 		String str1 = DateString.get();
 		
-		if (flag) log.debug(String.format("[%s]", str1));
+		if (!flag) log.debug(String.format("[%s]", str1));
 		
 		assertNotNull("the value of DateString.get is not null.", str1);
 	}

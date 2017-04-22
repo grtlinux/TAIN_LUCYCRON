@@ -64,7 +64,7 @@ public final class TestParams {
 		String osName1 = Params.getInstance().getString("os.name");
 		String osName2 = CheckSystem.getInstance().getOsName();
 		
-		assertSame(osName1, osName2);
+		assertSame("Params(os.name) is same of CheckSystem.", osName1, osName2);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

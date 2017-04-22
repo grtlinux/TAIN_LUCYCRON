@@ -40,7 +40,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith ( value = Suite.class )
 @SuiteClasses( value = {
 		tain.kr.test.lucycron.v01.util.TestParams.class,
-		tain.kr.test.lucycron.v01.util.DateString.class,
+		tain.kr.test.lucycron.v01.util.TestDateString.class,
 })
 public final class TestSuite {
 

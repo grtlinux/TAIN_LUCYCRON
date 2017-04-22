@@ -41,6 +41,10 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses( value = {
 		tain.kr.test.lucycron.v01.util.TestParams.class,
 		tain.kr.test.lucycron.v01.util.TestDateString.class,
+		tain.kr.test.lucycron.v01.controller.TestSchRequest.class,
+		tain.kr.test.lucycron.v01.controller.TestSchRequestHandler.class,
+		tain.kr.test.lucycron.v01.controller.TestSchController.class,
+		tain.kr.test.lucycron.v01.controller.TestSchResponse.class,
 })
 public final class TestSuite {
 

@@ -55,6 +55,7 @@ public final class TestParams {
 	@Before
 	public void initialize() throws Exception {
 		
+		if (!flag) log.debug("@Before initalize() be done!!!!");
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

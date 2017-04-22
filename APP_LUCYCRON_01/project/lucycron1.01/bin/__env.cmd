@@ -28,7 +28,8 @@ set DERBY_HOME=%TOOL_DIR%\db-derby\db10.8
 set DERBY_OPTS=-Dderby.system.home=%LUCY_BASE%\data\derbyDB
 set NSSM_HOME=%TOOL_DIR%\nssm-2.24
 set UNX_HOME=%TOOL_DIR%\UnxUpdates
-set MAVEN_HOME=%TOOL_DIR%\apache\apache-maven-3.3.3
+set M2_HOME=%TOOL_DIR%\apache\apache-maven-3.3.3
+set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
 set ANT_HOME=%TOOL_DIR%\apache\apache-ant-1.9.9
 
 :: path env
@@ -39,7 +40,7 @@ set PATH=%DERBY_HOME%\bin;%PATH%
 set PATH=%LUCY_HOME%\bin;%PATH%
 set PATH=%NSSM_HOME%\win64;%PATH%
 set PATH=%UNX_HOME%;%PATH%
-set PATH=%MAVEN_HOME%\bin;%PATH%
+set PATH=%M2_HOME%\bin;%PATH%
 set PATH=%ANT_HOME%\bin;%PATH%
 
 ::----------------------------------------------
@@ -64,7 +65,8 @@ echo DERBY_HOME=%DERBY_HOME%
 echo DERBY_OPTS=%DERBY_OPTS%
 echo NSSM_HOME=%NSSM_HOME%
 echo UNX_HOME=%UNX_HOME%
-echo MAVEN_HOME=%MAVEN_HOME%
+echo M2_HOME=%M2_HOME%
+echo MAVEN_OPTS=%MAVEN_OPTS%
 echo ANT_HOME=%ANT_HOME%
 echo ----- path env --------------------------
 echo PATH=%PATH%

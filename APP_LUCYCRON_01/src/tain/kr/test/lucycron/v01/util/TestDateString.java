@@ -17,18 +17,22 @@
  * Copyright 2014, 2015, 2016, 2017 TAIN, Inc.
  *
  */
-package tain.kr.test.lucycron.v01;
+package tain.kr.test.lucycron.v01.util;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import static org.junit.Assert.assertNotNull;
+
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
+
+import tain.kr.com.proj.lucycron.v00.util.DateString;
 
 /**
  * Code Templates > Comments > Types
  *
  * <PRE>
- *   -. FileName   : TestSuite.java
- *   -. Package    : tain.kr.test.lucycron.v01
+ *   -. FileName   : TestDateString.java
+ *   -. Package    : tain.kr.test.lucycron.v01.util
  *   -. Comment    :
  *   -. Author     : taincokr
  *   -. First Date : 2017. 4. 23. {time}
@@ -37,13 +41,33 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author taincokr
  *
  */
-@RunWith ( value = Suite.class )
-@SuiteClasses( value = {
-		tain.kr.test.lucycron.v01.util.TestParams.class,
-		tain.kr.test.lucycron.v01.util.DateString.class,
-})
-public final class TestSuite {
+public final class TestDateString {
 
+	private static boolean flag = true;
+
+	private static final Logger log = Logger.getLogger(TestDateString.class);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Before
+	public void initialize() throws Exception {
+		
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testGetDateString() {
+		
+		String str1 = DateString.get();
+		
+		if (flag) log.debug(String.format("[%s]", str1));
+		
+		assertNotNull("the value of DateString.get is not null.", str1);
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

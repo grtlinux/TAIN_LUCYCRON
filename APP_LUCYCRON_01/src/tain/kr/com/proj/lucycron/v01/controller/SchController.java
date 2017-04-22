@@ -19,6 +19,9 @@
  */
 package tain.kr.com.proj.lucycron.v01.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -35,13 +38,16 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class SchController {
+public final class SchController {
 
 	private static boolean flag = true;
 
 	private static final Logger log = Logger.getLogger(SchController.class);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private final Map<String, SchRequestHandler> mapHandler = new HashMap<String, SchRequestHandler>();
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
@@ -53,8 +59,38 @@ public class SchController {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void addHandler(SchRequest request, SchRequestHandler handler) throws Exception {
+		
+		String key = request.getName();
+		
+		if (this.mapHandler.containsKey(key)) {
+			throw new RuntimeException(String.format("a request handler has already been registered for request name [%s].", key));
+		}
+		
+		this.mapHandler.put(key, handler);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public SchRequestHandler getHandler(SchRequest request) throws Exception {
+		
+		String key = request.getName();
+		
+		if (!this.mapHandler.containsKey(key)) {
+			throw new RuntimeException(String.format("Cannot find handler for request name [%s].", key));
+		}
+		
+		return this.mapHandler.get(key);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public SchResponse getResponse(SchRequest request) throws Exception {
+		
+		return this.getHandler(request).process();
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,11 +106,10 @@ public class SchController {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new SchController();
-
 		if (flag) {
-
+			/*
+			 * test
+			 */
 		}
 	}
 

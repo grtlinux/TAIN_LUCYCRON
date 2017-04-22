@@ -36,20 +36,22 @@ package tain.kr.com.proj.lucycron.v01.enums;
  */
 public enum OsType {
 
-	WINDOWS  ("WIN", "Windows",  "윈도우"),
-	LINUX    ("LNX", "Linux",  "리눅스"),
+	WINDOWS  ("WIN", 3, "Windows",  "윈도우"),
+	LINUX    ("LNX", 3, "Linux",  "리눅스"),
 	;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	private final String strExtName;
+	private final int nExtSize;
 	private final String strEngName;
 	private final String strHanName;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	OsType(String strExtName, String strEngName, String strHanName) {
+	OsType(String strExtName, int nExtSize, String strEngName, String strHanName) {
 		this.strExtName = strExtName;
+		this.nExtSize = nExtSize;
 		this.strEngName = strEngName;
 		this.strHanName = strHanName;
 	}
@@ -58,6 +60,12 @@ public enum OsType {
 	
 	public String getExtName() {
 		return this.strExtName;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public int getNExtSize() {
+		return this.nExtSize;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +103,8 @@ public enum OsType {
 	public static void main(String[] args) throws Exception {
 		
 		for (OsType type : OsType.values()) {
-			System.out.printf("[%s] [%s] [%s] [%s]\n", type, type.getExtName(), type.getEngName(), type.getHanName());
+			System.out.printf("[%s] [%s] [%d] [%s] [%s]\n"
+					, type, type.getExtName(), type.getNExtSize(), type.getEngName(), type.getHanName());
 		}
 	}
 }

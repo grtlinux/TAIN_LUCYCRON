@@ -36,8 +36,8 @@ package tain.kr.com.proj.lucycron.v01.enums;
  */
 public enum OsType {
 
-	WINDOWS  ("WIN", 3, "Windows",  "윈도우"),
-	LINUX    ("LNX", 3, "Linux",  "리눅스"),
+	WINDOWS  ("win", 3, "Windows",  "윈도우"),
+	LINUX    ("lnx", 3, "Linux",  "리눅스"),
 	;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

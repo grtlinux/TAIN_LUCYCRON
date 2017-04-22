@@ -37,7 +37,7 @@ import tain.kr.com.proj.lucycron.v01.util.Params;
  * @author taincokr
  *
  */
-public class MainVersion {
+public final class MainVersion {
 
 	private static boolean flag = true;
 

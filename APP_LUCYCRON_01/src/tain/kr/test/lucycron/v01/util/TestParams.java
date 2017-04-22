@@ -42,7 +42,6 @@ import tain.kr.com.proj.lucycron.v01.util.Params;
  * @author taincokr
  *
  */
-@SuppressWarnings("unused")
 public final class TestParams {
 
 	private static boolean flag = true;
@@ -64,10 +63,22 @@ public final class TestParams {
 		String osName1 = Params.getInstance().getString("os.name");
 		String osName2 = CheckSystem.getInstance().getOsName();
 		
+		if (flag) log.debug(String.format("[%s] = [%s]", osName1, osName2));
+		
 		assertSame("Params(os.name) is same of CheckSystem.", osName1, osName2);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@Test
+	public void testCompareEnvAndParams() {
+		
+		String str1 = Params.getInstance().getString("USERNAME");
+		String str2 = System.getenv("USERNAME");
+		
+		assertSame("Params(USERNAME) is the same of env(USERNAME)", str1, str2);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

@@ -21,6 +21,8 @@ package tain.kr.test.lucycron.v01.util;
 
 import static org.junit.Assert.*;
 
+import java.util.ResourceBundle;
+
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,14 +60,14 @@ public final class TestParams {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@Test
-	public void testGetOsName() {
+	public void testCompareCheckSystemAndParams() {
 		
-		String osName1 = Params.getInstance().getString("os.name");
-		String osName2 = CheckSystem.getInstance().getOsName();
+		String str1 = Params.getInstance().getString("os.name");
+		String str2 = CheckSystem.getInstance().getOsName();
 		
-		if (flag) log.debug(String.format("[%s] = [%s]", osName1, osName2));
+		if (!flag) log.debug(String.format("[%s] = [%s]", str1, str2));
 		
-		assertSame("Params(os.name) is same of CheckSystem.", osName1, osName2);
+		assertSame("Params(os.name) is same of CheckSystem.", str1, str2);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,10 +78,24 @@ public final class TestParams {
 		String str1 = Params.getInstance().getString("USERNAME");
 		String str2 = System.getenv("USERNAME");
 		
+		if (!flag) log.debug(String.format("[%s] = [%s]", str1, str2));
+		
 		assertSame("Params(USERNAME) is the same of env(USERNAME)", str1, str2);
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	@Test
+	public void testCompareResourceAndParams() {
+		
+		String str1 = Params.getInstance().getString("tain.lucy.version");
+		String str2 = ResourceBundle.getBundle("resources/lucycron").getString("tain.lucy.version");
+		
+		if (!flag) log.debug(String.format("[%s] = [%s]", str1, str2));
+		
+		assertSame("Params(tain.lucy.version) is the same of Resource(tain.lucy.version)", str1, str2);
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

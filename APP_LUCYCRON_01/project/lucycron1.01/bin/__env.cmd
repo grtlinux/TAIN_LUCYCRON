@@ -29,7 +29,7 @@ set DERBY_OPTS=-Dderby.system.home=%LUCY_BASE%\data\derbyDB
 set NSSM_HOME=%TOOL_DIR%\nssm-2.24
 set UNX_HOME=%TOOL_DIR%\UnxUpdates
 set M2_HOME=%TOOL_DIR%\apache\apache-maven-3.3.3
-set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
+::set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
 set ANT_HOME=%TOOL_DIR%\apache\apache-ant-1.9.9
 
 :: path env

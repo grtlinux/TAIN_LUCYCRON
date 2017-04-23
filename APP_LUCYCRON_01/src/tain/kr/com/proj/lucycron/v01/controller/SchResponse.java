@@ -54,7 +54,7 @@ public final class SchResponse {
 		
 		this.name = name;
 		
-		if (flag)
+		if (!flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 

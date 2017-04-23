@@ -19,7 +19,9 @@
  */
 package tain.kr.com.proj.lucycron.v01.util;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
@@ -135,6 +137,31 @@ public final class Params {
 			return value;
 		
 		return defaultValue;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	public String[] getEnv() {
+
+		String[] arrEnv = null;
+		
+		if (flag) {
+			/*
+			 * System properties
+			 */
+			List<String> lstEnv = new ArrayList<String>();
+			
+			for (Map.Entry<String, String> entry : this.env.entrySet()) {
+				String strKey = entry.getKey();
+				String strVal = entry.getValue();
+				
+				if (!flag) System.out.printf("env [%s] = [%s]\n", strKey, strVal);
+				
+				lstEnv.add(String.format("%s=%s", strKey, strVal));
+			}
+		}
+		
+		return arrEnv;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

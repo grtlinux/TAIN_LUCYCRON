@@ -30,6 +30,7 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.lucycron.v01.exec.Exec;
 import tain.kr.com.proj.lucycron.v01.util.Params;
 
 /**
@@ -63,7 +64,6 @@ public final class SchRequest {
 	private final List<String> lstCmd;
 	private final List<String> lstEnv;
 	private final Set<String> setHHMM;
-	private final List<String> lstProp;
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,8 +80,8 @@ public final class SchRequest {
 		this.lstCwd = new ArrayList<String>();
 		this.lstCmd = new ArrayList<String>();
 		this.lstEnv = new ArrayList<String>();
+		//this.lstEnv = Params.getInstance().getListEnv();
 		this.setHHMM = new TreeSet<String>();
-		this.lstProp = new ArrayList<String>();
 		
 		if (!flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
@@ -146,7 +146,6 @@ public final class SchRequest {
 				case "CWD" : this.lstCwd.add(item[1].trim()); break;
 				case "CMD" : this.lstCmd.add(item[1].trim()); break;
 				case "ENV" : this.lstEnv.add(item[1].trim()); break;
-				case "PROPERTIES": this.lstProp.add(item[1].trim()); break;
 				case "HHMM": {
 					/*
 					 * analyze hhmm parameter for schedule condition
@@ -237,21 +236,26 @@ public final class SchRequest {
 				/*
 				 * print data for checking
 				 */
-				if (flag) log.debug(String.format("========== START of [ %s ] ==========\n"
+				if (flag) log.debug(String.format("\n\t========== START of [ %s ] ==========\n"
 						+ "\tlstCwd  = %s\n"
 						+ "\tlstCmd  = %s\n"
 						+ "\tlstEnv  = %s\n"
-						+ "\tlstProp = %s\n"
 						+ "\tsetHHMM = %s\n"
 						+ "\t========== END of [ %s ] ==========\n"
 						, this.getName()
 						, this.lstCwd
 						, this.lstCmd
 						, this.lstEnv
-						, this.lstProp
 						, this.setHHMM
 						, this.getName()
 						));
+			}
+			
+			if (flag) {
+				/*
+				 * add system env to program env
+				 */
+				this.lstEnv.addAll(Params.getInstance().getListEnv());
 			}
 		}
 	}
@@ -264,12 +268,23 @@ public final class SchRequest {
 		if (flag) {
 			/*
 			 * run schedule using Exec and FileIO
+			 * TODO 2017.04.23 : gonna make a thread
 			 */
+			String strCwd;
+			String[] arrCmd = new String[] { "cmd", "/c", "dir" };
+			String[] arrEnv;
 			
+			if (this.lstCwd.size() > 0) {
+				strCwd = this.lstCwd.get(0);
+			} else {
+				strCwd = ".";
+			}
 			
+			arrCmd = this.lstCmd.toArray(new String[this.lstCmd.size()]);
+			arrEnv = this.lstEnv.toArray(new String[this.lstEnv.size()]);
 			
-			
-			
+			int ret = Exec.run(arrCmd, arrEnv, new File(strCwd), System.out, false);
+			if (flag) log.debug(String.format(">>>>> [%s] runSchInfo.ret = (%d)", this.getName(), ret));;
 		}
 	}
 	

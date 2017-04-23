@@ -236,6 +236,11 @@ public final class SchRequest {
 				/*
 				 * print data for checking
 				 */
+				System.out.printf("lstCwd  = %s\n", this.lstCwd);
+				System.out.printf("lstCmd  = %s\n", this.lstCmd);
+				System.out.printf("lstEnv  = %s\n", this.lstEnv);
+				System.out.printf("lstProp = %s\n", this.lstProp);
+				System.out.printf("setHHMM = %s\n", this.setHHMM);
 			}
 		}
 	}

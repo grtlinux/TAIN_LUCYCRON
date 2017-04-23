@@ -48,7 +48,7 @@ env := EXIT_IF_CLOSE=true            # exit if program end
 # schedule.mon  := *    # every month
 # schedule.week := *    # every week
 
-hhmm := 00,03~06,12,15~18:30,40 01:10     # HH:mm - 1
+hhmm := *:*                                         # HH:mm - 1
 #hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 2
 #hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 3
 

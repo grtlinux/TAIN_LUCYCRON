@@ -50,7 +50,8 @@ hhmm := 00,03~06,12,15~18:30,40 01:10     # HH:mm - 1
 #hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 3
 
 # -------------------------------------
-# properties
+# properties : cannot do this properties
+# TODO 2017.04.01
 properties := tain.lucycron.desc = LucyCron package for package scheduling program
 properties := tain.lucycron.version = 1.01
 properties := tain.lucycron.author = Seok Kiea Kang

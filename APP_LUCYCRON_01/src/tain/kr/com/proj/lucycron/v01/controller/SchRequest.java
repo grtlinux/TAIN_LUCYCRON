@@ -236,11 +236,21 @@ public final class SchRequest {
 				/*
 				 * print data for checking
 				 */
-				System.out.printf("\tlstCwd  = %s\n", this.lstCwd);
-				System.out.printf("\tlstCmd  = %s\n", this.lstCmd);
-				System.out.printf("\tlstEnv  = %s\n", this.lstEnv);
-				System.out.printf("\tlstProp = %s\n", this.lstProp);
-				System.out.printf("\tsetHHMM = %s\n", this.setHHMM);
+				if (flag) log.debug(String.format("========== START of [ %s ] ==========\n"
+						+ "\tlstCwd  = %s\n"
+						+ "\tlstCmd  = %s\n"
+						+ "\tlstEnv  = %s\n"
+						+ "\tlstProp = %s\n"
+						+ "\tsetHHMM = %s\n"
+						+ "\t========== END of [ %s ] ==========\n"
+						, this.getName()
+						, this.lstCwd
+						, this.lstCmd
+						, this.lstEnv
+						, this.lstProp
+						, this.setHHMM
+						, this.getName()
+						));
 			}
 		}
 	}

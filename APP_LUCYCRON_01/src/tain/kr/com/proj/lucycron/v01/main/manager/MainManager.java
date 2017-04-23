@@ -204,7 +204,8 @@ public final class MainManager {
 								return false;
 						}
 
-						if (flag && !file.getName().startsWith("START"))
+						//if (flag && !file.getName().startsWith("START"))
+						if (flag && file.getName().indexOf("START") == -1)
 							return false;
 						
 						return true;

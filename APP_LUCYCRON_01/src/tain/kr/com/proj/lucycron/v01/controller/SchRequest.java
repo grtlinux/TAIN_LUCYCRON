@@ -262,7 +262,7 @@ public final class SchRequest {
 		
 		if (flag) {
 			/*
-			 * run schedule
+			 * run schedule using Exec and FileIO
 			 */
 			
 			

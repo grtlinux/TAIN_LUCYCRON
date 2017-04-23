@@ -22,6 +22,7 @@ package tain.kr.com.proj.lucycron.v01.exec;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 import org.apache.log4j.Logger;
 
@@ -88,7 +89,7 @@ public final class Exec {
 			
 			return process.exitValue();
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(new PrintStream(os));
 			return -1;
 		} finally {
 		}
@@ -126,7 +127,7 @@ public final class Exec {
 			
 			return process.exitValue();
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(new PrintStream(os));
 			return -1;
 		} finally {
 		}

@@ -21,6 +21,7 @@ package tain.kr.com.proj.lucycron.v01.main.manager;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -100,6 +101,7 @@ public final class MainManager {
 			/*
 			 * loadSchInfoToDb
 			 */
+			loadSchInfoToDb();
 		}
 		
 		if (flag) {
@@ -120,7 +122,7 @@ public final class MainManager {
 			}
 		}
 		
-		if (flag) try { Thread.sleep(60 * 60 * 1000); } catch (InterruptedException e) {}   // 1 hour
+		if (flag) try { Thread.sleep(1 * 30 * 1000); } catch (InterruptedException e) {}   // 1 hour
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,7 +209,7 @@ public final class MainManager {
 						}
 
 						//if (flag && !file.getName().startsWith("START"))
-						if (flag && file.getName().indexOf("START") == -1)
+						if (flag && file.getName().indexOf("START_DERBY_LUCYDB.win") == -1)
 							return false;
 						
 						return true;
@@ -223,7 +225,7 @@ public final class MainManager {
 				 * print the result of above processing
 				 */
 				for (File file : arrFiles) {
-					if (flag) log.debug(String.format("[%s]\n", file.getName()));
+					if (flag) log.debug(String.format("[ SCHID = %s]\n", file.getName()));
 				}
 			}
 		}
@@ -233,7 +235,7 @@ public final class MainManager {
 			 * create request handler
 			 */
 			for (File file : arrFiles) {
-				if (flag) log.debug(String.format("[%s]", file.getName()));
+				if (flag) log.debug(String.format("[ SCHID = %s ]", file.getName()));
 				
 				SchRequest request = new SchRequest(file.getName());
 				SchRequestHandler handler = new SchRequestHandler(request);
@@ -260,9 +262,38 @@ public final class MainManager {
 				handler.runSchInfo();
 			}
 		}
+		
+		if (flag) {
+			/*
+			 * wait for ready
+			 * TODO 2017.04.23 : delete later
+			 */
+			try { Thread.sleep(1000); } catch (InterruptedException e) {}
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private void loadSchInfoToDb() throws Exception {
+		
+		if (flag) {
+			/*
+			 * load schedule informations to database of lucycron01
+			 */
+			Map<String, SchRequestHandler> map = SchController.getInstance().getMapHandler();
+			
+			for (Map.Entry<String, SchRequestHandler> entry : map.entrySet()) {
+				String requestName = entry.getKey();
+				SchRequestHandler handler = entry.getValue();
+				
+				if (flag) log.debug(String.format("SCHID = [%s]", requestName));
+				
+				handler.deleteSchInfoFromTable();
+				handler.insertSchInfoIntoTable();
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////

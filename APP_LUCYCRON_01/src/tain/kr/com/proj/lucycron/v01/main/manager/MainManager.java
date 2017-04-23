@@ -95,7 +95,7 @@ public final class MainManager {
 			 */
 			preLoadSchInfoToDb();
 		}
-		
+
 		if (flag) {
 			/*
 			 * loadSchInfoToDb
@@ -119,6 +119,8 @@ public final class MainManager {
 				 */
 			}
 		}
+		
+		if (flag) try { Thread.sleep(60 * 60 * 1000); } catch (InterruptedException e) {}   // 1 hour
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,8 +256,6 @@ public final class MainManager {
 			String[] arrPreSchId = Params.getInstance().getString(key).split("\\s+");
 			
 			for (String preSchId : arrPreSchId) {
-				if (flag) log.debug(String.format("[preSchId] = [%s]", preSchId));
-				
 				SchRequestHandler handler = SchController.getInstance().getHandler(preSchId);
 				handler.runSchInfo();
 			}

@@ -65,6 +65,8 @@ public final class SchRequest {
 	private final List<String> lstEnv;
 	private final Set<String> setHHMM;
 	
+	private Thread thrScheduler;
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
@@ -265,7 +267,7 @@ public final class SchRequest {
 	
 	public void runSchInfo() throws Exception {
 		
-		if (flag) {
+		if (!flag) {
 			/*
 			 * run schedule using Exec and FileIO
 			 * TODO 2017.04.23 : gonna make a thread
@@ -285,6 +287,52 @@ public final class SchRequest {
 			
 			int ret = Exec.run(arrCmd, arrEnv, new File(strCwd), System.out, false);
 			if (flag) log.debug(String.format(">>>>> [%s] runSchInfo.ret = (%d)", this.getName(), ret));;
+		}
+		
+		if (flag) {
+			/*
+			 * using the method of thread
+			 */
+			this.thrScheduler = new Thread(this.getName()) {
+				// 
+				@Override
+				public void run() {
+					if (flag) {
+						/*
+						 * running thread logic
+						 */
+						int ret = 0;
+						
+						try {
+							String strCwd;
+							String[] arrCmd = new String[] { "cmd", "/c", "dir" };
+							String[] arrEnv;
+							
+							if (lstCwd.size() > 0) {
+								strCwd = lstCwd.get(0);
+							} else {
+								strCwd = ".";
+							}
+							
+							arrCmd = lstCmd.toArray(new String[lstCmd.size()]);
+							arrEnv = lstEnv.toArray(new String[lstEnv.size()]);
+							
+							if (flag) log.debug(String.format("START_RUN_THREAD = [%s], isDaemon=[%s]"
+									, Thread.currentThread().getName(), Thread.currentThread().isDaemon()));;
+
+							ret = Exec.run(arrCmd, arrEnv, new File(strCwd), System.out, false);
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							if (flag) log.debug(String.format("STOP_RUN_THREAD = [%s] ret = (%d)"
+									, Thread.currentThread().getName(), ret));;
+						}
+					}
+				}
+			};
+			
+			this.thrScheduler.setDaemon(true);
+			this.thrScheduler.start();
 		}
 	}
 	

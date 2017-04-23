@@ -54,7 +54,7 @@ public final class SchController {
 	 * constructor
 	 */
 	public SchController() {
-		if (flag)
+		if (!flag)
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
@@ -73,9 +73,7 @@ public final class SchController {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public SchRequestHandler getHandler(SchRequest request) throws Exception {
-		
-		String key = request.getName();
+	public SchRequestHandler getHandler(String key) throws Exception {
 		
 		if (!this.mapHandler.containsKey(key)) {
 			throw new RuntimeException(String.format("Cannot find handler for request name [%s].", key));
@@ -86,9 +84,9 @@ public final class SchController {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public SchResponse getResponse(SchRequest request) throws Exception {
+	public SchResponse getResponse(String key) throws Exception {
 		
-		return this.getHandler(request).process();
+		return this.getHandler(key).process();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

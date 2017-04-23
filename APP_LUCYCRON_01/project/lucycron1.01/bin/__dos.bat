@@ -31,3 +31,8 @@ echo The end of the command
 pause
 
 @endlocal
+
+:: --------------------------------------------
+:: if close then exit
+echo "EXIT_IF_CLOSE=%EXIT_IF_CLOSE%"
+if "%EXIT_IF_CLOSE%"=="true" exit /b 0

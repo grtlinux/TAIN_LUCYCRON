@@ -26,9 +26,9 @@ cwd := N:/WORK
 
 # -------------------------------------
 # running command
-cmd := cmd | bash     # windows | linux
-cmd := /c  | -c       # windows | linux
-cmd := DIR
+cmd := cmd            # windows
+cmd := /c             # windows
+cmd := DIR            # command on execute
 cmd := /W             # arg0
 cmd := /T             # arg1
 
@@ -45,9 +45,9 @@ env := PARAM2=hello, world
 # schedule.mon  := *    # every month
 # schedule.week := *    # every week
 
-hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 1
-hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 2
-hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 3
+hhmm := 00,03~06,12,15~18:30~40 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 1
+#hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 2
+#hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 3
 
 # -------------------------------------
 # properties

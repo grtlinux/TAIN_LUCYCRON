@@ -72,20 +72,26 @@ public final class Exec {
 	
 	public static int run(String cmd, String[] envp, File dir, OutputStream os, boolean flgOsClose) throws IOException {
 		
-		Process process = run.exec(cmd, envp, dir);
-		
-		FileIO.copyFile(process.getInputStream(), os, flgOsClose);
-		
 		try {
-			process.waitFor();
-		} catch (InterruptedException e) {
+			Process process = run.exec(cmd, envp, dir);
 			
-			FileIO.copyFile(process.getErrorStream(), os, flgOsClose);
+			FileIO.copyFile(process.getInputStream(), os, flgOsClose);
 			
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				
+				FileIO.copyFile(process.getErrorStream(), os, flgOsClose);
+				
+				return -1;
+			}
+			
+			return process.exitValue();
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
+		} finally {
 		}
-		
-		return process.exitValue();
 	}
 	
 	public static int run(String cmd, OutputStream os, boolean flaOsClose) throws IOException {
@@ -103,21 +109,27 @@ public final class Exec {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static int run(String[] cmd, String[] envp, File dir, OutputStream os, boolean flgOsClose) throws IOException {
-		
-		Process process = run.exec(cmd, envp, dir);
-		
-		FileIO.copyFile(process.getInputStream(), os, flgOsClose);
-		
+
 		try {
-			process.waitFor();
-		} catch (InterruptedException e) {
+			Process process = run.exec(cmd, envp, dir);
 			
-			FileIO.copyFile(process.getErrorStream(), os, flgOsClose);
+			FileIO.copyFile(process.getInputStream(), os, flgOsClose);
 			
+			try {
+				process.waitFor();
+			} catch (InterruptedException e) {
+				
+				FileIO.copyFile(process.getErrorStream(), os, flgOsClose);
+				
+				return -1;
+			}
+			
+			return process.exitValue();
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
+		} finally {
 		}
-		
-		return process.exitValue();
 	}
 	
 	public static int run(String[] cmd, OutputStream os, boolean flaOsClose) throws IOException {

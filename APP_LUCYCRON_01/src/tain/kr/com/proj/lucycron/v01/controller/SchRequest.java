@@ -150,6 +150,7 @@ public final class SchRequest {
 				case "HHMM": {
 					/*
 					 * analyze hhmm parameter for schedule condition
+					 * TODO 2017.04.21 : gonna change for good logical flow
 					 */
 					String[] arrHhmm = item[1].trim().split("\\s+");  // be separated by spaces
 					

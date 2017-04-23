@@ -141,16 +141,14 @@ public final class Params {
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	public String[] getEnv() {
+	public List<String> getListEnv() {
 
-		String[] arrEnv = null;
+		List<String> lstEnv = new ArrayList<String>();
 		
 		if (flag) {
 			/*
 			 * System properties
 			 */
-			List<String> lstEnv = new ArrayList<String>();
-			
 			for (Map.Entry<String, String> entry : this.env.entrySet()) {
 				String strKey = entry.getKey();
 				String strVal = entry.getValue();
@@ -161,7 +159,7 @@ public final class Params {
 			}
 		}
 		
-		return arrEnv;
+		return lstEnv;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

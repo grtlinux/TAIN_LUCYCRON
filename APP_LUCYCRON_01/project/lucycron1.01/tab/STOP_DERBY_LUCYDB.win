@@ -28,7 +28,11 @@ cwd := N:/tain/products/LucyCron/tools/db-derby/db10.8/bin
 # running command
 cmd := cmd                           # windows
 cmd := /c                            # windows
-cmd := startNetworkServer            # command on execute
+cmd := stopNetworkServer            # command on execute
+cmd := -user
+cmd := kang
+cmd := -password
+cmd := kang123!
 
 # -------------------------------------
 # running environment

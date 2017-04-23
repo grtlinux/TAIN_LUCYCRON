@@ -23,118 +23,105 @@ AUTOCOMMIT OFF;
 -- ==================================================================================================
 -- ==================================================================================================
 -- ==================================================================================================
--- TB_RUNCWD
-DROP TABLE KANG.TB_RUNCWD;
+-- TB_SCHCWD
+DROP TABLE KANG.TB_SCHCWD;
 
-CREATE TABLE KANG.TB_RUNCWD
+CREATE TABLE KANG.TB_SCHCWD
 (
-	F_RUNID    VARCHAR(10)   NOT NULL  DEFAULT ''                ,  -- RUNID
+	F_SCHID    VARCHAR(128)  NOT NULL  DEFAULT ''                ,  -- SCHID
 	F_SEQ      INTEGER       NOT NULL  DEFAULT 0                 ,  -- sequence
 	F_CWD      VARCHAR(1024)           DEFAULT ''                ,  -- current working directory
 	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
 	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
 );
 
-ALTER TABLE KANG.TB_RUNCWD ADD CONSTRAINT PK_RUNCWD PRIMARY KEY ( F_RUNID, F_SEQ );
+ALTER TABLE KANG.TB_SCHCWD ADD CONSTRAINT PK_SCHCWD PRIMARY KEY ( F_SCHID, F_SEQ );
 
 -- ==================================================================================================
--- TB_RUNCMD
-DROP TABLE KANG.TB_RUNCMD;
+-- TB_SCHCMD
+DROP TABLE KANG.TB_SCHCMD;
 
-CREATE TABLE KANG.TB_RUNCMD
+CREATE TABLE KANG.TB_SCHCMD
 (
-	F_RUNID    VARCHAR(10)   NOT NULL  DEFAULT ''                ,  -- RUNID
+	F_SCHID    VARCHAR(128)  NOT NULL  DEFAULT ''                ,  -- SCHID
 	F_SEQ      INTEGER       NOT NULL  DEFAULT 0                 ,  -- sequence
 	F_CMD      VARCHAR(1024)           DEFAULT ''                ,  -- command
 	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
 	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
 );
 
-ALTER TABLE KANG.TB_RUNCMD ADD CONSTRAINT PK_RUNCMD PRIMARY KEY ( F_RUNID, F_SEQ );
+ALTER TABLE KANG.TB_SCHCMD ADD CONSTRAINT PK_SCHCMD PRIMARY KEY ( F_SCHID, F_SEQ );
 
 -- ==================================================================================================
--- TB_RUNENV
-DROP TABLE KANG.TB_RUNENV;
+-- TB_SCHENV
+DROP TABLE KANG.TB_SCHENV;
 
-CREATE TABLE KANG.TB_RUNENV
+CREATE TABLE KANG.TB_SCHENV
 (
-	F_RUNID    VARCHAR(10)   NOT NULL  DEFAULT ''                ,  -- RUNID
+	F_SCHID    VARCHAR(128)  NOT NULL  DEFAULT ''                ,  -- SCHID
 	F_SEQ      INTEGER       NOT NULL  DEFAULT 0                 ,  -- sequence
-	F_ENV      VARCHAR(1024)           DEFAULT ''                ,  -- environment
+	F_ENV      VARCHAR(4096)           DEFAULT ''                ,  -- environment
 	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
 	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
 );
 
-ALTER TABLE KANG.TB_RUNENV ADD CONSTRAINT PK_RUNENV PRIMARY KEY ( F_RUNID, F_SEQ );
+ALTER TABLE KANG.TB_SCHENV ADD CONSTRAINT PK_SCHENV PRIMARY KEY ( F_SCHID, F_SEQ );
 
 -- ==================================================================================================
--- TB_RUNHHMM
-DROP TABLE KANG.TB_RUNHHMM;
+-- TB_SCHHHMM
+DROP TABLE KANG.TB_SCHHHMM;
 
-CREATE TABLE KANG.TB_RUNHHMM
+CREATE TABLE KANG.TB_SCHHHMM
 (
-	F_RUNID    VARCHAR(10)   NOT NULL  DEFAULT ''                ,  -- RUNID
+	F_SCHID    VARCHAR(128)  NOT NULL  DEFAULT ''                ,  -- SCHID
 	F_SEQ      INTEGER       NOT NULL  DEFAULT 0                 ,  -- sequence
-	F_HHMM     VARCHAR(1024)           DEFAULT ''                ,  -- schedule time(HH:MM)
+	F_HHMM     VARCHAR(5)              DEFAULT ''                ,  -- schedule time(HH:MM)
 	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
 	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
 );
 
-ALTER TABLE KANG.TB_RUNHHMM ADD CONSTRAINT PK_RUNHHMM PRIMARY KEY ( F_RUNID, F_SEQ );
+ALTER TABLE KANG.TB_SCHHHMM ADD CONSTRAINT PK_SCHHHMM PRIMARY KEY ( F_SCHID, F_SEQ );
 
--- ==================================================================================================
--- TB_RUNPROP
-DROP TABLE KANG.TB_RUNPROP;
-
-CREATE TABLE KANG.TB_RUNPROP
-(
-	F_RUNID    VARCHAR(10)   NOT NULL  DEFAULT ''                ,  -- RUNID
-	F_SEQ      INTEGER       NOT NULL  DEFAULT 0                 ,  -- sequence
-	F_PROP     VARCHAR(1024)           DEFAULT ''                ,  -- property
-	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
-	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
-);
-
-ALTER TABLE KANG.TB_RUNPROP ADD CONSTRAINT PK_RUNPROP PRIMARY KEY ( F_RUNID, F_SEQ );
+-- IN_SCHHHMM
+-- DROP INDEX KANG.IN_SCHHHMM;
+CREATE INDEX KANG.IN_SCHHHMM ON KANG.TB_SCHHHMM ( F_SCHID ASC );
 
 -- ==================================================================================================
 -- ==================================================================================================
--- TB_SCHDTTM
-DROP TABLE KANG.TB_SCHDTTM;
+-- TB_RUNLOG
+DROP TABLE KANG.TB_RUNLOG;
 
-CREATE TABLE KANG.TB_SCHDTTM
-(
-	F_HHMM     VARCHAR(5)    NOT NULL  DEFAULT ''                ,  -- schedule time(HH:MM)
-	F_RUNID    VARCHAR(10)   NOT NULL  DEFAULT ''                ,  -- RUNID
-	F_RUNDTTM  TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- running timestamp
-	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
-	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
-);
-
-ALTER TABLE KANG.TB_SCHDTTM ADD CONSTRAINT PK_SCHDTTM PRIMARY KEY ( F_HHMM, F_RUNID );
-
--- IN_SCHDTTM
--- DROP INDEX KANG.IN_SCHDTTM;
-CREATE INDEX KANG.IN_SCHDTTM ON KANG.TB_SCHDTTM   ( F_RUNID ASC );
-
--- ==================================================================================================
--- TB_SCHLOG
-DROP TABLE KANG.TB_SCHLOG;
-
-CREATE TABLE KANG.TB_SCHLOG
+CREATE TABLE KANG.TB_RUNLOG
 (
 	F_RUNDTTM  TIMESTAMP     NOT NULL  DEFAULT CURRENT_TIMESTAMP ,  -- running timestamp
 
+	F_SCHID    VARCHAR(128)  NOT NULL  DEFAULT ''                ,  -- SCHID
+	F_SEQ      INTEGER       NOT NULL  DEFAULT 0                 ,  -- sequence
 	F_HHMM     VARCHAR(5)              DEFAULT ''                ,  -- schedule time(HH:MM)
-	F_RUNID    VARCHAR(10)             DEFAULT ''                ,  -- RUNID
---	F_SEQ      INTEGER                 DEFAULT 0                 ,  -- sequence
+
 	F_RSLT     VARCHAR(1024)           DEFAULT ''                ,  -- property
 	
 	DTTM_REG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP ,  -- create timestamp
 	DTTM_CHG   TIMESTAMP               DEFAULT CURRENT_TIMESTAMP    -- change timestamp
 );
 
--- ALTER TABLE KANG.TB_RUNPROP ADD CONSTRAINT PK_RUNPROP PRIMARY KEY ( F_RUNID, F_SEQ );
+-- IN_RUNLOG
+-- DROP INDEX KANG.IN_RUNLOG;
+CREATE INDEX KANG.IN_RUNLOG ON KANG.TB_RUNLOG ( F_SCHID ASC );
+
+
+
+-- ==================================================================================================
+-- ==================================================================================================
+-- TABLE COUNT
+
+SELECT 'TB_SCHCWD' AS TB_NAME, COUNT(*) AS TB_CNT FROM KANG.TB_SCHCWD
+UNION SELECT 'TB_SCHCMD'  AS TB_NAME, COUNT(*) AS TB_CNT FROM KANG.TB_SCHCMD
+UNION SELECT 'TB_SCHENV'  AS TB_NAME, COUNT(*) AS TB_CNT FROM KANG.TB_SCHENV
+UNION SELECT 'TB_SCHHHMM' AS TB_NAME, COUNT(*) AS TB_CNT FROM KANG.TB_SCHHHMM
+UNION SELECT 'TB_RUNLOG'  AS TB_NAME, COUNT(*) AS TB_CNT FROM KANG.TB_RUNLOG
+;
+
 
 
 

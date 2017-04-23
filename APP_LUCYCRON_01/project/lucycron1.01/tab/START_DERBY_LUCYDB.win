@@ -22,20 +22,23 @@
 
 # -------------------------------------
 # current working directory
-cwd := N:/WORK
+cwd := N:/tain/products/LucyCron/tools/db-derby/db10.8/bin
 
 # -------------------------------------
 # running command
-cmd := cmd            # windows
-cmd := /c             # windows
-cmd := DIR            # command on execute
-cmd := /W             # arg0
-cmd := /T             # arg1
+cmd := cmd                           # windows
+cmd := /c                            # windows
+cmd := startNetworkServer            # command on execute
 
 # -------------------------------------
 # running environment
-env := PARAM1=123
-env := PARAM2=hello, world
+env := AUTHOR=Kiea, Seok Kang
+env := JAVA_HOME=N:/tain/products/LucyCron/tools/jdk/jdk1.7.0_79
+env := DERBY_HOME=N:/tain/products/LucyCron/tools/db-derby/db10.8
+env := DERBY_OPTS=-Dderby.system.home=N:/tain/products/LucyCron/data/derbyDB
+env := EXIT_IF_CLOSE=true            # exit if program end 
+
+
 
 # -------------------------------------
 # cron schecule list
@@ -48,13 +51,6 @@ env := PARAM2=hello, world
 hhmm := 00,03~06,12,15~18:30,40 01:10     # HH:mm - 1
 #hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 2
 #hhmm := 00:30 01:10 06:00 *:32 00~05:50,55 *:*     # HH:mm - 3
-
-# -------------------------------------
-# properties : cannot do this properties
-# TODO 2017.04.01
-properties := tain.lucycron.desc = LucyCron package for package scheduling program
-properties := tain.lucycron.version = 1.01
-properties := tain.lucycron.author = Seok Kiea Kang
 
 
 

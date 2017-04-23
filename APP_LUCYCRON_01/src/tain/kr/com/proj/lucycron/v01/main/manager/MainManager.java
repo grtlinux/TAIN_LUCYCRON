@@ -87,6 +87,37 @@ public final class MainManager {
 			 */
 			loadSchController();
 		}
+		
+		if (flag) {
+			/*
+			 * preLoadSchInfoToDb
+			 *   1. startDb
+			 */
+		}
+		
+		if (flag) {
+			/*
+			 * loadSchInfoToDb
+			 */
+		}
+		
+		if (flag) {
+			/*
+			 * running Thread
+			 */
+			
+			if (flag) {
+				/*
+				 * ThrSchListenerToDb
+				 */
+			}
+			
+			if (flag) {
+				/*
+				 * ThrRunSchInfoFromDb
+				 */
+			}
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -172,6 +203,9 @@ public final class MainManager {
 								return false;
 						}
 
+						if (flag && !file.getName().startsWith("START"))
+							return false;
+						
 						return true;
 					}
 				});
@@ -199,6 +233,7 @@ public final class MainManager {
 				
 				SchRequest request = new SchRequest(file.getName());
 				SchRequestHandler handler = new SchRequestHandler(request);
+				handler.readSchFile();    // read scheduler file content
 				
 				SchController.getInstance().addHandler(request, handler);
 			}

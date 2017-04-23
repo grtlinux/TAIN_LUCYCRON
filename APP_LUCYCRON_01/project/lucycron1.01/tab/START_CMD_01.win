@@ -28,13 +28,14 @@ cwd := N:/tain/bin
 # running command
 cmd := cmd            # windows
 cmd := /c             # windows
-#cmd := __dos.bat      # command on execute
-cmd := start      # command on execute
+cmd := start          # command on execute
+cmd := __dos.bat      # command on execute
 
 # -------------------------------------
 # running environment
 env := PARAM1=123
 env := PARAM2=hello, world
+env := EXIT_IF_CLOSE=true            # exit if program end 
 
 # -------------------------------------
 # cron schecule list

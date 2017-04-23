@@ -290,6 +290,7 @@ public final class MainManager {
 				
 				handler.deleteSchInfoFromTable();
 				handler.insertSchInfoIntoTable();
+				//handler.selectSchInfoWhereTable();
 			}
 		}
 	}

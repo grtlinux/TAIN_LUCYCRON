@@ -1,0 +1,161 @@
+----------------------------------------------------------------------------------------------------
+[ 윈도우에서 실행되는 서비스와 포트번호 ]
+
+포 트  Protocol  네트워크 서비스                 관련 윈도우 서비스                                          서비스명
+    7  TCP       Echo                            Simple TCP/IP Services                                      SimpTcp
+    7  UDP       Echo                            Simple TCP/IP Services                                      SimpTcp
+    9  TCP       Discard                         Simple TCP/IP Services                                      SimpTcp
+    9  UDP       Discard                         Simple TCP/IP Services                                      SimpTcp
+   13  TCP       Daytime                         Simple TCP/IP Services                                      SimpTcp
+   13  UDP       Daytime                         Simple TCP/IP Services                                      SimpTcp
+   17  TCP       Quotd                           Simple TCP/IP Services                                      SimpTcp
+   17  UDP       Quotd                           Simple TCP/IP Services                                      SimpTcp
+   19  TCP       Chargen                         Simple TCP/IP Services                                      SimpTcp
+   19  UDP       Chargen                         Simple TCP/IP Services                                      SimpTcp
+   20  TCP       FTP default data                FTP Publishing Service                                      MSFtpsvc
+   21  TCP       FTP control                     FTP Publishing Service                                      MSFtpsvc
+   21  TCP       FTP control                     Application Layer Gateway Service                           ALG
+   22  TCP       SSH                             SSH Daemon
+   23  TCP       Telnet                          Telnet                                                      TlntSvr
+   25  TCP       SMTP                            Simple Mail Transport Protocol                              SMTPSVC
+   25  UDP       SMTP                            Simple Mail Transport Protocol                              SMTPSVC
+   25  TCP       SMTP                            Exchange Server 　
+   25  UDP       SMTP                            Exchange Server 　
+   42  TCP       WINS Replication                Windows Internet Name Service                               WINS
+   42  UDP       WINS Replication                Windows Internet Name Service                               WINS
+   53  TCP       DNS                             DNS Server                                                  DNS
+   53  UDP       DNS                             DNS Server                                                  DNS
+   53  TCP       DNS                             Internet Connection Firewall/Internet Connection Sharing    SharedAccess
+   53  UDP       DNS                             Internet Connection Firewall/Internet Connection Sharing    SharedAccess
+   67  UDP       DHCP Server                     DHCP Server                                                 DHCPServer
+   67  UDP       DHCP Server                     Internet Connection Firewall/Internet Connection Sharing    SharedAccess
+   69  UDP       TFTP                            Trivial FTP Daemon Service                                  tftpd
+   80  TCP       HTTP                            Windows Media Services                                      WMServer
+   80  TCP       HTTP                            World Wide Web Publishing Service                           W3SVC
+   80  TCP       HTTP                            SharePoint Portal Server    　
+   88  TCP       Kerberos                        Kerberos Key Distribution Center                            Kdc
+   88  UDP       Kerberos                        Kerberos Key Distribution Center                            Kdc
+  102  TCP       X.400                           Microsoft Exchange MTA Stacks   　
+  110  TCP       POP3                            Microsoft POP3 Service                                      POP3SVC
+  110  TCP       POP3                            Exchange Server 　
+  111  TCP       rpcbind                         Network File Service(rpcbind)
+  119  TCP       NNTP                            Network News Transfer Protocol                              NntpSvc
+  123  UDP       NTP                             Windows Time                                                W32Time
+  123  UDP       SNTP                            Windows Time                                                W32Time
+  135  TCP       RPC                             Message Queuing                                             msmq
+  135  TCP       RPC                             Remote Procedure Call                                       RpcSs
+  135  TCP       RPC                             Exchange Server 　
+  137  TCP       NetBIOS Name Resolution         Computer Browser                                            Browser
+  137  UDP       NetBIOS Name Resolution         Computer Browser                                            Browser
+  137  TCP       NetBIOS Name Resolution         Server                                                      lanmanserver
+  137  UDP       NetBIOS Name Resolution         Server                                                      lanmanserver
+  137  TCP       NetBIOS Name Resolution         Windows Internet Name Service                               WINS
+  137  UDP       NetBIOS Name Resolution         Windows Internet Name Service                               WINS
+  137  TCP       NetBIOS Name Resolution         Net Logon                                                   Netlogon
+  137  UDP       NetBIOS Name Resolution         Net Logon                                                   Netlogon
+  137  TCP       NetBIOS Name Resolution         Systems Management Server 2.0                               　
+  137  UDP       NetBIOS Name Resolution         Systems Management Server 2.0                               　
+  138  UDP       NetBIOS Datagram Service        Computer Browser                                            Browser
+  138  UDP       NetBIOS Datagram Service        Messenger                                                   Messenger
+  138  UDP       NetBIOS Datagram Service        Server                                                      lanmanserver
+  138  UDP       NetBIOS Datagram Service        Net Logon                                                   Netlogon
+  138  UDP       NetBIOS Datagram Service        Distributed File System                                     Dfs
+  138  UDP       NetBIOS Datagram Service        Systems Management Server 2.0   　
+  138  UDP       NetBIOS Datagram Service        License Logging Service                                     LicenseService
+  139  TCP       NetBIOS Session Service         Computer Browser                                            Browser
+  139  TCP       NetBIOS Session Service         Fax Service                                                 Fax
+  139  TCP       NetBIOS Session Service         Performance Logs and Alerts                                 SysmonLog
+  139  TCP       NetBIOS Session Service         Print Spooler                                               Spooler
+  139  TCP       NetBIOS Session Service         Server                                                      lanmanserver
+  139  TCP       NetBIOS Session Service         Net Logon                                                   Netlogon
+  139  TCP       NetBIOS Session Service         Remote Procedure Call Locator                               RpcLocator
+  139  TCP       NetBIOS Session Service         Distributed File System                                     Dfs
+  139  TCP       NetBIOS Session Service         Systems Management Server 2.0   　
+  139  TCP       NetBIOS Session Service         License Logging Service                                     LicenseService
+  143  TCP       IMAP                            Exchange Server 　
+  161  UDP       SNMP                            SNMP Service                                                SNMP
+  162  UDP       SNMP Traps Outbound             SNMP Trap Service                                           SNMPTRAP
+  270  TCP       MOM 2004                        Microsoft Operations Manager 2004                           MOM
+  389  TCP       LDAP Server                     Local Security Authority                                    LSASS
+  389  UDP       LDAP Server                     Local Security Authority                                    LSASS
+  389  TCP       LDAP Server                     Distributed File System                                     Dfs
+  389  UDP       LDAP Server                     Distributed File System                                     Dfs
+  443  TCP       HTTPS                           HTTP SSL                                                    HTTPFilter
+  443  TCP       HTTPS                           World Wide Web Publishing Service                           W3SVC
+  443  TCP       HTTPS                           SharePoint Portal Server    　
+  445  TCP       SMB                             Fax Service                                                 Fax
+  445  UDP       SMB                             Fax Service                                                 Fax
+  445  TCP       SMB                             License Logging Service                                     LicenseService
+  445  UDP       SMB                             License Logging Service                                     LicenseService
+  445  TCP       SMB                             Print Spooler                                               Spooler
+  445  UDP       SMB                             Print Spooler                                               Spooler
+  445  TCP       SMB                             Server                                                      lanmanserver
+  445  UDP       SMB                             Server                                                      lanmanserver
+  445  TCP       SMB                             Remote Procedure Call Locator                               RpcLocator
+  445  UDP       SMB                             Remote Procedure Call Locator                               RpcLocator
+  445  TCP       SMB                             Distributed File System                                     Dfs
+  445  UDP       SMB                             Distributed File System                                     Dfs
+  445  TCP       SMB                             Net Logon                                                   Dfs
+  445  UDP       SMB                             Net Logon                                                   Dfs
+  500  UDP       IPSec ISAKMP                    IPSec Services                                              PolicyAgent
+  515  TCP       LPD                             TCP/IP Print Server                                         LPDSVC
+  548  TCP       File Server for                 Macintosh   File Server for Macintosh                       MacFile
+  554  TCP       RTSP                            Windows Media Services                                      WMServer
+  563  TCP       NNTP over SSL                   Network News Transfer Protocol                              NntpSvc
+  593  TCP       RPC over HTTP                   Remote Procedure Call                                       RpcSs
+  593  TCP       RPC over HTTP                   Exchange Server 　
+  636  TCP       LDAP SSL                        Local Security Authority                                    LSASS
+  636  UDP       LDAP SSL                        Local Security Authority                                    LSASS
+  993  TCP       IMAP over SSL                   Exchange Server 　
+  995  TCP       POP3 over SSL                   Exchange Server 　
+ 1270  TCP       MOM-Encrypted                   Microsoft Operations Manager 2000                           one point
+ 1433  TCP       SQL over TCP                    Microsoft SQL Server                                        SQLSERVR
+ 1433  TCP       SQL over TCP                    MSSQL$UDDI                                                  SQLSERVR
+ 1434  UDP       SQL Probe                       Microsoft SQL Server                                        SQLSERVR
+ 1434  UDP       SQL Probe                       MSSQL$UDDI                                                  SQLSERVR
+ 1645  UDP       Legacy RADIUS                   Internet Authentication Service                             IAS
+ 1646  UDP       Legacy RADIUS                   Internet Authentication Service                             IAS
+ 1701  UDP       L2TP                            Routing and Remote Access                                   RemoteAccess
+ 1723  TCP       PPTP                            Routing and Remote Access                                   RemoteAccess
+ 1755  TCP       MMS                             Windows Media Services                                      WMServer
+ 1755  UDP       MMS                             Windows Media Services                                      WMServer
+ 1801  TCP       MSMQ                            Message Queuing                                             msmq
+ 1801  UDP       MSMQ                            Message Queuing                                             msmq
+ 1812  UDP       RADIUS Authentication           Internet Authentication Service                             IAS
+ 1813  UDP       RADIUS Accounting               Internet Authentication Service                             IAS
+ 1900  UDP       SSDP                            SSDP Discovery Service                                      SSDPRSRV
+ 2049  TCP       NFS                             Network File Service(NFS)
+ 2101  TCP       MSMQ-DCs                        Message Queuing                                             msmq
+ 2103  TCP       MSMQ-RPC                        Message Queuing                                             msmq
+ 2105  TCP       MSMQ-RPC                        Message Queuing                                             msmq
+ 2107  TCP       MSMQ-Mgmt                       Message Queuing                                             msmq
+ 2393  TCP       OLAP Services 7.0               SQL Server: Downlevel OLAP Client Support   　
+ 2394  TCP       OLAP Services 7.0               SQL Server: Downlevel OLAP Client Support   　
+ 2460  UDP       MS Theater                      Windows Media Services                                      WMServer
+ 2535  UDP       MADCAP                          DHCP Server                                                 DHCPServer
+ 2701  TCP       SMS Remote Control (control)    SMS Remote Control Agent    　
+ 2701  UDP       SMS Remote Control (control)    SMS Remote Control Agent    　
+ 2702  TCP       SMS Remote Control (data)       SMS Remote Control Agent    　
+ 2702  UDP       SMS Remote Control (data)       SMS Remote Control Agent    　
+ 2703  TCP       SMS Remote Chat                 SMS Remote Control Agent    　
+ 2703  UDP       SMS Remote Chat                 SMS Remote Control Agent    　
+ 2704  TCP       SMS Remote File Transfer        SMS Remote Control Agent    　
+ 2704  UDP       SMS Remote File Transfer        SMS Remote Control Agent    　
+ 2725  TCP       SQL Analysis Services           SQL Analysis Server 　
+ 2869  TCP       UPNP                            Universal Plug and Play Device Host                         UPNPHost
+ 2869  TCP       SSDP event notification         SSDP Discovery Service                                      SSDPRSRV
+ 3268  TCP       Global Catalog Server           Local Security Authority                                    LSASS
+ 3269  TCP       Global Catalog Server           Local Security Authority                                    LSASS
+ 3343  UDP       Cluster Services                Cluster Service                                             ClusSvc
+ 3389  TCP       Terminal Services               NetMeeting Remote Desktop Sharing                           mnmsrvc
+ 3389  TCP       Terminal Services               Terminal Services                                           TermService
+ 3527  UDP       MSMQ-Ping                       Message Queuing                                             msmq
+ 4011  UDP       BINL                            Remote Installation                                         BINLSVC
+ 4500  UDP       NAT-T                           Routing and Remote Access                                   RemoteAccess
+ 5000  TCP       SSDP legacy event notification  SSDP Discovery Service                                      SSDPRSRV
+ 5004  UDP       RTP                             Windows Media Services                                      WMServer
+ 5005  UDP       RTCP                            Windows Media Services                                      WMServer
+15100  TCP                                       Mouse without Border Service-1
+15101  TCP                                       Mouse without Border Service-2
+42424  TCP       ASP.Net Session State           ASP.NET State Service                                       aspnet_state
+51515  TCP       MOM-Clear                       Microsoft Operations Manager 2000                           one point

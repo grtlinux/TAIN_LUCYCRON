@@ -30,6 +30,7 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
+import tain.kr.com.proj.lucycron.v01.db.DbManager;
 import tain.kr.com.proj.lucycron.v01.exec.Exec;
 import tain.kr.com.proj.lucycron.v01.util.Params;
 
@@ -82,7 +83,6 @@ public final class SchRequest {
 		this.lstCwd = new ArrayList<String>();
 		this.lstCmd = new ArrayList<String>();
 		this.lstEnv = new ArrayList<String>();
-		//this.lstEnv = Params.getInstance().getListEnv();
 		this.setHHMM = new TreeSet<String>();
 		
 		if (!flag)
@@ -95,6 +95,31 @@ public final class SchRequest {
 		return this.name;
 	}
 	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public List<String> getLstCwd() {
+		return this.lstCwd;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public List<String> getLstCmd() {
+		return this.lstCmd;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public List<String> getLstEnv() {
+		return this.lstEnv;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public Set<String> getSetHHMM() {
+		return this.setHHMM;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -345,8 +370,9 @@ public final class SchRequest {
 		
 		if (flag) {
 			/*
-			 * 
+			 * delete
 			 */
+			DbManager.getInstance().delete(this);
 		}
 	}
 
@@ -357,8 +383,9 @@ public final class SchRequest {
 		
 		if (flag) {
 			/*
-			 * 
+			 * insert
 			 */
+			DbManager.getInstance().insert(this);
 		}
 	}
 	
@@ -369,7 +396,7 @@ public final class SchRequest {
 		
 		if (flag) {
 			/*
-			 * 
+			 * don't use
 			 */
 		}
 	}

@@ -253,6 +253,9 @@ public final class MainManager {
 		if (flag) {
 			/*
 			 * run the schedule of the parameter tain.lucy.start.prejob
+			 * 
+			 * processing: lucycron.properties > tain.lucy.start.projob = START_DERBY_LUCYDB.win
+			 * 
 			 */
 			String key = "tain.lucy.start.prejob";
 			String[] arrPreSchId = Params.getInstance().getString(key).split("\\s+");
@@ -265,7 +268,7 @@ public final class MainManager {
 		
 		if (flag) {
 			/*
-			 * wait for ready
+			 * wait for a few seconds to be ready for DB
 			 * TODO 2017.04.23 : delete later
 			 */
 			try { Thread.sleep(1000); } catch (InterruptedException e) {}
@@ -288,9 +291,8 @@ public final class MainManager {
 				
 				if (flag) log.debug(String.format("SCHID = [%s]", requestName));
 				
-				handler.deleteSchInfoFromTable();
-				handler.insertSchInfoIntoTable();
-				//handler.selectSchInfoWhereTable();
+				handler.deleteSchInfoFromTable();   // delete
+				handler.insertSchInfoIntoTable();   // insert
 			}
 		}
 	}

@@ -185,8 +185,9 @@ public final class DbManager {
 				 * cwd
 				 */
 				List<String> lstCwd = request.getLstCwd();
-				
-				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHCWD values ('%s', ?, ?)", request.getName()));
+
+				String query = String.format("insert into KANG.TB_SCHCWD (F_SCHID, F_SEQ, F_CWD) values ('%s', ?, ?)", request.getName());
+				this.pstmt = this.conn.prepareStatement(query);
 				
 				for (int i=0; i < lstCwd.size(); i++) {
 					this.pstmt.setInt(1, i);
@@ -201,7 +202,8 @@ public final class DbManager {
 				 */
 				List<String> lstCmd = request.getLstCmd();
 				
-				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHCMD values ('%s', ?, ?)", request.getName()));
+				String query = String.format("insert into KANG.TB_SCHCMD (F_SCHID, F_SEQ, F_CMD) values ('%s', ?, ?)", request.getName());
+				this.pstmt = this.conn.prepareStatement(query);
 				
 				for (int i=0; i < lstCmd.size(); i++) {
 					this.pstmt.setInt(1, i);
@@ -216,7 +218,8 @@ public final class DbManager {
 				 */
 				List<String> lstEnv = request.getLstEnv();
 				
-				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHENV values ('%s', ?, ?)", request.getName()));
+				String query = String.format("insert into KANG.TB_SCHENV (F_SCHID, F_SEQ, F_ENV) values ('%s', ?, ?)", request.getName());
+				this.pstmt = this.conn.prepareStatement(query);
 				
 				for (int i=0; i < lstEnv.size(); i++) {
 					this.pstmt.setInt(1, i);
@@ -231,7 +234,8 @@ public final class DbManager {
 				 */
 				Set<String> setHHMM = request.getSetHHMM();
 				
-				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHHHMM values ('%s', ?, ?)", request.getName()));
+				String query = String.format("insert into KANG.TB_SCHHHMM (F_SCHID, F_SEQ, F_HHMM) values ('%s', ?, ?)", request.getName());
+				this.pstmt = this.conn.prepareStatement(query);
 				
 				int i = 0;
 				for (String hhmm : setHHMM) {

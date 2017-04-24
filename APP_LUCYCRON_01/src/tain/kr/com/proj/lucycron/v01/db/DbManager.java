@@ -26,9 +26,13 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+
+import tain.kr.com.proj.lucycron.v01.controller.SchRequest;
 
 /**
  * Code Templates > Comments > Types
@@ -130,20 +134,126 @@ public final class DbManager {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public synchronized void delete() throws SQLException {
+	public synchronized void delete(SchRequest request) throws SQLException {
 		
+		if (flag) {
+			/*
+			 * delete
+			 */
+			if (flag) {
+				/*
+				 * cwd
+				 */
+				this.stmt.execute(String.format("delete from KANG.TB_SCHCWD where F_SCHID = '%s'", request.getName()));
+			}
+			
+			if (flag) {
+				/*
+				 * cmd
+				 */
+				this.stmt.execute(String.format("delete from KANG.TB_SCHCMD where F_SCHID = '%s'", request.getName()));
+			}
+			
+			if (flag) {
+				/*
+				 * env
+				 */
+				this.stmt.execute(String.format("delete from KANG.TB_SCHENV where F_SCHID = '%s'", request.getName()));
+			}
+			
+			if (flag) {
+				/*
+				 * HHMM
+				 */
+				this.stmt.execute(String.format("delete from KANG.TB_SCHHHMM where F_SCHID = '%s'", request.getName()));
+			}
+		}
+		
+		this.conn.commit();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public synchronized void insert() throws SQLException {
+	public synchronized void insert(SchRequest request) throws SQLException {
 		
+		if (flag) {
+			/*
+			 * insert
+			 */
+			if (flag) {
+				/*
+				 * cwd
+				 */
+				List<String> lstCwd = request.getLstCwd();
+				
+				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHCWD values ('%s', ?, ?)", request.getName()));
+				
+				for (int i=0; i < lstCwd.size(); i++) {
+					this.pstmt.setInt(1, i);
+					this.pstmt.setString(2, lstCwd.get(i));
+					this.pstmt.executeUpdate();
+				}
+			}
+			
+			if (flag) {
+				/*
+				 * cmd
+				 */
+				List<String> lstCmd = request.getLstCmd();
+				
+				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHCMD values ('%s', ?, ?)", request.getName()));
+				
+				for (int i=0; i < lstCmd.size(); i++) {
+					this.pstmt.setInt(1, i);
+					this.pstmt.setString(2, lstCmd.get(i));
+					this.pstmt.executeUpdate();
+				}
+			}
+			
+			if (flag) {
+				/*
+				 * env
+				 */
+				List<String> lstEnv = request.getLstEnv();
+				
+				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHENV values ('%s', ?, ?)", request.getName()));
+				
+				for (int i=0; i < lstEnv.size(); i++) {
+					this.pstmt.setInt(1, i);
+					this.pstmt.setString(2, lstEnv.get(i));
+					this.pstmt.executeUpdate();
+				}
+			}
+			
+			if (flag) {
+				/*
+				 * HHMM
+				 */
+				Set<String> setHHMM = request.getSetHHMM();
+				
+				this.pstmt = this.conn.prepareStatement(String.format("insert into KANG.TB_SCHHHMM values ('%s', ?, ?)", request.getName()));
+				
+				int i = 0;
+				for (String hhmm : setHHMM) {
+					this.pstmt.setInt(1, i++);
+					this.pstmt.setString(2, hhmm);
+					this.pstmt.executeUpdate();
+				}
+			}
+		}
+
+		this.conn.commit();
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public synchronized void select() throws SQLException {
 		
+		if (flag) {
+			/*
+			 * select
+			 */
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////

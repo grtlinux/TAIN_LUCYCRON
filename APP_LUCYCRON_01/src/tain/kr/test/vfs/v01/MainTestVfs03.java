@@ -19,6 +19,12 @@
  */
 package tain.kr.test.vfs.v01;
 
+import org.apache.commons.vfs2.FileChangeEvent;
+import org.apache.commons.vfs2.FileListener;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.VFS;
+import org.apache.commons.vfs2.impl.DefaultFileMonitor;
 import org.apache.log4j.Logger;
 
 /**
@@ -35,7 +41,7 @@ import org.apache.log4j.Logger;
  * @author taincokr
  *
  */
-public class MainTestVfs03 {
+public final class MainTestVfs03 {
 
 	private static boolean flag = true;
 
@@ -52,6 +58,43 @@ public class MainTestVfs03 {
 			log.debug(">>>>> in class " + this.getClass().getSimpleName());
 	}
 
+	public void execute() throws Exception {
+		
+		if (flag) {
+			/*
+			 * progress
+			 */
+		}
+		
+		if (flag) {
+			/*
+			 * event listener
+			 */
+			try {
+				FileSystemManager fileSystemManager = VFS.getManager();
+				FileObject listenFolder = fileSystemManager.resolveFile("N:/tain/products/LucyCron/test");
+				
+				DefaultFileMonitor fileMonitor = new DefaultFileMonitor(new FileListener() {
+					@Override
+					public void fileChanged(FileChangeEvent fileChangeEvent) throws Exception {
+					}
+					@Override
+					public void fileCreated(FileChangeEvent fileChangeEvent) throws Exception {
+					}
+					@Override
+					public void fileDeleted(FileChangeEvent fileChangeEvent) throws Exception {
+					}
+				});
+				
+				fileMonitor.addFile(listenFolder);
+				fileMonitor.setRecursive(true);
+				fileMonitor.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,11 +113,11 @@ public class MainTestVfs03 {
 	 */
 	private static void test01(String[] args) throws Exception {
 
-		if (flag)
-			new MainTestVfs03();
-
 		if (flag) {
-
+			/*
+			 * begin
+			 */
+			new MainTestVfs03().execute();
 		}
 	}
 

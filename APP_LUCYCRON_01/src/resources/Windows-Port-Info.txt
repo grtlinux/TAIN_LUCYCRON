@@ -157,6 +157,7 @@ version : TODO 2017.04.24
  5000  TCP       SSDP legacy event notification  SSDP Discovery Service                                      SSDPRSRV
  5004  UDP       RTP                             Windows Media Services                                      WMServer
  5005  UDP       RTCP                            Windows Media Services                                      WMServer
+ 5357  TCP                                       HomeGroup Provider (System)
 15100  TCP                                       Mouse without Border Service-1
 15101  TCP                                       Mouse without Border Service-2
 42424  TCP       ASP.Net Session State           ASP.NET State Service                                       aspnet_state

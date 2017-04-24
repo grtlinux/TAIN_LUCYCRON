@@ -1,6 +1,8 @@
 ----------------------------------------------------------------------------------------------------
 [ 윈도우에서 실행되는 서비스와 포트번호 ]
 
+version : TODO 2017.04.24
+
 포 트  Protocol  네트워크 서비스                 관련 윈도우 서비스                                          서비스명
     7  TCP       Echo                            Simple TCP/IP Services                                      SimpTcp
     7  UDP       Echo                            Simple TCP/IP Services                                      SimpTcp

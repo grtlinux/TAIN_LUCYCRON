@@ -163,18 +163,18 @@ version : TODO 2017.04.25
 15100  TCP                                       Mouse without Border Service-1
 15101  TCP                                       Mouse without Border Service-2
 42424  TCP       ASP.Net Session State           ASP.NET State Service                                       aspnet_state
-49152  TCP                                                                                                   [wininit.exe]
+49152  TCP                                       Windows 시작 응용 프로그램                                  [wininit.exe]
 49153  TCP                                       eventlog                                                    [svchost.exe]
 49154  TCP                                       Schedule                                                    [svchost.exe]
-49155  TCP                                                                                                   [services.exe]
-49156  TCP                                                                                                   [spoolsv.exe]
-49157  TCP                                                                                                   [lsass.exe]
-49664  TCP                                                                                                   win10
+49155  TCP                                       서비스 및 컨트롤러 응용 프로그램                            [services.exe]
+49156  TCP                                       Spooler SubSystem App                                       [spoolsv.exe]
+49157  TCP                                       Local Security Authority Process                            [lsass.exe]
+49664  TCP                                       Windows 시작 응용 프로그램                                  win10 [wininit.exe]
 49665  TCP                                       EventLog                                                    win10 [svchost.exe]
 49666  TCP                                       Schedule                                                    win10 [svchost.exe]
-49667  TCP                                                                                                   win10 [spoolsv.exe]
-49668  TCP                                                                                                   win10
-49686  TCP                                                                                                   win10 [lsass.exe]
+49667  TCP                                       Spooler SubSystem App                                       win10 [spoolsv.exe]
+49668  TCP                                       서비스 및 컨트롤러 응용 프로그램                            win10 [services.exe]
+49686  TCP                                       Local Security Authority Process                            win10 [lsass.exe]
 51515  TCP       MOM-Clear                       Microsoft Operations Manager 2000                           one point
 
 

@@ -163,6 +163,12 @@ version : TODO 2017.04.25
 15100  TCP                                       Mouse without Border Service-1
 15101  TCP                                       Mouse without Border Service-2
 42424  TCP       ASP.Net Session State           ASP.NET State Service                                       aspnet_state
+49152  TCP                                                                                                   [wininit.exe]
+49153  TCP                                       eventlog                                                    [svchost.exe]
+49154  TCP                                       Schedule                                                    [svchost.exe]
+49155  TCP                                                                                                   [services.exe]
+49156  TCP                                                                                                   [spoolsv.exe]
+49157  TCP                                                                                                   [lsass.exe]
 51515  TCP       MOM-Clear                       Microsoft Operations Manager 2000                           one point
 
 

@@ -169,6 +169,12 @@ version : TODO 2017.04.25
 49155  TCP                                                                                                   [services.exe]
 49156  TCP                                                                                                   [spoolsv.exe]
 49157  TCP                                                                                                   [lsass.exe]
+49664  TCP                                                                                                   win10
+49665  TCP                                       EventLog                                                    win10 [svchost.exe]
+49666  TCP                                       Schedule                                                    win10 [svchost.exe]
+49667  TCP                                                                                                   win10 [spoolsv.exe]
+49668  TCP                                                                                                   win10
+49686  TCP                                                                                                   win10 [lsass.exe]
 51515  TCP       MOM-Clear                       Microsoft Operations Manager 2000                           one point
 
 

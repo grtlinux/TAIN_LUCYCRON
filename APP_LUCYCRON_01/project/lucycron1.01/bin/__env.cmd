@@ -45,16 +45,34 @@ set PATH=%M2_HOME%\bin;%PATH%
 set PATH=%ANT_HOME%\bin;%PATH%
 
 ::----------------------------------------------
+::----------------------------------------------
+::----------------------------------------------
 :label_start
+echo ----- system base env --------------------------
+echo "> APPDATA               " = "%APPDATA%"
+echo "> COMPUTERNAME          " = "%COMPUTERNAME%"
+echo "> HOMEPATH              " = "%HOMEPATH%"
+echo "> LOCALAPPDATA          " = "%LOCALAPPDATA%"
+echo "> LOGONSERVER           " = "%LOGONSERVER%"
+echo "> PROCESSOR_ARCHITECTURE" = "%PROCESSOR_ARCHITECTURE%"
+echo "> SystemRoot            " = "%SystemRoot%"
+echo "> USERDOMAIN            " = "%USERDOMAIN%"
+echo "> USERNAME              " = "%USERNAME%"
+echo "> USERPROFILE           " = "%USERPROFILE%"
+echo "> hostname"
+
 echo ----- first env --------------------------
 echo CURRENT_DIR=%CURRENT_DIR%
 echo ENV_CMD=%ENV_CMD%
+
 echo ----- base env --------------------------
 echo TAIN_HOME=%TAIN_HOME%
 echo PRODUCT_HOME=%PRODUCT_HOME%
+
 echo ----- project env --------------------------
 echo LUCY_BASE=%LUCY_BASE%
 echo LUCY_HOME=%LUCY_HOME%
+
 echo ----- test tool env --------------------------
 echo TEST_DIR=%TEST_DIR%
 echo LOG_DIR=%LOG_DIR%
@@ -69,6 +87,7 @@ echo UNX_HOME=%UNX_HOME%
 echo M2_HOME=%M2_HOME%
 echo MAVEN_OPTS=%MAVEN_OPTS%
 echo ANT_HOME=%ANT_HOME%
+
 echo ----- path env --------------------------
 echo PATH=%PATH%
 
@@ -78,6 +97,7 @@ echo "##### jre version > java -version"
 echo "##### jdk version > javac -version"
 echo "##### apache-tomcat version > version"
 echo "##### derby information > sysinfo"
+echo "##### derby information > startNetworkServer, stopNetworkServer -user kang -password kang123!"
 echo "##### nssm windows service > nssm"
 echo "##### UnxUpdates command > tail one, dir | grep bat"
 echo "##### apache-maven version > mvn -version"
@@ -87,6 +107,8 @@ echo "The environment is OK!!!"
 
 goto label_end
 
+::----------------------------------------------
+::----------------------------------------------
 ::----------------------------------------------
 :label_exit
 echo ERROR: don't make the enviroment

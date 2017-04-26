@@ -71,7 +71,7 @@ echo "> msconfig      : 시스템 구성"
 echo "> mstsc         : 원격 데스크톱 연결"
 echo ""
 echo "> firewall.cpl  : Windows 방화벽"
-echo "> ncpa.cpl      : 네트워크 연결"
+echo "> ncpa.cpl      : 네트워크 연결(eq. control netconnections)"
 echo ""
 echo "> compmgmt.msc  : 컴퓨터 관리"
 echo "> services.msc  : 서비스"
@@ -81,18 +81,19 @@ echo "> fsmgmt.msc    : 공유 폴더"
 
 echo "> cmd : command"
 
+echo ""
 echo ----- first env --------------------------
 echo CURRENT_DIR=%CURRENT_DIR%
 echo ENV_CMD=%ENV_CMD%
-
+echo ""
 echo ----- base env --------------------------
 echo TAIN_HOME=%TAIN_HOME%
 echo PRODUCT_HOME=%PRODUCT_HOME%
-
+echo ""
 echo ----- project env --------------------------
 echo LUCY_BASE=%LUCY_BASE%
 echo LUCY_HOME=%LUCY_HOME%
-
+echo ""
 echo ----- test tool env --------------------------
 echo TEST_DIR=%TEST_DIR%
 echo LOG_DIR=%LOG_DIR%
@@ -107,7 +108,7 @@ echo UNX_HOME=%UNX_HOME%
 echo M2_HOME=%M2_HOME%
 echo MAVEN_OPTS=%MAVEN_OPTS%
 echo ANT_HOME=%ANT_HOME%
-
+echo ""
 echo ----- path env --------------------------
 echo PATH=%PATH%
 

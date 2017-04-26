@@ -65,6 +65,8 @@ echo ----- windows command --------------------------
 echo "> cmd           : Windows command"
 echo "> taskmgr       : 작업관리자"
 echo "> explorer      : 탐색기"
+echo "> tasklist      : 프로세스 목록(ex. tasklist /fi 'pid eq 1234')"
+echo "> taskkill      : 프로세스 종료(ex. taskkill /fi 'imagename eq acme*')"
 echo ""
 echo "> control       : 제어판"
 echo "> msconfig      : 시스템 구성"

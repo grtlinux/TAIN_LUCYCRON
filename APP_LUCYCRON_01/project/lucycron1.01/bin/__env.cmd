@@ -60,6 +60,26 @@ echo "> USERDOMAIN            " = "%USERDOMAIN%"
 echo "> USERNAME              " = "%USERNAME%"
 echo "> USERPROFILE           " = "%USERPROFILE%"
 echo "> hostname"
+echo ""
+echo ----- windows command --------------------------
+echo "> cmd           : Windows command"
+echo "> taskmgr       : 작업관리자"
+echo "> explorer      : 탐색기"
+echo ""
+echo "> control       : 제어판"
+echo "> msconfig      : 시스템 구성"
+echo "> mstsc         : 원격 데스크톱 연결"
+echo ""
+echo "> firewall.cpl  : Windows 방화벽"
+echo "> ncpa.cpl      : 네트워크 연결"
+echo ""
+echo "> compmgmt.msc  : 컴퓨터 관리"
+echo "> services.msc  : 서비스"
+echo "> devmgmt.msc   : 장치 관리자"
+echo "> diskmgmt.msc  : 디스크 관리"
+echo "> fsmgmt.msc    : 공유 폴더"
+
+echo "> cmd : command"
 
 echo ----- first env --------------------------
 echo CURRENT_DIR=%CURRENT_DIR%

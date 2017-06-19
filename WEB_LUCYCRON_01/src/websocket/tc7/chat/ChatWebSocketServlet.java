@@ -59,6 +59,7 @@ public class ChatWebSocketServlet extends WebSocketServlet {
 	private final AtomicInteger connectionIds = new AtomicInteger(0);
 	private final Set<ChatMessageInbound> connections = new CopyOnWriteArraySet<ChatMessageInbound>();
 	
+	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
 		return new ChatMessageInbound(connectionIds.incrementAndGet());
 	}
@@ -98,10 +99,9 @@ public class ChatWebSocketServlet extends WebSocketServlet {
 		}
 		
 		private void broadcast(String message) {
-			CharBuffer buffer = CharBuffer.wrap(message);
-
 			for (ChatMessageInbound connection : connections) {
 				try {
+					CharBuffer buffer = CharBuffer.wrap(message);
 					connection.getWsOutbound().writeTextMessage(buffer);
 				} catch (Exception e) {
 					// TODO: handle exception

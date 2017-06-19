@@ -61,6 +61,8 @@ public class ChatWebSocketServlet extends WebSocketServlet {
 	
 	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
+		// occurs a event every session
+		System.out.printf("createWebSocketInbound('%s')\n", request.getProtocol());
 		return new ChatMessageInbound(connectionIds.incrementAndGet());
 	}
 	

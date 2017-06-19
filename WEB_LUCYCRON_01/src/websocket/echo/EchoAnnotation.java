@@ -19,6 +19,14 @@
  */
 package websocket.echo;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+import javax.websocket.OnMessage;
+import javax.websocket.PongMessage;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -33,6 +41,44 @@ package websocket.echo;
  * @author taincokr
  *
  */
+@ServerEndpoint("/websocket/echoAnnotation")
 public class EchoAnnotation {
 
+	@OnMessage
+	public void echoTextMessage(Session session, String msg, boolean last) {
+		try {
+			if (session.isOpen()) {
+				session.getBasicRemote().sendText(msg, last);
+			}
+		} catch (IOException e) {
+			// TODO: handle exception
+			try {
+				session.close();
+			} catch (IOException e2) {
+				// ignore
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	@OnMessage
+	public void echoBinaryMessage(Session session, ByteBuffer buffer, boolean last) {
+		try {
+			if (session.isOpen()) {
+				session.getBasicRemote().sendBinary(buffer, last);
+			}
+		} catch (IOException e) {
+			try {
+				session.close();
+			} catch (IOException e2) {
+				// ignore
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	@OnMessage
+	public void echoPongMessage(PongMessage pongMessage) {
+		// no operation
+	}
 }

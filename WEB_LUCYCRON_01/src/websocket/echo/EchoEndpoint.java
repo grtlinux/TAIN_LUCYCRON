@@ -19,6 +19,15 @@
  */
 package websocket.echo;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+
+import javax.websocket.Endpoint;
+import javax.websocket.EndpointConfig;
+import javax.websocket.MessageHandler;
+import javax.websocket.RemoteEndpoint;
+import javax.websocket.Session;
+
 /**
  * Code Templates > Comments > Types
  *
@@ -33,6 +42,54 @@ package websocket.echo;
  * @author taincokr
  *
  */
-public class EchoEndpoint {
+public class EchoEndpoint extends Endpoint {
 
+	@Override
+	public void onOpen(Session session, EndpointConfig endpointConfig) {
+		RemoteEndpoint.Basic remoteEndpointBasic = session.getBasicRemote();
+		session.addMessageHandler(new EchoMessageHandlerText(remoteEndpointBasic));
+		session.addMessageHandler(new EchoMessageHandlerBinary(remoteEndpointBasic));
+	}
+	
+	private static class EchoMessageHandlerText implements MessageHandler.Partial<String> {
+		
+		private final RemoteEndpoint.Basic remoteEndpointBasic;
+		
+		private EchoMessageHandlerText(RemoteEndpoint.Basic remoteEndpointBasic) {
+			this.remoteEndpointBasic = remoteEndpointBasic;
+		}
+		
+		@Override
+		public void onMessage(String message, boolean last) {
+			try {
+				if (this.remoteEndpointBasic != null) {
+					this.remoteEndpointBasic.sendText(message, last);
+				}
+			} catch (IOException e) {
+				// ignore
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private static class EchoMessageHandlerBinary implements MessageHandler.Partial<ByteBuffer> {
+		
+		private final RemoteEndpoint.Basic remoteEndpointBasic;
+		
+		private EchoMessageHandlerBinary(RemoteEndpoint.Basic remoteEndpointBasic) {
+			this.remoteEndpointBasic = remoteEndpointBasic;
+		}
+		
+		@Override
+		public void onMessage(ByteBuffer message, boolean last) {
+			try {
+				if (this.remoteEndpointBasic != null) {
+					this.remoteEndpointBasic.sendBinary(message, last);
+				}
+			} catch (IOException e) {
+				// ignore
+				e.printStackTrace();
+			}
+		}
+	}
 }

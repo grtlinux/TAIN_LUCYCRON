@@ -33,6 +33,8 @@ import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
 import org.apache.catalina.websocket.WsOutbound;
 
+import util.HTMLFilter;
+
 /**
  * Code Templates > Comments > Types
  *

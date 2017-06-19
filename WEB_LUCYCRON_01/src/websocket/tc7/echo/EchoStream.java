@@ -50,6 +50,7 @@ public class EchoStream extends WebSocketServlet {
 	
 	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
+		System.out.printf("createWebSocketInbound('%s', request)\n", subProtocol);
 		return new EchoStreamInbound();
 	}
 	
@@ -57,6 +58,8 @@ public class EchoStream extends WebSocketServlet {
 		
 		@Override
 		protected void onBinaryData(InputStream is) throws IOException {
+			System.out.printf("onBinaryData(InputStream)\n");
+			
 			// Simply echo the data to back to the client
 			WsOutbound outbound = getWsOutbound();
 			
@@ -71,6 +74,8 @@ public class EchoStream extends WebSocketServlet {
 		
 		@Override
 		protected void onTextData(Reader reader) throws IOException {
+			System.out.printf("onBinaryData(Reader)\n");
+
 			// Simply echo the data to back to the client
 			WsOutbound outbound = getWsOutbound();
 			

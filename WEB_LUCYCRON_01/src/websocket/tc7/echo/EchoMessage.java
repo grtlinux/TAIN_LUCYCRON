@@ -56,6 +56,8 @@ public class EchoMessage extends WebSocketServlet {
 		super.init();
 		byteBufSize = getInitParameterIntValue("byteBufferMaxSize", 2097152);
 		charBufSize = getInitParameterIntValue("charBufferMaxSize", 2097152);
+		
+		System.out.printf("init(%d, %d)\n", byteBufSize, charBufSize);
 	}
 	
 	public int getInitParameterIntValue(String name, int defaultValue) {
@@ -76,6 +78,7 @@ public class EchoMessage extends WebSocketServlet {
 	
 	@Override
 	protected StreamInbound createWebSocketInbound(String subProtocol, HttpServletRequest request) {
+		System.out.printf("createWebSocketInbound('%s', request)\n", subProtocol);
 		return new EchoMessageInbound(byteBufSize, charBufSize);
 	}
 	
@@ -89,11 +92,13 @@ public class EchoMessage extends WebSocketServlet {
 		
 		@Override
 		protected void onBinaryMessage(ByteBuffer message) throws IOException {
+			System.out.printf("onBinaryMessage(%s)\n", message.toString());
 			getWsOutbound().writeBinaryMessage(message);
 		}
 		
 		@Override
 		protected void onTextMessage(CharBuffer message) throws IOException {
+			System.out.printf("onTextMessage(%s)\n", message.toString());
 			getWsOutbound().writeTextMessage(message);
 		}
 	}

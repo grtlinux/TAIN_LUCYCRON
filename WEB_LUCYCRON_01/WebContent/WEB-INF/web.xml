@@ -88,6 +88,11 @@
 
 
 
+    <!-- Drawboard Websocket examples -->
+    <listener>
+        <listener-class>websocket.drawboard.DrawboardContextListener</listener-class>
+    </listener>
+
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

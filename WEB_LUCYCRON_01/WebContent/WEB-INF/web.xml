@@ -76,7 +76,7 @@
     </servlet-mapping>
     
     
-    
+    <!-- snake1.html -->
     <servlet>
       <servlet-name>wsSnake</servlet-name>
       <servlet-class>websocket.tc7.snake.SnakeWebSocketServlet</servlet-class>

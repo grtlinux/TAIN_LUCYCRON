@@ -8,6 +8,8 @@
 <body>
 <h1>index.jsp</h1>
 
+<%=request.getRemoteAddr()%>
+
 
 
 </body>

@@ -77,6 +77,8 @@
 	        }
 		}
 		
+		setTimeout(function() { alert("Hello"); launchFullscreen2(); }, 1000);  // no action of fullscreen
+		
 	</script>
 </head>
 <body>

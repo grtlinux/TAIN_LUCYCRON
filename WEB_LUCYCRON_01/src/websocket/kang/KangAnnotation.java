@@ -20,6 +20,7 @@
 package websocket.kang;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -55,7 +56,7 @@ public class KangAnnotation {
 	
 	private static final Log log = LogFactory.getLog(KangAnnotation.class);
 
-	private static final String GUEST_PREFIX = "GUEST";
+	private static final String GUEST_PREFIX = "KANG";
 	private static final AtomicInteger connectionIDs = new AtomicInteger(0);
 	private static final Set<KangAnnotation> connections = new CopyOnWriteArraySet<KangAnnotation>();
 	
@@ -64,25 +65,29 @@ public class KangAnnotation {
 	
 	public KangAnnotation() {
 		this.nickName = String.format("%s-%03d", GUEST_PREFIX, connectionIDs.getAndIncrement());
+		System.out.printf("Annotation\n");
 	}
 	
 	@OnOpen
-	public void start(Session session) {
+	public void onOpen(Session session) {
 		this.session = session;
 		connections.add(this);
 		String message = String.format("* %s %s", this.nickName, "has joined.");
 		broadcast(message);
+		
+		//URI uri = this.session.getRequestURI();
+		System.out.printf("id: %s\n", this.session.getId());
 	}
 	
 	@OnClose
-	public void end() {
+	public void onClose() {
 		connections.remove(this);
 		String message = String.format("* %s %s", this.nickName, "has disconnected.");
 		broadcast(message);
 	}
 	
 	@OnMessage
-	public void incoming(String msg) {
+	public void onMessage(String msg) {
 		// never trust the client
 		String filteredMessage = String.format("%s: %s", this.nickName, HTMLFilter.filter(msg.toString()));
 		broadcast(filteredMessage);
@@ -90,7 +95,8 @@ public class KangAnnotation {
 	
 	@OnError
 	public void onError(Throwable t) throws Throwable {
-		log.error("Chat Error: " + t.toString(), t);
+		System.out.printf("onError\n");
+		//log.error("Chat Error: " + t.toString(), t);
 	}
 	
 	private static void broadcast(String msg) {

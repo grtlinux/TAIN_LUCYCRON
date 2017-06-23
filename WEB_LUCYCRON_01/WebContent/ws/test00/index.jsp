@@ -64,9 +64,9 @@
 
         Chat.initialize = function() {
             if (window.location.protocol == 'http:') {
-                Chat.connect('ws://' + window.location.host + '/WEB_LUCYCRON_01/ws/test00');
+                Chat.connect('ws://' + window.location.host + '/WEB_LUCYCRON_01/ws/test00?id=123&name=hello');
             } else {
-                Chat.connect('wss://' + window.location.host + '/WEB_LUCYCRON_01/ws/test00');
+                Chat.connect('wss://' + window.location.host + '/WEB_LUCYCRON_01/ws/test00?id=123&name=hello');
             }
         };
 

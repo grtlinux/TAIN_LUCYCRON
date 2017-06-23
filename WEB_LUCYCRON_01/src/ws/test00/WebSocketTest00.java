@@ -20,6 +20,7 @@
 package ws.test00;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -69,6 +70,16 @@ public class WebSocketTest00 {
 	@OnOpen
 	public void start(Session session) {
 		this.session = session;
+		System.out.println(this.session.toString());
+		System.out.println(this.session.getQueryString());
+		
+		Map<String,Object> map = this.session.getUserProperties();
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			String key = entry.getKey();
+			String val = String.valueOf(entry.getValue());
+			System.out.printf("[%s] = [%s]\n", key, val);
+		}
+		
 		connections.add(this);
 		String message = String.format("* %s %s", nickName, "has joined.");
 		broadcast(message);

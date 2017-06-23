@@ -20,8 +20,7 @@
 		var ws;     // websocket 객체를 저장할 변수
 		
 		function connect() {       // websocket 생성
-			//ws = new WebSocket("ws://192.168.1.11:8080/WEB_LUCYCRON_01/ws/test01?id=" + nickName);
-			ws = new WebSocket("ws://192.168.1.11:8080/WEB_LUCYCRON_01/ws/test01");
+			ws = new WebSocket("ws://192.168.1.11:8080/WEB_LUCYCRON_01/ws/test01?id=" + nickName);
 			ws.onmessage = onMessage;    // 메시지를 받았을 때 호출하는 function 지정
 		}
 		

@@ -6,7 +6,7 @@
 	<title>Insert title here</title>
 	<script type="text/javascript">
 		var ws;
-		var message = document.getElementById("message");
+		var messages = document.getElementById("messages");
 		
 		function connect() {
 			// ensure only one connection is open at a time
@@ -48,7 +48,8 @@
 		}
 		
 		function writeResponse(text) {
-			message.innerHTML += "<br/>" + test;
+			document.getElementById("messages").innerHTML += "<br/>" + text;
+			//messages.innerHTML += "<br/>" + test;
 		}
 	</script>
 </head>
@@ -64,7 +65,7 @@
 		<button type="button" onclick="close();">Close</button>
 	</div>
 	
-	<div id="message">
+	<div id="messages">
 	</div>
 </body>
 </html>

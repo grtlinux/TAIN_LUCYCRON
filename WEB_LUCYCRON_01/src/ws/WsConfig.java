@@ -26,9 +26,6 @@ import javax.websocket.Endpoint;
 import javax.websocket.server.ServerApplicationConfig;
 import javax.websocket.server.ServerEndpointConfig;
 
-import websocket.drawboard.DrawboardEndpoint;
-import websocket.echo.EchoEndpoint;
-
 /**
  * Code Templates > Comments > Types
  *
@@ -72,13 +69,13 @@ public class WsConfig implements ServerApplicationConfig {
 
 		Set<ServerEndpointConfig> result = new HashSet<ServerEndpointConfig>();
 		
-		if (scanned.contains(EchoEndpoint.class)) {
-			result.add(ServerEndpointConfig.Builder.create(EchoEndpoint.class, "/websocket/echoProgrammatic").build());
-		}
+		//if (scanned.contains(EchoEndpoint.class)) {
+		//	result.add(ServerEndpointConfig.Builder.create(EchoEndpoint.class, "/websocket/echoProgrammatic").build());
+		//}
 		
-		if (scanned.contains(DrawboardEndpoint.class)) {
-			result.add(ServerEndpointConfig.Builder.create(DrawboardEndpoint.class, "/websocket/drawboard").build());
-		}
+		//if (scanned.contains(DrawboardEndpoint.class)) {
+		//	result.add(ServerEndpointConfig.Builder.create(DrawboardEndpoint.class, "/websocket/drawboard").build());
+		//}
 		
 		return result;
 	}

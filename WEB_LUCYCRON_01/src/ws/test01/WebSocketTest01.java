@@ -42,7 +42,8 @@ import javax.websocket.server.ServerEndpoint;
  * @author taincokr
  *
  */
-@ServerEndpoint("/ws/test01")
+//@ServerEndpoint("/ws/test01")
+@ServerEndpoint(value = "/ws/test01")
 public class WebSocketTest01 {
 
 	private String nickName;
@@ -50,6 +51,7 @@ public class WebSocketTest01 {
 	@OnOpen
 	public void onOpen(Session session) {
 		String queryString = session.getQueryString();
+		System.out.println(queryString);
 		this.nickName = decoder(queryString);
 		System.out.printf("* 클라이언트가 접속함: %s\n", this.nickName);
 	}

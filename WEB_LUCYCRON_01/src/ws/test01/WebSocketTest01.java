@@ -42,8 +42,8 @@ import javax.websocket.server.ServerEndpoint;
  * @author taincokr
  *
  */
-//@ServerEndpoint("/ws/test01")
-@ServerEndpoint(value = "/ws/test01")
+@ServerEndpoint("/ws/test01")
+//@ServerEndpoint(value = "/ws/test01")
 public class WebSocketTest01 {
 
 	private String nickName;

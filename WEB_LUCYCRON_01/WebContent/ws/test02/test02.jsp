@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
 	<script type="text/javascript">
-		var ws = new WebSocket("ws://localhost:8080/WEB_LUCYCRON_01/ws/test02");
+		var ws = new WebSocket("ws://" + window.location.host + "/WEB_LUCYCRON_01/ws/test02");
 		var messageTextArea = document.getElementById("messageTestArea");
 		
 		ws.onmessage = function processMessage(message) {

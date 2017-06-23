@@ -48,7 +48,7 @@
 	<textarea id='textArea'></textarea>
 	<br>
 	
-	<input id='text' test='text' onkeydown='submitMessage(event);'>
+	<input id='text' type='text' onkeydown='submitMessage(event);'>
 	<br>
 	
 	<div id='test'></div>

@@ -90,7 +90,7 @@ public class WebSocketTest02 {
 	}
 	
 	public String buildJsonData(String userName, String message) {
-		// TODO 20170623 : make currect the below
+		// TODO 20170623 : make currect the below                         <- gson, json
 		JsonObject jsonObject = Json.createObjectBuilder().add("message", userName + " : " + message).build();
 		StringWriter stringWriter = new StringWriter();
 		try (JsonWriter jsonWriter = Json.createWriter(stringWriter)) {

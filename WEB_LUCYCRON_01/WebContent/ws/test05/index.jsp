@@ -19,7 +19,7 @@
 	<title>Insert title here</title>
 	<script type="text/javascript">
 		var websocket = new WebSocket("ws://" + window.location.host + "/WEB_LUCYCRON_01/ws/test05");
-		var inputMessage = document.getElementById("inputMessage");
+		//var inputMessage = document.getElementById("inputMessage");
 		var re_send = "";
 		
 		websocket.onopen = function(event) {
@@ -107,9 +107,11 @@
 		
 		function send() {
 			// inputMessage가 있을 때만 메세지를 전송한다.
-			if (inputMessage.value != "") {
+			if (document.getElementById("inputMessage").value != "") {
+				var message = document.getElementById("inputMessage").value;
+				
 				// 서버에 보내는 메시지
-				websocket.send("<%=nick%>|\|" + inputMessage.value);
+				websocket.send("<%=nick%>|\|" + message);
 				
 				// 채팅화면 div에 붙일 내용
 				var div = document.createElement("div");
@@ -121,7 +123,7 @@
 				div.style["border-radius"] = "3px";
 				div.style["padding"] = "3px";
 				div.style["margin-left"] = "3px";
-				div.innerHTML = inputMessage.value;
+				div.innerHTML = message;
 				
 				document.getElementById("messageWindow2").appendChild(div);
 				
@@ -132,7 +134,7 @@
 				document.getElementById("messageWindow2").appendChild(clear);
 
 				// inputMessage value 값을 지운다.
-				inputMessage.value = "";
+				document.getElementById("inputMessage").value = "";
 				
 				// div 스크롤 아래로
 				messageWindow2.scrollTop = messageWindow2.scrollHeight;

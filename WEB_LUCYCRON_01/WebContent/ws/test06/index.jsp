@@ -61,10 +61,11 @@
 		});
 		
 		ws.initialize = function() {
+			var query = "?ip=<%=request.getRemoteAddr()%>&type=T99";
 			if (window.location.protocol == 'http:') {
-				ws.connect('ws://' + window.location.host + '/WEB_LUCYCRON_01/ws/test06');
+				ws.connect('ws://' + window.location.host + '/WEB_LUCYCRON_01/ws/test06' + query);
 			} else {
-				ws.connect('wss://' + window.location.host + '/WEB_LUCYCRON_01/ws/test06');
+				ws.connect('wss://' + window.location.host + '/WEB_LUCYCRON_01/ws/test06' + query);
 			}
 		};
 		

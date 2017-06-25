@@ -20,6 +20,10 @@
 package ws.test06;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -57,61 +61,116 @@ public final class WebSocketTest06 {
 	
 	private final static String GUEST_PREFIX = "TEST06";
 	private final static AtomicInteger connectionIDs = new AtomicInteger(0);
-	private final static Set<WebSocketTest06> connections = new CopyOnWriteArraySet<WebSocketTest06>();
+	// private final static Set<WebSocketTest06> connections = new CopyOnWriteArraySet<WebSocketTest06>();
+	private final static Set<TypeBean> typeBeans = new CopyOnWriteArraySet<TypeBean>();
 	
 	private final String nickName;
 	private Session session;
+	private TypeBean bean;
 	
 	public WebSocketTest06() {
-		log.info("INFO: constructor nickName: " + this.nickName);
-
 		this.nickName = String.format("%s-%02d", GUEST_PREFIX, connectionIDs.getAndIncrement());
+		System.out.printf("INFO: constructor nickName: %s\n", this.nickName);
 	}
 	
 	@OnOpen
 	public void onOpen(Session session) {
-		log.info("INFO: OnOpen nickName: " + this.nickName);
+		System.out.printf("INFO: OnOpen nickName: %s\n", this.nickName);
+		
+		Properties prop = getProperties(session.getQueryString());
+		String ip = prop.getProperty("ip");
+		if (ip == null) {
+			try {
+				session.close();
+			} catch (IOException e) {
+				// ignore
+			}
+			
+			return;
+		}
+		
+		String type = mapType.get(ip);
+		if (type == null) {
+			try {
+				session.close();
+			} catch (IOException e) {
+				// ignore
+			}
+			
+			return;
+		}
+		
+		System.out.printf("INFO: OnOpen nickName: %s %s %s\n", this.nickName, ip, type);
 
 		this.session = session;
-		connections.add(this);
+		this.bean = new TypeBean(ip, type, this);
+		
+		typeBeans.add(this.bean);
+		//connections.add(this);
+		
 		String message = String.format("* %s %s", this.nickName, "has joined.");
 		broadcast(message);
 	}
 	
+	private Properties getProperties(String query) {
+		//System.out.println("[" + query + "]");
+		if (query == null)
+			return null;
+		
+		Properties prop = new Properties();
+		
+		String[] articles = query.split("&");
+		for (String article : articles) {
+			String[] items = article.split("=");
+			if (items.length != 2)
+				continue;
+			
+			prop.put(items[0], items[1]);
+		}
+		
+		//prop.list(System.out);
+		
+		return prop;
+	}
+	
 	@OnClose
 	public void onClose(Session session) {
-		log.info("INFO: OnClose nickName: " + this.nickName);
+		System.out.printf("INFO: OnClose nickName: %s\n", this.nickName);
 
-		connections.remove(this);
+		typeBeans.remove(this.bean);
+		//connections.remove(this);
 		String message = String.format("* %s %s", this.nickName, "has disconnected.");
 		broadcast(message);
 	}
 	
 	@OnError
 	public void onError(Throwable e, Session session) throws Throwable {
-		log.info("INFO: OnError nickName: " + this.nickName);
+		System.out.printf("INFO: OnError nickName: %s\n", this.nickName);
 
 		log.error("ERROR: " + e.toString(), e);
 	}
 	
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		log.info("INFO: OnMessage nickName: " + this.nickName);
+		System.out.printf("INFO: OnMessage nickName: %s\n", this.nickName);
 		
 		String filteredMessage = String.format("%s: %s", this.nickName, HTMLFilter.filter(message.toString()));
 		broadcast(filteredMessage);
 	}
 	
 	private static void broadcast(String message) {
-		synchronized (connections) {
-			for (WebSocketTest06 client : connections) {
+		//synchronized (connections) {
+		synchronized (typeBeans) {
+			for (TypeBean client : typeBeans) {
 				try {
-					client.session.getBasicRemote().sendText(message);
+					if (setType.contains(client.getType())) {
+						client.getObj().session.getBasicRemote().sendText(message);
+					}
 				} catch (IOException e) {
 					log.debug("ERROR: Failed to send message to client.", e);
-					connections.remove(client);
+					typeBeans.remove(client);
 					try {
-						client.session.close();
+						client.getObj().session.close();
 					} catch (IOException e2) {
 						// ignore
 					}
@@ -119,4 +178,66 @@ public final class WebSocketTest06 {
 			}
 		}
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	
+	private static Map<String, String> mapType = null;
+	private static Set<String> setType = null;
+	
+	static {
+		mapType = new HashMap<String, String>();
+		mapType.put("192.168.1.11",  "T00");
+		
+		mapType.put("192.168.1.15",  "T01");
+		
+		mapType.put("192.168.1.20",  "T02");
+		mapType.put("192.168.1.112", "T02");
+		
+		//mapType.put("192.168.1.11", "T00");
+		//mapType.put("192.168.1.11", "T00");
+		//mapType.put("192.168.1.11", "T00");
+		
+		setType = new HashSet<String>();
+		setType.add("T00");
+		//setType.add("T01");
+		setType.add("T02");
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	
+	private class TypeBean {
+		private String ip;
+		private String type;
+		private WebSocketTest06 obj;
+
+		public TypeBean(String ip, String type, WebSocketTest06 obj) {
+			this.ip = ip;
+			this.type = type;
+			this.obj = obj;
+		}
+		
+		public String getIp() {
+			return this.ip;
+		}
+
+		public String getType() {
+			return this.type;
+		}
+
+		public WebSocketTest06 getObj() {
+			return this.obj;
+		}
+		
+		public String toString() {
+			return String.format("[%s-%s]", this.getIp(), this.getType());
+		}
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////
+
 }

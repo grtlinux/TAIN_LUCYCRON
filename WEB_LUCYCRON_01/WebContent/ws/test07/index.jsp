@@ -2,7 +2,7 @@
 <%@ page import = "ws.test07.Addr2Type" %>
 <%
 	String addr = request.getRemoteAddr();
-	String type = request.getParameter("TYPE");
+	String type = request.getParameter("type");
 	if (type == null) {
 		if (!Addr2Type.getInstance().isContentType(type)) {
 			type = Addr2Type.getInstance().getType(addr);
@@ -34,8 +34,8 @@
 		}
 	</style>
 	<script type="text/javascript">
-		// setTimeout(function() { alert("Hello"); location.href = "/WEB_LUCYCRON_01/ws/test07/<%=type%>/index.jsp"; }, 1000);
-		setTimeout(function() { location.href = "/WEB_LUCYCRON_01/ws/test07/<%=type%>/index.jsp"; }, 1000);
+		// setTimeout(function() { alert("Hello"); location.href = "/WEB_LUCYCRON_01/ws/test07/<%=type%>/index.jsp?addr=<%=addr%>&type=<%=type%>"; }, 1000);
+		setTimeout(function() { location.href = "/WEB_LUCYCRON_01/ws/test07/<%=type%>/index.jsp?addr=<%=addr%>&type=<%=type%>"; }, 1000);
 	</script>
 </head>
 <body>

@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import = "ws.test07.Addr2Type" %>
+<%
+	String addr = request.getRemoteAddr();
+	String type = request.getParameter("type");
+	if (type == null) {
+		if (!Addr2Type.getInstance().isContentType(type)) {
+			type = Addr2Type.getInstance().getType(addr);
+		}
+	}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,8 +37,8 @@
 <body>
 
 <h1>T01.index.jsp</h1>
-<div id='page'><iframe name='ipage' src='Page010.jsp' style='border:0;width:100%;height:300px;padding:0;margin:0;'></iframe></div>
-<div id='websocket'><iframe name='iwebsocket' src='WebSocket010.jsp' style='border:0;width:100%;height:50px;padding:0;margin:0;'></iframe></div>
+<div id='page'><iframe name='ipage' src='Page010.jsp?addr=<%=addr%>&type=<%=type%>' style='border:0;width:100%;height:300px;padding:0;margin:0;'></iframe></div>
+<div id='websocket'><iframe name='iwebsocket' src='WebSocket010.jsp?addr=<%=addr%>&type=<%=type%>' style='border:0;width:100%;height:50px;padding:0;margin:0;'></iframe></div>
 
 </body>
 </html>

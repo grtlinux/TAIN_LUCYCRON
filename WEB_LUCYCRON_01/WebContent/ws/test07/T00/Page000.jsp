@@ -30,12 +30,14 @@
 
 		function onRecvMsg(msg) {
 			document.getElementById("msg").value = msg;
+			top.launchFullscreen2();
 		}
 	</script>
 </head>
 <body>
 <h1>Page000.jsp</h1>
 
+<input id="button1" type="button" value="FS" onclick="top.launchFullscreen2();">
 <input id="button1" type="button" value="Page000" onclick="onSendMsg('T00 = 1000')">
 <input id="button1" type="button" value="Page010" onclick="onSendMsg('T01 = 12345')">
 <input id="button2" type="button" value="Page020" onclick="onSendMsg('T02 = ABCDEF')">

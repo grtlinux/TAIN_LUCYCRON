@@ -26,8 +26,8 @@
 </head>
 <body>
 
-<div id='page'><iframe name='ipage' src='Page001.jsp' style='border:0;width:100%;height:1000px;padding:0;margin:0;'></iframe></div>
-<div id='websocket'><iframe name='iwebsocket' src='WebSocket00.jsp' style='border:0;width:100%;height:100px;padding:0;margin:0;'></iframe></div>
+<div id='page'><iframe name='ipage' src='Page001.jsp' style='border:0;width:100%;height:300px;padding:0;margin:0;'></iframe></div>
+<div id='websocket'><iframe name='iwebsocket' src='WebSocket00.jsp' style='border:0;width:100%;height:50px;padding:0;margin:0;'></iframe></div>
 
 </body>
 </html>

@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page import = "ws.test07.Addr2Type" %>
+<%
+	String addr = request.getRemoteAddr();
+	String type = request.getParameter("TYPE");
+	if (type == null) {
+		if (!Addr2Type.getInstance().isContentType(type)) {
+			type = Addr2Type.getInstance().getType(addr);
+		}
+	}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,11 +33,12 @@
 			padding: 0;
 		}
 	</style>
+	<script type="text/javascript">
+		// setTimeout(function() { alert("Hello"); location.href = "/WEB_LUCYCRON_01/ws/test07/<%=type%>/index.jsp"; }, 1000);
+		setTimeout(function() { location.href = "/WEB_LUCYCRON_01/ws/test07/<%=type%>/index.jsp"; }, 1000);
+	</script>
 </head>
 <body>
-
-<div id='page'><iframe name='ipage' src='Page001.jsp' style='border:0;width:100%;height:1000px;padding:0;margin:0;'></iframe></div>
-<div id='websocket'><iframe name='iwebsocket' src='WebSocket00.jsp' style='border:0;width:100%;height:100px;padding:0;margin:0;'></iframe></div>
-
+<%=addr %>:<%=type %>
 </body>
 </html>

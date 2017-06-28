@@ -3,10 +3,10 @@
 <html lang="ko">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-	<title>Page000.jsp</title>
+	<title>Page020.jsp</title>
 </head>
 <body>
-<h1>Page000.jsp</h1>
+<h1>Page020.jsp</h1>
 
 
 

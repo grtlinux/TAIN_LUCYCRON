@@ -20,7 +20,9 @@
 package ws.test07;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Code Templates > Comments > Types
@@ -39,11 +41,15 @@ import java.util.Map;
 public class Addr2Type {
 	
 	private Map<String, String> map = null;
+	private Set<String> set = null;
 	
 	////////////////////////////////////////////////////////////////////////////////////
 	
 	private Addr2Type() {
 	
+		/*
+		 * Host Address To Type
+		 */
 		this.map = new HashMap<String, String>();
 		
 		this.map.put("192.168.1.11",  "T00");
@@ -52,6 +58,15 @@ public class Addr2Type {
 		
 		this.map.put("192.168.1.20",  "T02");
 		this.map.put("192.168.1.112", "T02");
+		
+		/*
+		 * Contents of Type
+		 */
+		this.set = new HashSet<String>();
+		
+		for (Map.Entry<String, String> entry : this.map.entrySet()) {
+			this.set.add(entry.getValue());
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +80,11 @@ public class Addr2Type {
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////
+	
+	public boolean isContentType(String type) {
+		return this.set.contains(type);
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////

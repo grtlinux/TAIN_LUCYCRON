@@ -105,14 +105,17 @@
 	        }
 		}
 		
-		setTimeout(function() { alert("Hello"); launchFullscreen2(); }, 1000);  // no action of fullscreen
+		//setTimeout(function() {
+		//	alert("Hello"); 
+		//	launchFullscreen2();
+		//}, 1000);  // no action of fullscreen
 		
 	</script>
 </head>
 <body>
 
 <h1>T02.index.jsp</h1>
-<div id='page'><iframe name='ipage' src='Page020.jsp?addr=<%=addr%>&type=<%=type%>' style='border:0;width:100%;height:300px;padding:0;margin:0;'></iframe></div>
+<div id='page'><iframe name='ipage' src='Page020.jsp?addr=<%=addr%>&type=<%=type%>' style='border:0;width:100%;height:500px;padding:0;margin:0;'></iframe></div>
 <div id='websocket'><iframe name='iwebsocket' src='WebSocket020.jsp?addr=<%=addr%>&type=<%=type%>' style='border:0;width:100%;height:50px;padding:0;margin:0;'></iframe></div>
 
 </body>

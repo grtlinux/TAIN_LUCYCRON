@@ -44,5 +44,9 @@
 
 <input id="msg" type="text">
 
+<video src="JungYounSeo_20170601.mp4" poster="/WEB_LUCYCRON_01/image/imagemap.jpg" preload="auto" autoplay controls loop>
+<h3>현재 사용 중인 브라우저에서는 재생할 수 없습니다.</h3>
+</video>
+
 </body>
 </html>

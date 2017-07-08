@@ -81,7 +81,7 @@ public class MainTest {
 
 		if (flag) {
 			try {
-				String dbFileSpec = "jdbc:ucanaccess://G:\\11. Matrix System ver1.0\\_DB.accdb";
+				String dbFileSpec = "jdbc:ucanaccess://G:/11. Matrix System ver1.0/_DB.accdb";
 				Connection conn = DriverManager.getConnection(dbFileSpec, "admin", "123");
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("select 코드명 from 코드기타");

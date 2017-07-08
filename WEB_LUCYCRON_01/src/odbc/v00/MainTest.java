@@ -24,6 +24,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 /**
@@ -74,9 +75,9 @@ public final class MainTest {
 		if (flag)
 			new MainTest();
 
-		if (flag) {
+		if (!flag) {
 			/*
-			 * begin
+			 * begin: C:/Windows/SysWOW64/odbcad32.exe
 			 * 
 			 * Access에서 한글을 8859_1(ISO-8859-1)을 사용하기 때문에 아래와 같이 하여 자료를 넣는다.
 			 * 
@@ -94,15 +95,44 @@ public final class MainTest {
 			ResultSet rs = null;
 			
 			try {
-				String sql = "SELECT USERNAME FROM MEMBER";
+				String sql = "select * from 코드기타";
 				conn = dbConn.getConnection();
 				psmt = conn.prepareStatement(sql);
 				
 				rs = psmt.executeQuery();
 				
 				while (rs.next()) {
-					@SuppressWarnings("unused")
-					String username = new String(rs.getString("username").getBytes("8859_1"), "euc-kr");
+					String grpName = new String(rs.getString("그룹명").getBytes("8859_1"), "euc-kr");
+					String codeName = new String(rs.getString("코드명").getBytes("8859_1"), "euc-kr");
+					System.out.printf("[%s] [%s]\n", grpName, codeName);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				dbConn.disConnection(rs, psmt, conn);
+			}
+		}
+
+		if (flag) {
+			
+			DBConnection dbConn = new DBConnection();
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			Statement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+				String sql = "select * from 코드기타";
+				conn = dbConn.getConnection();
+				
+				stmt = conn.createStatement();
+				
+				rs = stmt.executeQuery(sql);
+				
+				while (rs.next()) {
+					String grpName = new String(rs.getString("그룹명").getBytes("8859_1"), "euc-kr");
+					String codeName = new String(rs.getString("코드명").getBytes("8859_1"), "euc-kr");
+					System.out.printf("[%s] [%s]\n", grpName, codeName);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -125,9 +155,9 @@ public final class MainTest {
 
 final class DBConnection {
 	
-	private String DB_URL = "Jdbc:Odbc:Testdata";   // Testdata
-	private String DB_USER = "test";
-	private String DB_PASS = "test";
+	private String DB_URL = "jdbc:odbc:USRDB";   // Testdata
+	private String DB_USER = "admin";
+	private String DB_PASS = "";
 	
 	private Connection conn = null;
 	
@@ -140,13 +170,14 @@ final class DBConnection {
 		
 		try {
 			Properties props = new Properties();
-			props.put("charSet", "8859_1");
+			//props.put("charSet", "8859_1");
 			props.put("user", DB_USER);
-			props.put("password", DB_PASS);
+			//props.put("password", DB_PASS);
 			
-			this.conn = DriverManager.getConnection(DB_URL, props);
+			// this.conn = DriverManager.getConnection(DB_URL, props);
+			this.conn = DriverManager.getConnection(DB_URL);
 		} catch (SQLException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		return this.conn;

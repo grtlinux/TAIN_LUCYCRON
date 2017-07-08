@@ -73,6 +73,43 @@ public class MainTest {
 
 	/*
 	 * static test method
+	 * 
+	 * [ UCanAccess-4.0.2-bin.zip ]
+	 * 
+	 *     1. 환경
+	 *     
+	 *         JAVA : jdk1.7.0_79
+	 *         
+	 *         아래 jar들을 libs에 포함.
+	 *             
+	 *             ucanaccess-4.0.2.jar
+	 *             ucanload.jar
+	 *             
+	 *             commons-lang-2.6.jar
+	 *             commons-logging-1.1.1.jar
+	 *             
+	 *             hsqldb.jar
+	 *             jackcess-2.1.6.jar
+	 * 
+	 *     2. 테스트 소소
+	 * 
+	 *             try {
+	 *                 String dbFileSpec = "jdbc:ucanaccess://G:\\11. Matrix System ver1.0\\_DB.accdb";
+	 *                 Connection conn = DriverManager.getConnection(dbFileSpec, "admin", "123");
+	 *                 Statement stmt = conn.createStatement();
+	 *                 ResultSet rs = stmt.executeQuery("select 코드명 from 코드기타");
+	 *                 
+	 *                 while (rs.next()) {
+	 *                     String codeName = rs.getString("코드명");
+	 *                     System.out.printf("[%s]\n", codeName);
+	 *                 }
+	 *                 
+	 *                 rs.close();
+	 *                 conn.close();
+	 *             } catch (SQLException e) {
+	 *                 e.printStackTrace();
+	 *             }
+	 * 
 	 */
 	private static void test01(String[] args) throws Exception {
 
@@ -82,7 +119,8 @@ public class MainTest {
 		if (flag) {
 			try {
 				String dbFileSpec = "jdbc:ucanaccess://G:\\11. Matrix System ver1.0\\_DB.accdb";
-				Connection conn = DriverManager.getConnection(dbFileSpec, "admin", "123");
+				Connection conn = DriverManager.getConnection(dbFileSpec, "admin", "");
+				
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("select 코드명 from 코드기타");
 				

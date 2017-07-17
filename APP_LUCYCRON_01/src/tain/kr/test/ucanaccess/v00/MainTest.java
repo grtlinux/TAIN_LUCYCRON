@@ -24,6 +24,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -116,10 +117,35 @@ public class MainTest {
 		if (flag)
 			new MainTest();
 
+		if (!flag) {
+			try {
+				String dbFileSpec = "jdbc:ucanaccess://G:\\11. Matrix System ver1.0\\_DB.accdb";  // OK!
+				Connection conn = DriverManager.getConnection(dbFileSpec, "admin", "");
+				
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery("select 코드명 from 코드기타");
+				
+				while (rs.next()) {
+					String codeName = rs.getString("코드명");
+					System.out.printf("[%s]\n", codeName);
+				}
+				
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if (flag) {
 			try {
-				String dbFileSpec = "jdbc:ucanaccess://G:\\11. Matrix System ver1.0\\_DB.accdb";
-				Connection conn = DriverManager.getConnection(dbFileSpec, "admin", "");
+				String dbFileSpec = "jdbc:ucanaccess://G:/11. Matrix System ver1.0/_DB.accdb";      // OK!
+				Properties props = new Properties();
+				props.put("charSet",  "8859_1");
+				props.put("user",     "admin");
+				props.put("password", "");
+
+				Connection conn = DriverManager.getConnection(dbFileSpec, props);
 				
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("select 코드명 from 코드기타");

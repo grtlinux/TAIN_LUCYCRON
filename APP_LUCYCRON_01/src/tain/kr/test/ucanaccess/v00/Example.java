@@ -230,12 +230,32 @@ public class Example {
 	private void executeLikeExample() throws SQLException {
 		
 		Statement stmt = null;
+		ResultSet rs = null;
 		
 		try {
 			stmt = this.ucaConn.createStatement();
-			ResultSet rs = stmt.executeQuery("");
-			dump(rs, "");
+			rs = stmt.executeQuery("select descr from example2 where descr like 'P%'");
+			dump(rs, "executeLikeExample STEP 1: like with standard % jolly");
+			stmt.close();
+
+			stmt = this.ucaConn.createStatement();
+			rs = stmt.executeQuery("select descr from example2 where descr like 'P*'");
+			dump(rs, "executeLikeExample STEP 2: like with standard * jolly");
+			stmt.close();
+
+			stmt = this.ucaConn.createStatement();
+			rs = stmt.executeQuery("select descr from example2 where descr like 'P[A-F]###'");
+			dump(rs, "executeLikeExample STEP 3: number and interval patterns");
+			stmt.close();
+
+			stmt = this.ucaConn.createStatement();
+			rs = stmt.executeQuery("select descr from example2 where descr like 'C#V##'");
+			dump(rs, "executeLikeExample STEP 4: number pattern");
+			stmt.close();
 		} finally {
+			if (rs != null)
+				rs.close();
+			
 			if (stmt != null)
 				stmt.close();
 		}
@@ -245,12 +265,61 @@ public class Example {
 	
 	private void showExtensions() throws SQLException {
 		
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = this.ucaConn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM example3 full outer join example4 on (example3.id = example4.id)");
+			dump(rs, "showExcention STEP 1: full outer join");
+			stmt.close();
+			
+			stmt = this.ucaConn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM example2 order by id desc limit 5 offset 1");
+			dump(rs, "showExcention STEP 2: limit and offset");
+			stmt.close();
+		} finally {
+			if (rs != null)
+				rs.close();
+			
+			if (stmt != null)
+				stmt.close();
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	private void transaction() throws SQLException {
 		
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			this.ucaConn.setAutoCommit(false);
+			
+			stmt = this.ucaConn.createStatement();
+			stmt.executeUpdate("update example4 set descr='Lugo di Romagna'");
+			rs = stmt.executeQuery("SELECT * FROM example4");
+			dump(rs, "transaction: before rollback");
+			this.ucaConn.rollback();
+			stmt.close();
+			
+			stmt = this.ucaConn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM example4");
+			dump(rs, "transaction: after rollback");
+			
+			stmt.executeUpdate("update example4 set descr='Lugo di Romagna'");
+			stmt.execute("insert into example4 (ID, descr) values (5, 'DALLAS')");
+			this.ucaConn.commit();
+			rs = stmt.executeQuery("SELECT * FROM example4");
+			dump(rs, "transaction: after commit");
+		} finally {
+			if (rs != null)
+				rs.close();
+			
+			if (stmt != null)
+				stmt.close();
+		}
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////
@@ -301,8 +370,8 @@ public class Example {
 		if (flag)
 			log.debug(">>>>> " + new Object() {
 			}.getClass().getEnclosingClass().getName());
-
+		
 		if (flag)
-			test01(args);
+			test01(new String[] { "N:/" });
 	}
 }

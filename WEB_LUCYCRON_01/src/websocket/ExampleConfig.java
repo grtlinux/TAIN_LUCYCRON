@@ -50,6 +50,9 @@ public class ExampleConfig implements ServerApplicationConfig {
 		
 		Set<ServerEndpointConfig> result = new HashSet<ServerEndpointConfig>();
 		
+		/*
+		 * This is a logic for endpoint
+		 */
 		if (scanned.contains(EchoEndpoint.class)) {
 			result.add(ServerEndpointConfig.Builder.create(EchoEndpoint.class, "/websocket/echoProgrammatic").build());
 		}
